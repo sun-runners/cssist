@@ -1,0 +1,21 @@
+{
+  "name": "cssist",
+  "authors": [
+    "김선욱 <sunus7@naver.com>"
+  ],
+  "description": "It automatically create css based on classes",
+  "main": "cssist.js",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "scripts",
+    "cssist_webpack.js",
+    "webpack.config.js"
+  ],
+  "dependencies": {
+  }
+}

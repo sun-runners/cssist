@@ -1,0 +1,174 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>cssist</title>
+    <link rel="stylesheet" href="bower_components/peki/peki.css" />
+    <script src="cssist.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="app/scripts/app.js"></script>
+    <script src="app/scripts/directive/titleDir.js"></script>
+    <script src="app/scripts/directive/subTitleDir.js"></script>
+    <script src="app/scripts/directive/codeTestDir.js"></script>
+  </head>
+  <body class="d-b p-r f-l w-100 h-100vh" ng-app="cssist">
+    <div class="w-100" ng-repeat="description in $root.descriptions">
+      <title-dir title="description.title"></title-dir>
+      <!-- Placeholder Color -->
+      <div class="w-100" ng-if="description.title=='PlaceholderColor'">
+        <div class="w-100">
+          <sub-title-dir sub-title="'HEX'" index="1"></sub-title-dir>
+          <code-test-dir bold="['pc-rd']">
+            <div class="w-100">
+              <input class="w-100 h-50px f-25px c-rd pc-rd t-c b-gy50" placeholder="Write anything..."/>
+            </div>
+          </code-test-dir>
+        </div>
+        <div class="w-100">
+          <sub-title-dir sub-title="'RGBA'" index="2"></sub-title-dir>
+          <code-test-dir bold="['pc-2196F3_30']">
+            <div class="w-100">
+              <input class="w-100 h-50px f-25px c-rd pc-2196F3_30 t-c b-gy50" placeholder="Write anything..."/>
+            </div>
+          </code-test-dir>
+        </div>
+        <div class="w-100">
+          <sub-title-dir sub-title="'event'" index="3"></sub-title-dir>
+          <code-test-dir class="['pc-rd', 'pc-be-h']">
+            <div class="w-100">
+              <input class="w-100 h-50px f-25px c-rd pc-rd pc-be-a t-c b-gy50" placeholder="Write anything..."/>
+            </div>
+          </code-test-dir>
+        </div>
+      </div>
+
+      <!-- Gradient -->
+      <div class="w-100" ng-if="description.title=='Gradient'">
+        <div class="w-100">
+          <sub-title-dir sub-title="'HEX'" index="1"></sub-title-dir>
+          <code-test-dir bold="['pc-rd']">
+            <div class="w-100 h-25vw">
+              <div class="w-25 h-100 b-lg_1_FFFFFF_000000"></div>
+              <div class="w-25 h-100 b-rg_7_rd_oe_yw_gn_be_io"></div>
+              <div class="w-25 h-100 b-rlg_10_bk_we_bk_we_bk_we_bk"></div>
+              <div class="w-25 h-100 b-rlg_10_rd_io bor-15px">
+                <div class="w-100_10px h-100_10px b-we cen bor-10px"></div>
+              </div>
+            </div>
+            <div class="w-100 h-100px">
+              <span class="f-30px lh-32px t-c bc-t tf-t b-lg_90D_rd_oe_yw_gn_be_io cen" style="">
+                ABCDEFG
+              </span>
+            </div>
+          </code-test-dir>
+        </div>
+      </div>
+
+      <!-- Letter Spacing -->
+      <div class="w-100" ng-if="description.title=='LetterSpacing'">
+        <div class="w-100">
+          <div class="w-100">
+            <sub-title-dir sub-title="'positive'" index="3"></sub-title-dir>
+            <code-test-dir bold="['l-5px']">
+              <div class="w-100">
+                <span class="w-100 f-25px c-rd ls-5px t-c">
+                  ABCDEFGHIJKLMNOPQRSTUVWXYZ
+                </span>
+              </div>
+            </code-test-dir>
+          </div>
+          <div class="w-100">
+            <sub-title-dir sub-title="'negative'" index="3"></sub-title-dir>
+            <code-test-dir bold="['l-_5px']">
+              <div class="w-100">
+                <span class="w-100 f-25px c-rd ls-_5px t-c">
+                  ABCDEFGHIJKLMNOPQRSTUVWXYZ
+                </span>
+              </div>
+            </code-test-dir>
+          </div>
+          <div class="w-100">
+            <sub-title-dir sub-title="'negative'" index="3"></sub-title-dir>
+            <code-test-dir bold="['l-_0o5px']">
+              <div class="w-100">
+                <span class="w-100 f-25px c-rd ls-_0o5px t-c">
+                  ABCDEFGHIJKLMNOPQRSTUVWXYZ
+                </span>
+              </div>
+            </code-test-dir>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overflow -->
+      <div class="w-100" ng-if="description.title=='Overflow'">
+        <div class="w-100">
+          <div class="w-100">
+            <sub-title-dir sub-title="'overlay'" index="1"></sub-title-dir>
+            <code-test-dir bold="['oy-o']">
+              <div class="w-300px h-300px bo-1px bo-be cen-x oy-h oy-o-H">
+                <div class="w-100" ng-repeat="num in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]">
+                  {{num}}
+                </div>
+              </div>
+            </code-test-dir>
+          </div>
+        </div>
+      </div>
+
+      <!-- Border -->
+      <div class="w-100" ng-if="description.title=='Border'">
+        <div class="w-100">
+          <div class="w-100">
+            <sub-title-dir sub-title="'border'" index="1"></sub-title-dir>
+            <code-test-dir>
+              <div class="w-300px h-300px bo-1px bo-be cen-x">
+              </div>
+            </code-test-dir>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ng-class -->
+      <div class="w-100" ng-if="description.title=='NgClass'">
+        <div class="w-100">
+          <div class="w-100">
+            <sub-title-dir sub-title="'ng-class'" index="1"></sub-title-dir>
+            <code-test-dir bold="['oy-o']">
+              <div class="w-300px h-300px cen-x" ng-class="[{'b-yw':hover, 'b-be':!hover}]" ng-mouseleave="hover=false;" ng-mouseenter="hover=true;"></div>
+            </code-test-dir>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ng-class -->
+      <div class="w-100" ng-if="description.title=='ng-class'">
+        <div class="w-100">
+          <div class="w-100">
+            <sub-title-dir sub-title="'ng-class'" index="1"></sub-title-dir>
+            <code-test-dir bold="['oy-o']">
+              <div class="w-300px h-300px cen-x" ng-class="[{'b-yw':hover, 'b-be':!hover}]" ng-mouseleave="hover=false;" ng-mouseenter="hover=true;"></div>
+            </code-test-dir>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ng-class -->
+      <div class="w-100" ng-if="description.title=='Responsive'">
+        <div class="w-100">
+          <div class="w-100">
+            <sub-title-dir sub-title="'responsive'" index="1"></sub-title-dir>
+            <code-test-dir>
+              <div class="w-300px-X1000 w-100-N1000 h-300px cen-x b-rd">
+                <span class="cen c-we">
+                  Responsive
+                </span>
+              </div>
+            </code-test-dir>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>
