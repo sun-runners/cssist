@@ -13,7 +13,6 @@ require("./make.js");
   }
   peci.paint = {
     element : function(element){
-      peci.init.element(element);
 			var class_names = peci.get.classes(element);
       for(var i=0; i<class_names.length; i++){
         var class_name = class_names[i];

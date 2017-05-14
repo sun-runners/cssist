@@ -9,19 +9,39 @@ require("./convert.js");
       if(class_name_pieces[2]) var class_value = class_name_pieces[2];
       if(class_name_pieces[3]) var class_event = class_name_pieces[3];
       if(class_name_pieces[4]) var class_mediaquery = class_name_pieces[4];
-      for(var i=0; i<peci.palette.length; i++){
-        if(class_value.match('^('+peci.palette[i].match+')$')
-          && peci.palette[i].property[class_property]
-          && peci.palette[i].getValue(class_value)){
-          var css = {
-            class:class_name,
-            property:peci.palette[i].property[class_property],
-            value:peci.palette[i].getValue(class_value),
-            event:peci.convert.eventCode2event(class_event),
-            suffix:class_mediaquery
-          };
-          return css;
+      for(var i=0; i<peci.property_sets.length; i++){
+        property_set = peci.property_sets[i];
+        if(property_set.properties[class_property]){
+          var property = property_set.properties[class_property]
+          for(var j=0; j<property_set.value_sets.length; j++){
+            var value_set = property_set.value_sets[j];
+            var regex = new RegExp(value_set.regex);
+            if(class_value.match(regex)){
+              var value = value_set.getValue(class_value);
+              var css = {
+                class:class_name,
+                property:property,
+                value:value,
+                event:peci.convert.eventCode2event(class_event),
+                suffix:class_mediaquery
+              };
+              return css;
+            }
+          }
         }
+        // if(class_value.match('^('+peci.palette[i].match+')$')
+        //   && peci.palette[i].property[class_property]
+        //   && peci.palette[i].getValue(class_value)){
+        //   var css = {
+        //     class:class_name,
+        //     property:peci.palette[i].property[class_property],
+        //     value:peci.palette[i].getValue(class_value),
+        //     event:peci.convert.eventCode2event(class_event),
+        //     suffix:class_mediaquery
+        //   };
+        //   return css;
+        // }
+
       }
     },
     property : function(class_name){
