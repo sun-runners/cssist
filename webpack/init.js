@@ -39,18 +39,6 @@ require("./make.js");
           examples: ['a'],
           getValue: getValueFromValues
         };
-        peci.value_sets.none = {
-          regex: '(?:n)',
-          values: { n: 'none' },
-          examples: ['n'],
-          getValue: getValueFromValues
-        };
-        peci.value_sets.normal = {
-          regex: '(?:n)',
-          values: { n: 'normal' },
-          examples: ['n'],
-          getValue: getValueFromValues
-        };
         peci.value_sets.initial = {
           regex: '(?:il)',
           values: { il: 'initial' },
@@ -63,42 +51,30 @@ require("./make.js");
           examples: ['it'],
           getValue: getValueFromValues
         };
+        peci.value_sets.none = {
+          regex: '(?:n)',
+          values: { n: 'none' },
+          examples: ['n'],
+          getValue: getValueFromValues
+        };
+        peci.value_sets.normal = {
+          regex: '(?:n)',
+          values: { n: 'normal' },
+          examples: ['n'],
+          getValue: getValueFromValues
+        };
 
         // KIND
-        peci.value_sets.position_kind = {
-          regex: '(?:s|a|f|r)',
-          values: { s: 'static', a: 'absolute', f: 'fixed', r: 'relative' },
-          examples: ['s', 'r'],
+        peci.value_sets.animation_direction = {
+          regex: '(?:c|b)',
+          values: { n: 'normal', r: 'reverse', a: 'alternate', ar: 'alternate-reverse' },
+          examples: ['n', 'ar'],
           getValue: getValueFromValues
         };
-        peci.value_sets.display_kind = {
-          regex: '(?:i|b|f|ib|if|it|li|ri|t)',
-          values: { i: 'inline', b: 'block', f: 'flex', ib: 'inline-block', if: 'inline-flex', it: 'inline-table', li: 'list-item', ri: 'run-in', t: 'table' },
-          examples: ['l', 'rr'],
-          getValue: getValueFromValues
-        };
-        peci.value_sets.overflow_kind = {
-          regex: '(?:h|o|s|v)',
-          values: { h: 'hidden', o: 'overlay', s: 'scroll', v: 'visible' },
-          examples: ['h', 'v'],
-          getValue: getValueFromValues
-        };
-        peci.value_sets.float_kind = {
-          regex: '(?:l|r)',
-          values: { l: 'left', r: 'right' },
-          examples: ['l', 'r'],
-          getValue: getValueFromValues
-        };
-        peci.value_sets.text_align_kind = {
-          regex: '(?:l|r|c|j)',
-          values: { l: 'left', r: 'right', c: 'center', j: 'justify' },
-          examples: ['l', 'j'],
-          getValue: getValueFromValues
-        };
-        peci.value_sets.transition_timing_function_kind = {
-          regex: '(?:l|e|ei|eo|eio|ss|se)',
-          values: { l: 'linear', e: 'ease', ei: 'ease-in', eo: 'ease-out', eio: 'ease-in-out', ss: 'step-start', se: 'step-end',  },
-          examples: ['l', 'se'],
+        peci.value_sets.box_sizing_kind = {
+          regex: '(?:c|b)',
+          values: { c: 'content-box', b: 'border-box' },
+          examples: ['c', 'b'],
           getValue: getValueFromValues
         };
         peci.value_sets.background_size_kind = {
@@ -107,16 +83,28 @@ require("./make.js");
           examples: ['cr', 'cn'],
           getValue: getValueFromValues
         };
+        peci.value_sets.display_kind = {
+          regex: '(?:i|b|f|ib|if|it|li|ri|t)',
+          values: { i: 'inline', b: 'block', f: 'flex', ib: 'inline-block', if: 'inline-flex', it: 'inline-table', li: 'list-item', ri: 'run-in', t: 'table' },
+          examples: ['l', 'rr'],
+          getValue: getValueFromValues
+        };
+        peci.value_sets.float_kind = {
+          regex: '(?:l|r)',
+          values: { l: 'left', r: 'right' },
+          examples: ['l', 'r'],
+          getValue: getValueFromValues
+        };
         peci.value_sets.font_size_kind = {
           regex: '(?:m|xxs|xs|s|l|xl|xxl|sr|lr)',
           values: { m: 'medium', xxs: 'xx-small', xs:'x-small', s:'small', l:'large', xl:'x-large', xxl:'xx-large', sr:'smaller', lr:'larger' },
           examples: ['m', 'lr'],
           getValue: getValueFromValues
         };
-        peci.value_sets.thick_kind = {
-          regex: '(?:m|tn|tk)',
-          values: { m: 'medium', tn: 'thin', tk:'thick' },
-          examples: ['m', 'tk'],
+        peci.value_sets.gradient_kind = {
+          regex: '(?:rl|rr|l|r)',
+          values: { l: 'linear-gradient', r: 'radial-gradient', rl: 'repeating-linear-gradient', rr: 'repeating-radial-gradient' },
+          examples: ['l', 'rr'],
           getValue: getValueFromValues
         };
         peci.value_sets.length_unit_kind = {
@@ -125,10 +113,64 @@ require("./make.js");
           examples: ['em', 'p'],
           getValue: getValueFromValues
         };
-        peci.value_sets.gradient_kind = {
+        peci.value_sets.overflow_kind = {
+          regex: '(?:h|o|s|v)',
+          values: { h: 'hidden', o: 'overlay', s: 'scroll', v: 'visible' },
+          examples: ['h', 'v'],
+          getValue: getValueFromValues
+        };
+        peci.value_sets.position_kind = {
+          regex: '(?:s|a|f|r)',
+          values: { s: 'static', a: 'absolute', f: 'fixed', r: 'relative' },
+          examples: ['s', 'r'],
+          getValue: getValueFromValues
+        };
+        peci.value_sets.text_overflow_kind = {
+          regex: '(?:c|e|s)',
+          values: { c: 'clip', e: 'ellipsis', s: 'string' },
+          examples: ['c', 's'],
+          getValue: getValueFromValues
+        };
+        peci.value_sets.text_align_kind = {
+          regex: '(?:l|r|c|j)',
+          values: { l: 'left', r: 'right', c: 'center', j: 'justify' },
+          examples: ['l', 'j'],
+          getValue: getValueFromValues
+        };
+        peci.value_sets.thick_kind = {
+          regex: '(?:m|tn|tk)',
+          values: { m: 'medium', tn: 'thin', tk:'thick' },
+          examples: ['m', 'tk'],
+          getValue: getValueFromValues
+        };
+        peci.value_sets.transition_timing_function_kind = {
+          regex: '(?:l|e|ei|eo|eio|ss|se)',
+          values: { l: 'linear', e: 'ease', ei: 'ease-in', eo: 'ease-out', eio: 'ease-in-out', ss: 'step-start', se: 'step-end',  },
+          examples: ['l', 'se'],
+          getValue: getValueFromValues
+        };
+        peci.value_sets.vertical_align_kind = {
           regex: '(?:rl|rr|l|r)',
-          values: { l: 'linear-gradient', r: 'radial-gradient', rl: 'repeating-linear-gradient', rr: 'repeating-radial-gradient' },
+          values: { be: 'baseline', sb: 'sub', sr: 'super', t: 'top', tt: 'text-top	', m: 'middle', b: 'bottom', tb: 'text-bottom' },
           examples: ['l', 'rr'],
+          getValue: getValueFromValues
+        };
+        peci.value_sets.visibility_kind = {
+          regex: '(?:v|h|c)',
+          values: { v: 'visible', h: 'hidden', c: 'collapse' },
+          examples: ['v', 'c'],
+          getValue: getValueFromValues
+        };
+        peci.value_sets.white_space_kind = {
+          regex: '(?:rl|rr|l|r)',
+          values: { n: 'normal', nw: 'nowrap', p: 'pre', pl: 'pre-line', pw: 'pre-wrap' },
+          examples: ['l', 'rr'],
+          getValue: getValueFromValues
+        };
+        peci.value_sets.word_break_kind = {
+          regex: '(?:n|b|k)',
+          values: { n: 'normal', b: 'break-all', k: 'keep-all' },
+          examples: ['n', 'k'],
           getValue: getValueFromValues
         };
 
@@ -517,24 +559,8 @@ require("./make.js");
       function initializePropertySets(){
         peci.property_sets = [
           {
-            properties: {
-              c: 'color', pc: 'placeholder',
-              bc:'background-color',
-              bo:'border-color', bo_t:'border-top-color', bo_b:'border-bottom-color', bo_l:'border-left-color', bo_r:'border-right-color'
-            },
-            value_sets: [peci.value_sets.rgba_color]
-          },{
             properties: { b:'background' },
             value_sets: [peci.value_sets.rgba_color, peci.value_sets.gradient, peci.value_sets.none, peci.value_sets.initial, peci.value_sets.inherit]
-          },{
-            properties: { p:'position' },
-            value_sets: [peci.value_sets.position_kind, peci.value_sets.initial, peci.value_sets.inherit]
-          },{
-            properties: { d:'display' },
-            value_sets: [peci.value_sets.display_kind, peci.value_sets.initial, peci.value_sets.inherit]
-          },{
-            properties: { o:'overflow', ox:'overflow-x', oy:'overflow-y' },
-            value_sets: [peci.value_sets.overflow_kind, peci.value_sets.auto, peci.value_sets.initial, peci.value_sets.inherit]
           },{
             properties: { bi:'background-image' },
             value_sets: [peci.value_sets.url, peci.value_sets.none, peci.value_sets.initial, peci.value_sets.inherit]
@@ -542,14 +568,84 @@ require("./make.js");
             properties: { bs:'box-shadow', ts:'text-shadow' },
             value_sets: [peci.value_sets.shadow]
           },{
-            properties: { o:'opacity' },
-            value_sets: [peci.value_sets.opacity]
+            properties: { bs:'box-sizing' },
+            value_sets: [peci.value_sets.box_sizing_kind, peci.value_sets.initial, peci.value_sets.inherit]
+          },{
+            properties: { bo:'border-width', bo_t:'border-top-width', bo_b:'border-bottom-width', bo_l:'border-left-width', bo_r:'border-right-width' },
+            value_sets: [peci.value_sets.length_calc, peci.value_sets.auto, peci.value_sets.initial, peci.value_sets.inherit, peci.value_sets.thick_kind]
+          },{
+            properties: { bs:'background-size' },
+            value_sets: [peci.value_sets.auto, peci.value_sets.length_calc_2D, peci.value_sets.background_size_kind, peci.value_sets.initial, peci.value_sets.inherit]
+          },{
+            properties: { bp:'background-position' },
+            value_sets: [peci.value_sets.direction_2D, peci.value_sets.length_calc_2D, peci.value_sets.initial, peci.value_sets.inherit]
+          },{
+            properties: {
+              c: 'color', pc: 'placeholder',
+              bc:'background-color',
+              bo:'border-color', bo_t:'border-top-color', bo_b:'border-bottom-color', bo_l:'border-left-color', bo_r:'border-right-color'
+            },
+            value_sets: [peci.value_sets.rgba_color]
+          },{
+            properties: { d:'display' },
+            value_sets: [peci.value_sets.display_kind, peci.value_sets.initial, peci.value_sets.inherit]
+          },{
+            properties: { p:'position' },
+            value_sets: [peci.value_sets.position_kind, peci.value_sets.initial, peci.value_sets.inherit]
           },{
             properties: { f:'float' },
             value_sets: [peci.value_sets.none, peci.value_sets.float_kind, peci.value_sets.initial, peci.value_sets.inherit]
           },{
+            properties: { f:'font-size' },
+            value_sets: [peci.value_sets.font_size_kind, peci.value_sets.length_calc, peci.value_sets.initial, peci.value_sets.inherit]
+          },{
             properties: { t:'text-align' },
             value_sets: [peci.value_sets.text_align_kind, peci.value_sets.initial, peci.value_sets.inherit]
+          },{
+            properties: { lh:'line-height' },
+            value_sets: [peci.value_sets.normal,  peci.value_sets.length_calc, peci.value_sets.initial, peci.value_sets.inherit]
+          },{
+            properties: { ls:'letter-spacing' },
+            value_sets: [peci.value_sets.normal, peci.value_sets.length_calc, peci.value_sets.initial, peci.value_sets.inherit]
+          },{
+            properties: { o:'opacity' },
+            value_sets: [peci.value_sets.opacity]
+          },{
+            properties: { o:'overflow', ox:'overflow-x', oy:'overflow-y' },
+            value_sets: [peci.value_sets.overflow_kind, peci.value_sets.auto, peci.value_sets.initial, peci.value_sets.inherit]
+          },{
+            properties: {
+              p:'padding', pb:'padding-bottom', pl:'padding-left', pr:'padding-right', pt:'padding-top',
+              bor:'border-radius', bor_tl:'border-top-left-radius', bor_tr:'border-top-right-radius', bor_bl:'border-bottom-left-radius', bor_br:'border-bottom-right-radius',
+            },
+            value_sets: [peci.value_sets.length_calc, peci.value_sets.initial, peci.value_sets.inherit]
+          },{
+            properties: { to:'text-overflow:' },
+            value_sets: [peci.value_sets.text_overflow_kind]
+          },{
+            properties: { tn:'transform' },
+            value_sets: [peci.value_sets.translate_length_calc_2D]
+          },{
+            properties: { tn:'transition-property' },
+            value_sets: [peci.value_sets.all, peci.value_sets.variables]
+          },{
+            properties: { tn:'transition-duration', tnd:'transition-delay', an:'animation-duration', and: 'animation-delay' },
+            value_sets: [peci.value_sets.second, peci.value_sets.millisecond, peci.value_sets.initial, peci.value_sets.inherit]
+          },{
+            properties: { tn:'transition-timing-function', an:'animation-timing-function' },
+            value_sets: [peci.value_sets.transition_timing_function_kind, peci.value_sets.initial, peci.value_sets.inherit]
+          },{
+            properties: { v:'visibility' },
+            value_sets: [peci.value_sets.visibility_kind, peci.value_sets.initial, peci.value_sets.inherit]
+          },{
+            properties: { v:'vertical-align' },
+            value_sets: [peci.value_sets.vertical_align_kind, peci.value_sets.length_calc, peci.value_sets.initial, peci.value_sets.inherit]
+          },{
+            properties: { ws:'white-space' },
+            value_sets: [peci.value_sets.white_space_kind, peci.value_sets.initial, peci.value_sets.inherit]
+          },{
+            properties: { wb:'word-break' },
+            value_sets: [peci.value_sets.white_break_kind, peci.value_sets.initial, peci.value_sets.inherit]
           },{
             properties: {
               w:'width', xw:'max-width', nw:'min-width', h:'height', xh:'max-height', nh:'min-height',
@@ -559,47 +655,8 @@ require("./make.js");
             },
             value_sets: [peci.value_sets.length_calc, peci.value_sets.auto, peci.value_sets.initial, peci.value_sets.inherit]
           },{
-            properties: { lh:'line-height' },
-            value_sets: [peci.value_sets.normal,  peci.value_sets.length_calc, peci.value_sets.initial, peci.value_sets.inherit]
-          },{
-            properties: { ls:'letter-spacing' },
-            value_sets: [peci.value_sets.normal, peci.value_sets.length_calc, peci.value_sets.initial, peci.value_sets.inherit]
-          },{
-            properties: {
-              p:'padding', pb:'padding-bottom', pl:'padding-left', pr:'padding-right', pt:'padding-top',
-              bor:'border-radius', bor_tl:'border-top-left-radius', bor_tr:'border-top-right-radius', bor_bl:'border-bottom-left-radius', bor_br:'border-bottom-right-radius',
-            },
-            value_sets: [peci.value_sets.length_calc, peci.value_sets.initial, peci.value_sets.inherit]
-          },{
-            properties: { f:'font-size' },
-            value_sets: [peci.value_sets.font_size_kind, peci.value_sets.length_calc, peci.value_sets.initial, peci.value_sets.inherit]
-          },{
-            properties: { bo:'border-width', bo_t:'border-top-width', bo_b:'border-bottom-width', bo_l:'border-left-width', bo_r:'border-right-width' },
-            value_sets: [peci.value_sets.length_calc, peci.value_sets.auto, peci.value_sets.initial, peci.value_sets.inherit, peci.value_sets.thick_kind]
-          },{
             properties: { z:'z-index' },
             value_sets: [peci.value_sets.auto, peci.value_sets.integer, peci.value_sets.initial, peci.value_sets.inherit]
-          },{
-            properties: { bs:'background-size' },
-            value_sets: [peci.value_sets.auto, peci.value_sets.length_calc_2D, peci.value_sets.background_size_kind, peci.value_sets.initial, peci.value_sets.inherit]
-          },{
-            properties: { bp:'background-position' },
-            value_sets: [peci.value_sets.direction_2D, peci.value_sets.length_calc_2D, peci.value_sets.initial, peci.value_sets.inherit]
-          },{
-            properties: { t:'transform' },
-            value_sets: [peci.value_sets.translate_length_calc_2D]
-          },{
-            properties: { tn:'transition-property' },
-            value_sets: [peci.value_sets.all, peci.value_sets.variables]
-          },{
-            properties: { tn:'transition-duration', tndy:'transition-delay' },
-            value_sets: [peci.value_sets.second, peci.value_sets.millisecond, peci.value_sets.initial, peci.value_sets.inherit]
-          },{
-            properties: { tn:'transition-timing-function' },
-            value_sets: [peci.value_sets.transition_timing_function_kind, peci.value_sets.initial, peci.value_sets.inherit]
-          },{
-            properties: { tn:'transition-timing-function' },
-            value_sets: [peci.value_sets.transition_timing_function_kind, peci.value_sets.initial, peci.value_sets.inherit]
           },{
             properties: {
               color: 'color', opacity: 'opacity',
