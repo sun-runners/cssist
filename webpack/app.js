@@ -1,4 +1,4 @@
-window.peci={};
+window.cssist={};
 require("./watch.js");
-// require('!style!css!./basic.css');
-peci.watch.start();
+require('!style!css!./cssist.css');
+cssist.watch.start();

@@ -1,6 +1,6 @@
 require("./convert.js");
 (function(){
-  peci.get = {
+  cssist.get = {
     css : function(class_name){
       if(!class_name){ return; }
       var class_name_pieces = class_name.match(/^([a-zA-Z\_]+)-((?:[a-zA-Z0-9\_]|(?:\-\-))*)(?:-([a-zA-Z]{1,2}))?(?:-((?:(?:NX|NH|X|N)[0-9]+)+))?$/);
@@ -9,8 +9,8 @@ require("./convert.js");
       if(class_name_pieces[2]) var class_value = class_name_pieces[2];
       if(class_name_pieces[3]) var class_event = class_name_pieces[3];
       if(class_name_pieces[4]) var class_mediaquery = class_name_pieces[4];
-      for(var i=0; i<peci.property_sets.length; i++){
-        property_set = peci.property_sets[i];
+      for(var i=0; i<cssist.property_sets.length; i++){
+        property_set = cssist.property_sets[i];
         if(property_set.properties[class_property]){
           var property = property_set.properties[class_property]
           for(var j=0; j<property_set.value_sets.length; j++){
@@ -22,21 +22,21 @@ require("./convert.js");
                 class:class_name,
                 property:property,
                 value:value,
-                event:peci.convert.eventCode2event(class_event),
+                event:cssist.convert.eventCode2event(class_event),
                 suffix:class_mediaquery
               };
               return css;
             }
           }
         }
-        // if(class_value.match('^('+peci.palette[i].match+')$')
-        //   && peci.palette[i].property[class_property]
-        //   && peci.palette[i].getValue(class_value)){
+        // if(class_value.match('^('+cssist.palette[i].match+')$')
+        //   && cssist.palette[i].property[class_property]
+        //   && cssist.palette[i].getValue(class_value)){
         //   var css = {
         //     class:class_name,
-        //     property:peci.palette[i].property[class_property],
-        //     value:peci.palette[i].getValue(class_value),
-        //     event:peci.convert.eventCode2event(class_event),
+        //     property:cssist.palette[i].property[class_property],
+        //     value:cssist.palette[i].getValue(class_value),
+        //     event:cssist.convert.eventCode2event(class_event),
         //     suffix:class_mediaquery
         //   };
         //   return css;
@@ -50,11 +50,11 @@ require("./convert.js");
       if(!(class_name_pieces && class_name_pieces && class_name_pieces[1] && class_name_pieces[2] ) ){ return; }
       if(class_name_pieces[1]) var class_property = class_name_pieces[1];
       if(class_name_pieces[2]) var class_value = class_name_pieces[2];
-      for(var i=0; i<peci.palette.length; i++){
-        if(class_value.match('^('+peci.palette[i].match+')$')
-          && peci.palette[i].property[class_property]
-          && peci.palette[i].getValue(class_value)){
-          return peci.palette[i].property[class_property];
+      for(var i=0; i<cssist.palette.length; i++){
+        if(class_value.match('^('+cssist.palette[i].match+')$')
+          && cssist.palette[i].property[class_property]
+          && cssist.palette[i].getValue(class_value)){
+          return cssist.palette[i].property[class_property];
         }
       }
     },

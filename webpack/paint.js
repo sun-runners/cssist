@@ -6,23 +6,23 @@ require("./make.js");
       var self = this;
       mutations.forEach(function(mutation) {
         var element = mutation.target;
-        if(element && element.lastClassName !== element.className && typeof element.className=='string') peci.paint.element(element);
+        if(element && element.lastClassName !== element.className && typeof element.className=='string') cssist.paint.element(element);
         element.lastClassName = element.className;
       });
     });
   }
-  peci.paint = {
+  cssist.paint = {
     element : function(element){
-			var class_names = peci.get.classes(element);
+			var class_names = cssist.get.classes(element);
       for(var i=0; i<class_names.length; i++){
         var class_name = class_names[i];
-        var peci_CLASSES = [];
-        if(!peci.classes) peci.classes = [];
-        if(peci.classes.indexOf(class_name)==-1){
-          peci.classes.push(class_name);
-          peci.make.class(class_name);
+        var cssist_CLASSES = [];
+        if(!cssist.classes) cssist.classes = [];
+        if(cssist.classes.indexOf(class_name)==-1){
+          cssist.classes.push(class_name);
+          cssist.make.class(class_name);
           if(i == class_names.length-1){
-            element.setAttribute('peci','');
+            element.setAttribute('cssist','');
           }
         }
       }
@@ -30,7 +30,7 @@ require("./make.js");
     rootElement : function(element){
       var self = this;
       if( element && typeof element === 'object' && element.nodeType && element.nodeType !== 8 && element.tagName ){
-  			var element_childen = element.querySelectorAll(':not([peci])');
+  			var element_childen = element.querySelectorAll(':not([cssist])');
   			self.element(element);
         if(mutationObserver){
           mutationObserver.observe(element, { attributes: true,  attributeFilter: ['class'] });
@@ -43,8 +43,8 @@ require("./make.js");
           }
       	}
         if(localStorage){
-          localStorage['peci_CSSES'] = JSON.stringify(peci.csses);
-          localStorage['peci_CLASSES'] = JSON.stringify(peci.classes);
+          localStorage['cssist_CSSES'] = JSON.stringify(cssist.csses);
+          localStorage['cssist_CLASSES'] = JSON.stringify(cssist.classes);
         }
   		}
     }

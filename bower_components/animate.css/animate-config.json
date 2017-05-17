@@ -82,7 +82,7 @@
     "rotateOutUpRight"
   ],
 
-  "specials": [
+  "scssistals": [
     "hinge",
     "rollIn",
     "rollOut"

@@ -1,5 +1,5 @@
 (function(){
-  peci.convert = {
+  cssist.convert = {
     eventCode2event : function(event_code){
       if(!(event_code && event_code.toLowerCase().match(/^ct|cy|p|kp|ku|h|f|a|me|mo|mm|md|mu|ml|mo|c|dc|w$/))) return;
       var events = { // CSS Pseudo-classes

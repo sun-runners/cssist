@@ -1,63 +1,63 @@
 require("./make.js");
 (function(){
-  peci.init = {
+  cssist.init = {
     settings : function(){
 
-      var VERSION = '1.1.60';
-      if( localStorage && localStorage['peci_VERSION'] && localStorage['peci_VERSION']==VERSION ){
-        peci.csses = JSON.parse(localStorage['peci_CSSES']);
-        peci.classes = JSON.parse(localStorage['peci_CLASSES']);
-        for(var suffix in peci.csses){
-          peci.make.sheet(suffix);
-          peci.styles[suffix].innerHTML = peci.csses[suffix];
+      var VERSION = '0.0.1';
+      if( localStorage && localStorage['cssist_VERSION'] && localStorage['cssist_VERSION']==VERSION ){
+        cssist.csses = JSON.parse(localStorage['cssist_CSSES']);
+        cssist.classes = JSON.parse(localStorage['cssist_CLASSES']);
+        for(var suffix in cssist.csses){
+          cssist.make.sheet(suffix);
+          cssist.styles[suffix].innerHTML = cssist.csses[suffix];
         }
       }
       else{
         if(localStorage){
-          localStorage['peci_VERSION'] = VERSION;
-          localStorage['peci_CSSES'] = null;
-          localStorage['peci_CLASSES'] = null;
+          localStorage['cssist_VERSION'] = VERSION;
+          localStorage['cssist_CSSES'] = null;
+          localStorage['cssist_CLASSES'] = null;
         }
       }
 
-      peci.value_sets = {}, peci.property_sets = {};
+      cssist.value_sets = {}, cssist.property_sets = {};
       function initializeValueSets(){
 
         var getValueFromValues = function(value){ return this.values[value]; }
         var getValueFromOriginalValue = function(value){ return value; }
 
         // CONSTANT
-        peci.value_sets.auto = {
+        cssist.value_sets.auto = {
           regex: '(?:a)',
           values: { a: 'auto' },
           examples: ['a'],
           getValue: getValueFromValues
         };
-        peci.value_sets.all = {
+        cssist.value_sets.all = {
           regex: '(?:a)',
           values: { a: 'all' },
           examples: ['a'],
           getValue: getValueFromValues
         };
-        peci.value_sets.initial = {
+        cssist.value_sets.initial = {
           regex: '(?:il)',
           values: { il: 'initial' },
           examples: ['il'],
           getValue: getValueFromValues
         };
-        peci.value_sets.inherit = {
+        cssist.value_sets.inherit = {
           regex: '(?:it)',
           values: { it: 'inherit' },
           examples: ['it'],
           getValue: getValueFromValues
         };
-        peci.value_sets.none = {
+        cssist.value_sets.none = {
           regex: '(?:n)',
           values: { n: 'none' },
           examples: ['n'],
           getValue: getValueFromValues
         };
-        peci.value_sets.normal = {
+        cssist.value_sets.normal = {
           regex: '(?:n)',
           values: { n: 'normal' },
           examples: ['n'],
@@ -65,109 +65,109 @@ require("./make.js");
         };
 
         // KIND
-        peci.value_sets.animation_direction = {
+        cssist.value_sets.animation_direction = {
           regex: '(?:c|b)',
           values: { n: 'normal', r: 'reverse', a: 'alternate', ar: 'alternate-reverse' },
           examples: ['n', 'ar'],
           getValue: getValueFromValues
         };
-        peci.value_sets.box_sizing_kind = {
+        cssist.value_sets.box_sizing_kind = {
           regex: '(?:c|b)',
           values: { c: 'content-box', b: 'border-box' },
           examples: ['c', 'b'],
           getValue: getValueFromValues
         };
-        peci.value_sets.background_size_kind = {
+        cssist.value_sets.background_size_kind = {
           regex: '(?:cr|cn)',
           values: { cr: 'cover', cn: 'contain' },
           examples: ['cr', 'cn'],
           getValue: getValueFromValues
         };
-        peci.value_sets.display_kind = {
+        cssist.value_sets.display_kind = {
           regex: '(?:i|b|f|ib|if|it|li|ri|t)',
           values: { i: 'inline', b: 'block', f: 'flex', ib: 'inline-block', if: 'inline-flex', it: 'inline-table', li: 'list-item', ri: 'run-in', t: 'table' },
           examples: ['l', 'rr'],
           getValue: getValueFromValues
         };
-        peci.value_sets.float_kind = {
+        cssist.value_sets.float_kind = {
           regex: '(?:l|r)',
           values: { l: 'left', r: 'right' },
           examples: ['l', 'r'],
           getValue: getValueFromValues
         };
-        peci.value_sets.font_size_kind = {
+        cssist.value_sets.font_size_kind = {
           regex: '(?:m|xxs|xs|s|l|xl|xxl|sr|lr)',
           values: { m: 'medium', xxs: 'xx-small', xs:'x-small', s:'small', l:'large', xl:'x-large', xxl:'xx-large', sr:'smaller', lr:'larger' },
           examples: ['m', 'lr'],
           getValue: getValueFromValues
         };
-        peci.value_sets.gradient_kind = {
+        cssist.value_sets.gradient_kind = {
           regex: '(?:rl|rr|l|r)',
           values: { l: 'linear-gradient', r: 'radial-gradient', rl: 'repeating-linear-gradient', rr: 'repeating-radial-gradient' },
           examples: ['l', 'rr'],
           getValue: getValueFromValues
         };
-        peci.value_sets.length_unit_kind = {
+        cssist.value_sets.length_unit_kind = {
           regex: '(?:em|ex|ch|rem|vw|vh|vmax|vmin|cm|mm|in|px|pt|pc|p|n)',
           values: { em: 'em', ex: 'ex', ch: 'ch', rem: 'rem', vw:'vw' , vh: 'vh', vmax:'vmax', vmin:'vmin', cm:'cm', mm:'mm', in:'in', px:'px', pt:'pt', pc:'pc', p:'%', n:'' },
           examples: ['em', 'p'],
           getValue: getValueFromValues
         };
-        peci.value_sets.overflow_kind = {
+        cssist.value_sets.overflow_kind = {
           regex: '(?:h|o|s|v)',
           values: { h: 'hidden', o: 'overlay', s: 'scroll', v: 'visible' },
           examples: ['h', 'v'],
           getValue: getValueFromValues
         };
-        peci.value_sets.position_kind = {
+        cssist.value_sets.position_kind = {
           regex: '(?:s|a|f|r)',
           values: { s: 'static', a: 'absolute', f: 'fixed', r: 'relative' },
           examples: ['s', 'r'],
           getValue: getValueFromValues
         };
-        peci.value_sets.text_overflow_kind = {
+        cssist.value_sets.text_overflow_kind = {
           regex: '(?:c|e|s)',
           values: { c: 'clip', e: 'ellipsis', s: 'string' },
           examples: ['c', 's'],
           getValue: getValueFromValues
         };
-        peci.value_sets.text_align_kind = {
+        cssist.value_sets.text_align_kind = {
           regex: '(?:l|r|c|j)',
           values: { l: 'left', r: 'right', c: 'center', j: 'justify' },
           examples: ['l', 'j'],
           getValue: getValueFromValues
         };
-        peci.value_sets.thick_kind = {
+        cssist.value_sets.thick_kind = {
           regex: '(?:m|tn|tk)',
           values: { m: 'medium', tn: 'thin', tk:'thick' },
           examples: ['m', 'tk'],
           getValue: getValueFromValues
         };
-        peci.value_sets.transition_timing_function_kind = {
+        cssist.value_sets.transition_timing_function_kind = {
           regex: '(?:l|e|ei|eo|eio|ss|se)',
           values: { l: 'linear', e: 'ease', ei: 'ease-in', eo: 'ease-out', eio: 'ease-in-out', ss: 'step-start', se: 'step-end',  },
           examples: ['l', 'se'],
           getValue: getValueFromValues
         };
-        peci.value_sets.vertical_align_kind = {
+        cssist.value_sets.vertical_align_kind = {
           regex: '(?:rl|rr|l|r)',
           values: { be: 'baseline', sb: 'sub', sr: 'super', t: 'top', tt: 'text-top	', m: 'middle', b: 'bottom', tb: 'text-bottom' },
           examples: ['l', 'rr'],
           getValue: getValueFromValues
         };
-        peci.value_sets.visibility_kind = {
+        cssist.value_sets.visibility_kind = {
           regex: '(?:v|h|c)',
           values: { v: 'visible', h: 'hidden', c: 'collapse' },
           examples: ['v', 'c'],
           getValue: getValueFromValues
         };
-        peci.value_sets.white_space_kind = {
+        cssist.value_sets.white_space_kind = {
           regex: '(?:rl|rr|l|r)',
           values: { n: 'normal', nw: 'nowrap', p: 'pre', pl: 'pre-line', pw: 'pre-wrap' },
           examples: ['l', 'rr'],
           getValue: getValueFromValues
         };
-        peci.value_sets.word_break_kind = {
+        cssist.value_sets.word_break_kind = {
           regex: '(?:n|b|k)',
           values: { n: 'normal', b: 'break-all', k: 'keep-all' },
           examples: ['n', 'k'],
@@ -175,74 +175,74 @@ require("./make.js");
         };
 
         // NUMBER
-        peci.value_sets.integer = {
+        cssist.value_sets.integer = {
           regex: '(?:_?[0-9]+)',
           examples: ['_100', '100'],
           getValue: function(value){ return value.replace(/_/g,'-'); }
         };
-        peci.value_sets.integer_0 = {
+        cssist.value_sets.integer_0 = {
           regex: '(?:[0-9]+)',
           examples: ['100'],
           getValue: function(value){ return Math.abs(value); }
         };
-        peci.value_sets.integer_0_12 = {
+        cssist.value_sets.integer_0_12 = {
           regex: '(?:10|11|12|[0-9])',
           examples: ['0', '12'],
           getValue: function(value){ return Math.floor(value)%13; }
         };
-        peci.value_sets.integer_0_255 = {
+        cssist.value_sets.integer_0_255 = {
           regex: '(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:[01]?[0-9]?[0-9]))',
           examples: ['0', '255'],
           getValue: function(value){ return Math.floor(value)%256; }
         };
-        peci.value_sets.integer_3digits = {
+        cssist.value_sets.integer_3digits = {
           regex: '(?:_?[0-9]{0,3})',
           examples: ['_999', '999'],
-          getValue: function(value){ return Math.floor(peci.value_sets.integer.getValue(value))%1000; }
+          getValue: function(value){ return Math.floor(cssist.value_sets.integer.getValue(value))%1000; }
         };
-        peci.value_sets.float = {
-          regex: peci.value_sets.integer.regex+'(?:o'+peci.value_sets.integer_0.regex+')?',
+        cssist.value_sets.float = {
+          regex: cssist.value_sets.integer.regex+'(?:o'+cssist.value_sets.integer_0.regex+')?',
           examples: ['0', '7o777', '_7o777'],
           getValue: function(value){ return value.replace(/o/g, '.'); }
         };
-        peci.value_sets.float_0_100 = {
+        cssist.value_sets.float_0_100 = {
           regex: '(?:100|[0-9]?[0-9])(?:o[0-9]+)?',
           examples: ['0', '10', '100', '7o777'],
-          getValue: function(value){ return peci.value_sets.float.getValue(value.replace(/_/g,'-'))%101; }
+          getValue: function(value){ return cssist.value_sets.float.getValue(value.replace(/_/g,'-'))%101; }
         };
-        peci.value_sets.float_0 = {
-          regex: peci.value_sets.integer.regex+'(?:o'+peci.value_sets.integer_0.regex+')?',
+        cssist.value_sets.float_0 = {
+          regex: cssist.value_sets.integer.regex+'(?:o'+cssist.value_sets.integer_0.regex+')?',
           examples: ['0', '7o777'],
-          getValue: function(value){ return peci.value_sets.float.getValue(value.replace(/_/g,'-')); }
+          getValue: function(value){ return cssist.value_sets.float.getValue(value.replace(/_/g,'-')); }
         };
 
         // OPACITY
-        peci.value_sets.opacity = {
-          regex: peci.value_sets.float_0_100.regex,
+        cssist.value_sets.opacity = {
+          regex: cssist.value_sets.float_0_100.regex,
           examples: ['0', '50o50', '100'],
-          getValue: function(value){ return peci.value_sets.float_0_100.getValue(value)*0.01; }
+          getValue: function(value){ return cssist.value_sets.float_0_100.getValue(value)*0.01; }
         };
 
         // LENGTH
-        peci.value_sets.length = {
-          regex: peci.value_sets.float_0.regex+'(?:'+peci.value_sets.length_unit_kind.regex+')?',
+        cssist.value_sets.length = {
+          regex: cssist.value_sets.float_0.regex+'(?:'+cssist.value_sets.length_unit_kind.regex+')?',
           examples: ['0px', '50p', '50', '100vw', '3n'],
           getValue: function(value){
-            var regex = new RegExp('('+peci.value_sets.float_0.regex+')('+peci.value_sets.length_unit_kind.regex+')?');
+            var regex = new RegExp('('+cssist.value_sets.float_0.regex+')('+cssist.value_sets.length_unit_kind.regex+')?');
             var matches = value.match(regex);
             var result = '';
-            if(peci.value_sets.float_0.getValue(matches[1])){ // 길이 값
-              result = peci.value_sets.float_0.getValue(matches[1]);
+            if(cssist.value_sets.float_0.getValue(matches[1])){ // 길이 값
+              result = cssist.value_sets.float_0.getValue(matches[1]);
             }
             if(matches[2]){ // 길이 단위
-              result += peci.value_sets.length_unit_kind.getValue(matches[2]);
+              result += cssist.value_sets.length_unit_kind.getValue(matches[2]);
             } else {
               result += '%';
             }
             return result;
           }
         };
-        peci.value_sets.calc = {
+        cssist.value_sets.calc = {
           regex: '(?:__|_|M|D)',
           examples: ['__','_','D','M'],
           getValue: function(value){
@@ -254,21 +254,21 @@ require("./make.js");
             return result;
           }
         };
-        peci.value_sets.length_calc = {
-          regex: '(?:'+peci.value_sets.calc.regex+'?'+peci.value_sets.length.regex+')+',
+        cssist.value_sets.length_calc = {
+          regex: '(?:'+cssist.value_sets.calc.regex+'?'+cssist.value_sets.length.regex+')+',
           examples: ['0', '50', '100_100px', '100M2_100vwD3__100cmD4_100pxD5_100M6_100vwD7__100cmD8_100pxD9'],
           getValue: function(value){
-            var regex = new RegExp('('+peci.value_sets.calc.regex+'?'+peci.value_sets.length.regex+')', 'g');
+            var regex = new RegExp('('+cssist.value_sets.calc.regex+'?'+cssist.value_sets.length.regex+')', 'g');
             var matches = value.match(regex);
             var result = 'calc( ';
             for(var i=0; i<matches.length; i++){
-              var regex_each = new RegExp('('+peci.value_sets.calc.regex+')?('+peci.value_sets.length.regex+')');
+              var regex_each = new RegExp('('+cssist.value_sets.calc.regex+')?('+cssist.value_sets.length.regex+')');
               var matches_each = matches[i].match(regex_each);
               if(matches_each[1]){
-                result += peci.value_sets.calc.getValue(matches_each[1]);
+                result += cssist.value_sets.calc.getValue(matches_each[1]);
               }
               if(!(matches_each[1]=='D'||matches_each[1]=='M')&&matches_each[2]){
-                result += peci.value_sets.length.getValue(matches_each[2]);
+                result += cssist.value_sets.length.getValue(matches_each[2]);
               } else{
                 result += matches_each[2];
               }
@@ -277,23 +277,23 @@ require("./make.js");
             return result;
           }
         };
-        peci.value_sets.length_calc_2D = {
-          regex: '(?:[X|Y]'+peci.value_sets.length_calc.regex+')+',
+        cssist.value_sets.length_calc_2D = {
+          regex: '(?:[X|Y]'+cssist.value_sets.length_calc.regex+')+',
           examples: ['X100pxY50px', 'X100_10pxY50pxM10', 'X100M2_100vwD3__100cmD4_100pxD5_100M6_100vwD7__100cmD8_100pxD9'],
           getValue: function(value){
             var result = '';
-            var regex_X = new RegExp('X('+peci.value_sets.length_calc.regex+')');
+            var regex_X = new RegExp('X('+cssist.value_sets.length_calc.regex+')');
             var matches_X = value.match(regex_X);
             if(matches_X){
-              result += peci.value_sets.length_calc.getValue(matches_X[0]);
+              result += cssist.value_sets.length_calc.getValue(matches_X[0]);
             } else {
               result += 0;
             }
             result += ' ';
-            var regex_Y = new RegExp('Y('+peci.value_sets.length_calc.regex+')');
+            var regex_Y = new RegExp('Y('+cssist.value_sets.length_calc.regex+')');
             var matches_Y = value.match(regex_Y);
             if(matches_Y){
-              result += peci.value_sets.length_calc.getValue(matches_Y[0]);
+              result += cssist.value_sets.length_calc.getValue(matches_Y[0]);
             } else {
               result += 0;
             }
@@ -302,53 +302,53 @@ require("./make.js");
         };
 
         // DEGREE
-        peci.value_sets.degree = {
+        cssist.value_sets.degree = {
           regex: '(?:_?[0-9]+)(?:d)',
           examples: ['180d', '_90d'],
           getValue: function(value){ return value.replace(/d/g, 'deg'); }
         };
 
         // TIME
-        peci.value_sets.hour = {
-          regex: peci.value_sets.integer_0.regex+'h',
+        cssist.value_sets.hour = {
+          regex: cssist.value_sets.integer_0.regex+'h',
           examples: ['0h', '100h'],
           getValue: getValueFromOriginalValue
         };
-        peci.value_sets.hour_0_12 = {
-          regex: peci.value_sets.integer_0_12.regex+'h',
+        cssist.value_sets.hour_0_12 = {
+          regex: cssist.value_sets.integer_0_12.regex+'h',
           examples: ['0h', '12h'],
           getValue: getValueFromOriginalValue
         };
-        peci.value_sets.second = {
-          regex: peci.value_sets.float_0.regex+'s',
+        cssist.value_sets.second = {
+          regex: cssist.value_sets.float_0.regex+'s',
           examples: ['0s', '100s'],
           getValue: getValueFromOriginalValue
         };
-        peci.value_sets.millisecond = {
-          regex: peci.value_sets.float_0.regex+'ms',
+        cssist.value_sets.millisecond = {
+          regex: cssist.value_sets.float_0.regex+'ms',
           examples: ['0ms', '100ms'],
           getValue: getValueFromOriginalValue
         };
 
         // TRANSFORM
-        peci.value_sets.translate_length_calc_2D = {
-          regex: '(?:[X|Y]'+peci.value_sets.length_calc.regex+')+',
+        cssist.value_sets.translate_length_calc_2D = {
+          regex: '(?:[X|Y]'+cssist.value_sets.length_calc.regex+')+',
           examples: ['X100pxY50px', 'X100_10pxY50pxM10'],
           examples: ['X100pxY50px', 'X100_10pxY50pxM10', 'X100M2_100vwD3__100cmD4_100pxD5_100M6_100vwD7__100cmD8_100pxD9'],
           getValue: function(value){
             var result = 'translate(';
-            var regex_X = new RegExp('X('+peci.value_sets.length_calc.regex+')');
+            var regex_X = new RegExp('X('+cssist.value_sets.length_calc.regex+')');
             var matches_X = value.match(regex_X);
             if(matches_X){
-              result += peci.value_sets.length_calc.getValue(matches_X[0]);
+              result += cssist.value_sets.length_calc.getValue(matches_X[0]);
             } else {
               result += 0;
             }
             result += ', ';
-            var regex_Y = new RegExp('Y('+peci.value_sets.length_calc.regex+')');
+            var regex_Y = new RegExp('Y('+cssist.value_sets.length_calc.regex+')');
             var matches_Y = value.match(regex_Y);
             if(matches_Y){
-              result += peci.value_sets.length_calc.getValue(matches_Y[0]);
+              result += cssist.value_sets.length_calc.getValue(matches_Y[0]);
             } else {
               result += 0;
             }
@@ -358,13 +358,13 @@ require("./make.js");
         };
 
         // DIRECTION
-        peci.value_sets.direction = {
+        cssist.value_sets.direction = {
           regex: '(?:l|r|t|b|c)',
           values: { l: 'left', r: 'left', t: 'top', b: 'bottom', c: 'center' },
           examples: ['l', 'c'],
           getValue: getValueFromValues
         };
-        peci.value_sets.direction_2D = {
+        cssist.value_sets.direction_2D = {
           regex: '(?:lt|lc|lb|rt|rc|rb|ct|cc|cb)',
           values: { lt: 'left top', lc: 'left center', lb: 'left bottom', rt: 'right top', rc: 'right center', rb: 'right bottom', ct: 'center top', cc: 'center center', cb: 'center bottom' },
           examples: ['lt', 'cc'],
@@ -372,7 +372,7 @@ require("./make.js");
         };
 
         // COLOR
-        peci.value_sets.hex_color = {
+        cssist.value_sets.hex_color = {
           regex: '(?:[0-9a-fA-F]{6})',
           examples: ['000000', 'aaaaaa', 'FFFFFF'],
           getValue: function(value){
@@ -392,7 +392,7 @@ require("./make.js");
             return result;
           }
         };
-        peci.value_sets.google_color = {
+        cssist.value_sets.google_color = {
           regex: '(?:rd|pk|pe|dp|io|be|lb|cn|tl|gn|lg|le|yw|ar|oe|de|bn|gy|by|bk|we)(?:[1-9]00|50)?',
           values: {
             rd:'F44336', rd50: 'FFEBEE', rd100: 'FFCDD2', rd200: 'EF9A9A', rd300: 'E57373', rd400: 'EF5350', rd500: 'F44336', rd600: 'E53935', rd700: 'D32F2F', rd800: 'C62828', rd900: 'B71C1C', //Red
@@ -419,14 +419,14 @@ require("./make.js");
           },
           examples: ['yw', 'rd500'],
           getValue: function(value){
-            return peci.value_sets.hex_color.getValue(this.values[value]);
+            return cssist.value_sets.hex_color.getValue(this.values[value]);
           },
           getObject: function(value){
-            return peci.value_sets.hex_color.getObject(this.values[value]);
+            return cssist.value_sets.hex_color.getObject(this.values[value]);
           }
         };
-        peci.value_sets.rgb_color = {
-          regex: peci.value_sets.integer_0_255.regex+'(?:_'+peci.value_sets.integer_0_255.regex+'){2}',
+        cssist.value_sets.rgb_color = {
+          regex: cssist.value_sets.integer_0_255.regex+'(?:_'+cssist.value_sets.integer_0_255.regex+'){2}',
           examples: ['0_0_0', '10_10_10', '100_100_100', '255_255_255'],
           getValue: function(value){
             splits = value.split('_');
@@ -447,31 +447,31 @@ require("./make.js");
             return result;
           }
         };
-        peci.value_sets.rgba_color = {
-          regex: '(?:'+peci.value_sets.google_color.regex+'|'+peci.value_sets.hex_color.regex+'|'+peci.value_sets.rgb_color.regex+')'+'(?:_'+peci.value_sets.opacity.regex+')?',
+        cssist.value_sets.rgba_color = {
+          regex: '(?:'+cssist.value_sets.google_color.regex+'|'+cssist.value_sets.hex_color.regex+'|'+cssist.value_sets.rgb_color.regex+')'+'(?:_'+cssist.value_sets.opacity.regex+')?',
           examples: ['rd_0','yw500_25','123456_50', 'abcDEF_75', '255_255_255_100','255_255_255'],
           getValue: function(value){
-            var regex = new RegExp('(?:('+peci.value_sets.google_color.regex+')|('+peci.value_sets.hex_color.regex+')|('+peci.value_sets.rgb_color.regex+'))'+'(?:_('+peci.value_sets.opacity.regex+'))?');
+            var regex = new RegExp('(?:('+cssist.value_sets.google_color.regex+')|('+cssist.value_sets.hex_color.regex+')|('+cssist.value_sets.rgb_color.regex+'))'+'(?:_('+cssist.value_sets.opacity.regex+'))?');
             var matches = value.match(regex);
             var object_rgb;
             var opacity;
             if(matches[1]){
-              var regex_each = new RegExp('('+peci.value_sets.google_color.regex+')(?:_('+peci.value_sets.opacity.regex+'))?');
+              var regex_each = new RegExp('('+cssist.value_sets.google_color.regex+')(?:_('+cssist.value_sets.opacity.regex+'))?');
               var matches_each = value.match(regex_each);
-              object_rgb = peci.value_sets.google_color.getObject(matches_each[1]);
-              if(matches_each[2]) opacity = peci.value_sets.opacity.getValue(matches_each[2]);
+              object_rgb = cssist.value_sets.google_color.getObject(matches_each[1]);
+              if(matches_each[2]) opacity = cssist.value_sets.opacity.getValue(matches_each[2]);
             }
             else if(matches[2]){
-              var regex_each = new RegExp('('+peci.value_sets.hex_color.regex+')(?:_('+peci.value_sets.opacity.regex+'))?');
+              var regex_each = new RegExp('('+cssist.value_sets.hex_color.regex+')(?:_('+cssist.value_sets.opacity.regex+'))?');
               var matches_each = value.match(regex_each);
-              object_rgb = peci.value_sets.hex_color.getObject(matches_each[1]);
-              if(matches_each[2]) opacity = peci.value_sets.opacity.getValue(matches_each[2]);
+              object_rgb = cssist.value_sets.hex_color.getObject(matches_each[1]);
+              if(matches_each[2]) opacity = cssist.value_sets.opacity.getValue(matches_each[2]);
             }
             else if(matches[3]){
-              var regex_each = new RegExp('('+peci.value_sets.rgb_color.regex+')(?:_('+peci.value_sets.opacity.regex+'))?');
+              var regex_each = new RegExp('('+cssist.value_sets.rgb_color.regex+')(?:_('+cssist.value_sets.opacity.regex+'))?');
               var matches_each = value.match(regex_each);
-              object_rgb = peci.value_sets.rgb_color.getObject(matches_each[1]);
-              if(matches_each[2]) opacity = peci.value_sets.opacity.getValue(matches_each[2]);
+              object_rgb = cssist.value_sets.rgb_color.getObject(matches_each[1]);
+              if(matches_each[2]) opacity = cssist.value_sets.opacity.getValue(matches_each[2]);
             }
             if(matches_each[2]){
               return 'rgba('+object_rgb.red+','+object_rgb.green+','+object_rgb.blue+','+opacity+')';
@@ -482,38 +482,38 @@ require("./make.js");
         };
 
         // GRADIENT
-        peci.value_sets.gradient = {
-          regex: '(?:'+peci.value_sets.gradient_kind.regex+'_)?'+'(?:'+peci.value_sets.degree.regex+'|'+peci.value_sets.hour.regex+')'+'(?:_'+peci.value_sets.rgba_color.regex+'){2,}',
+        cssist.value_sets.gradient = {
+          regex: '(?:'+cssist.value_sets.gradient_kind.regex+'_)?'+'(?:'+cssist.value_sets.degree.regex+'|'+cssist.value_sets.hour.regex+')'+'(?:_'+cssist.value_sets.rgba_color.regex+'){2,}',
           examples: ['l_30d_rd_oe_yw_gn_be_io_pe', 'rr_1h_000000_50_FFFFFF_50'],
           getValue: function(value){ return value; }
         };
 
         // SHADOW
-        peci.value_sets.shadow = {
-          regex: peci.value_sets.integer_3digits.regex+'_'+peci.value_sets.integer_3digits.regex+'(?:_'+peci.value_sets.integer_3digits.regex+')?'+'(?:_'+peci.value_sets.rgba_color.regex+')',
+        cssist.value_sets.shadow = {
+          regex: cssist.value_sets.integer_3digits.regex+'_'+cssist.value_sets.integer_3digits.regex+'(?:_'+cssist.value_sets.integer_3digits.regex+')?'+'(?:_'+cssist.value_sets.rgba_color.regex+')',
           examples: ['2_2_bk_30', '2_2_2_000000_50'],
           getValue: function(value){ return value; }
         };
 
         // URL
-        peci.value_sets.file_name = {
+        cssist.value_sets.file_name = {
           regex: '[a-zA-Z0-9_-]+',
           examples: ['aA0_zZ9'],
           getValue: function(value){ return value; }
         };
-        peci.value_sets.image_extension = {
+        cssist.value_sets.image_extension = {
           regex: '(?:png|jpg|gif|PNG|JPG|GIF)',
           examples: ['png','GIF'],
           getValue: function(value){ return value; }
         };
-        peci.value_sets.image_url = {
-          regex: peci.value_sets.file_name.regex+'([__]'+peci.value_sets.file_name.regex+')*'+'_'+peci.value_sets.image_extension.regex,
+        cssist.value_sets.image_url = {
+          regex: cssist.value_sets.file_name.regex+'([__]'+cssist.value_sets.file_name.regex+')*'+'_'+cssist.value_sets.image_extension.regex,
           examples: ['images__image_png'],
           getValue: function(value){ return value; }
         };
 
         // VARIABLE
-        peci.value_sets.variable = {
+        cssist.value_sets.variable = {
           regex: '(?:[a-z]+)(?:[A-Z][a-z]+)*',
           examples: ['linear','ease','easeIn','easeOut','easeInOut'],
           getValue: function(value){
@@ -523,15 +523,15 @@ require("./make.js");
             return result;
           }
         };
-        peci.value_sets.variables = {
-          regex: peci.value_sets.variable.regex+'(?:_'+peci.value_sets.variable.regex+')*',
+        cssist.value_sets.variables = {
+          regex: cssist.value_sets.variable.regex+'(?:_'+cssist.value_sets.variable.regex+')*',
           examples: ['width_backgroundColor'],
           getValue: function(value){
             var splits = value.split('_');
             var result = '';
             for(var i=0; i<splits.length; i++){
               if(result.length>=1){ result += ' ' }
-              result += peci.value_sets.variable.getValue(splits[i]);
+              result += cssist.value_sets.variable.getValue(splits[i]);
             }
             return result;
           }
@@ -539,15 +539,15 @@ require("./make.js");
 
       };
       function testValueSets(){
-        for(var prop in peci.value_sets){
-          var regex = new RegExp('^'+peci.value_sets[prop].regex+'$');
-          if(peci.value_sets[prop].examples){
-            for(var i=0; i<peci.value_sets[prop].examples.length; i++){
-              var matches = peci.value_sets[prop].examples[i].match(regex);
-              if(!(matches&&matches.input==matches[0])||peci.value_sets[prop].test){
+        for(var prop in cssist.value_sets){
+          var regex = new RegExp('^'+cssist.value_sets[prop].regex+'$');
+          if(cssist.value_sets[prop].examples){
+            for(var i=0; i<cssist.value_sets[prop].examples.length; i++){
+              var matches = cssist.value_sets[prop].examples[i].match(regex);
+              if(!(matches&&matches.input==matches[0])||cssist.value_sets[prop].test){
                 console.log('\n');
-                console.log(prop, regex, peci.value_sets[prop].examples[i], matches);
-                if(matches) console.log(peci.value_sets[prop].getValue(matches[0]));
+                console.log(prop, regex, cssist.value_sets[prop].examples[i], matches);
+                if(matches) console.log(cssist.value_sets[prop].getValue(matches[0]));
               }
             }
           }
@@ -557,95 +557,95 @@ require("./make.js");
       // testValueSets();
 
       function initializePropertySets(){
-        peci.property_sets = [
+        cssist.property_sets = [
           {
             properties: { b:'background' },
-            value_sets: [peci.value_sets.rgba_color, peci.value_sets.gradient, peci.value_sets.none, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.rgba_color, cssist.value_sets.gradient, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { bi:'background-image' },
-            value_sets: [peci.value_sets.url, peci.value_sets.none, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.url, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { bs:'box-shadow', ts:'text-shadow' },
-            value_sets: [peci.value_sets.shadow]
+            value_sets: [cssist.value_sets.shadow]
           },{
             properties: { bs:'box-sizing' },
-            value_sets: [peci.value_sets.box_sizing_kind, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.box_sizing_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { bo:'border-width', bo_t:'border-top-width', bo_b:'border-bottom-width', bo_l:'border-left-width', bo_r:'border-right-width' },
-            value_sets: [peci.value_sets.length_calc, peci.value_sets.auto, peci.value_sets.initial, peci.value_sets.inherit, peci.value_sets.thick_kind]
+            value_sets: [cssist.value_sets.length_calc, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit, cssist.value_sets.thick_kind]
           },{
             properties: { bs:'background-size' },
-            value_sets: [peci.value_sets.auto, peci.value_sets.length_calc_2D, peci.value_sets.background_size_kind, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.auto, cssist.value_sets.length_calc_2D, cssist.value_sets.background_size_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { bp:'background-position' },
-            value_sets: [peci.value_sets.direction_2D, peci.value_sets.length_calc_2D, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.direction_2D, cssist.value_sets.length_calc_2D, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: {
               c: 'color', pc: 'placeholder',
               bc:'background-color',
               bo:'border-color', bo_t:'border-top-color', bo_b:'border-bottom-color', bo_l:'border-left-color', bo_r:'border-right-color'
             },
-            value_sets: [peci.value_sets.rgba_color]
+            value_sets: [cssist.value_sets.rgba_color]
           },{
             properties: { d:'display' },
-            value_sets: [peci.value_sets.display_kind, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.display_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { p:'position' },
-            value_sets: [peci.value_sets.position_kind, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.position_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { f:'float' },
-            value_sets: [peci.value_sets.none, peci.value_sets.float_kind, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.none, cssist.value_sets.float_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { f:'font-size' },
-            value_sets: [peci.value_sets.font_size_kind, peci.value_sets.length_calc, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.font_size_kind, cssist.value_sets.length_calc, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { t:'text-align' },
-            value_sets: [peci.value_sets.text_align_kind, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.text_align_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { lh:'line-height' },
-            value_sets: [peci.value_sets.normal,  peci.value_sets.length_calc, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.normal,  cssist.value_sets.length_calc, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { ls:'letter-spacing' },
-            value_sets: [peci.value_sets.normal, peci.value_sets.length_calc, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.normal, cssist.value_sets.length_calc, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { o:'opacity' },
-            value_sets: [peci.value_sets.opacity]
+            value_sets: [cssist.value_sets.opacity]
           },{
             properties: { o:'overflow', ox:'overflow-x', oy:'overflow-y' },
-            value_sets: [peci.value_sets.overflow_kind, peci.value_sets.auto, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.overflow_kind, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: {
               p:'padding', pb:'padding-bottom', pl:'padding-left', pr:'padding-right', pt:'padding-top',
               bor:'border-radius', bor_tl:'border-top-left-radius', bor_tr:'border-top-right-radius', bor_bl:'border-bottom-left-radius', bor_br:'border-bottom-right-radius',
             },
-            value_sets: [peci.value_sets.length_calc, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.length_calc, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { to:'text-overflow:' },
-            value_sets: [peci.value_sets.text_overflow_kind]
+            value_sets: [cssist.value_sets.text_overflow_kind]
           },{
             properties: { tn:'transform' },
-            value_sets: [peci.value_sets.translate_length_calc_2D]
+            value_sets: [cssist.value_sets.translate_length_calc_2D]
           },{
             properties: { tn:'transition-property' },
-            value_sets: [peci.value_sets.all, peci.value_sets.variables]
+            value_sets: [cssist.value_sets.all, cssist.value_sets.variables]
           },{
             properties: { tn:'transition-duration', tnd:'transition-delay', an:'animation-duration', and: 'animation-delay' },
-            value_sets: [peci.value_sets.second, peci.value_sets.millisecond, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.second, cssist.value_sets.millisecond, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { tn:'transition-timing-function', an:'animation-timing-function' },
-            value_sets: [peci.value_sets.transition_timing_function_kind, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.transition_timing_function_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { v:'visibility' },
-            value_sets: [peci.value_sets.visibility_kind, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.visibility_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { v:'vertical-align' },
-            value_sets: [peci.value_sets.vertical_align_kind, peci.value_sets.length_calc, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.vertical_align_kind, cssist.value_sets.length_calc, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { ws:'white-space' },
-            value_sets: [peci.value_sets.white_space_kind, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.white_space_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { wb:'word-break' },
-            value_sets: [peci.value_sets.white_break_kind, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.white_break_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: {
               w:'width', xw:'max-width', nw:'min-width', h:'height', xh:'max-height', nh:'min-height',
@@ -653,10 +653,10 @@ require("./make.js");
               m:'margin', mb:'margin-bottom', ml:'margin-left', mr:'margin-right', mt:'margin-top',
               ws:'word-spacing'
             },
-            value_sets: [peci.value_sets.length_calc, peci.value_sets.auto, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.length_calc, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { z:'z-index' },
-            value_sets: [peci.value_sets.auto, peci.value_sets.integer, peci.value_sets.initial, peci.value_sets.inherit]
+            value_sets: [cssist.value_sets.auto, cssist.value_sets.integer, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: {
               color: 'color', opacity: 'opacity',
@@ -679,7 +679,7 @@ require("./make.js");
               mark: 'mark', mark_after: 'mark-after', mark_before: 'mark-before', phonemes: 'phonemes', rest: 'rest', rest_after: 'rest-after', rest_before: 'rest-before', voice_balance: 'voice-balance', voice_duration: 'voice-duration', voice_pitch: 'voice-pitch', voice_pitch_range: 'voice-pitch-range', voice_rate: 'voice-rate', voice_stress: 'voice-stress', voice_volume: 'voice-volume',
               marquee_direction: 'marquee-direction', marquee_play_count: 'marquee-play-count', marquee_speed: 'marquee-speed', marquee_style: 'marquee-style',
             },
-            value_sets: [peci.value_sets.variable]
+            value_sets: [cssist.value_sets.variable]
           }
         ];
       };
@@ -687,5 +687,5 @@ require("./make.js");
 
     }
   };
-  peci.init.settings();
+  cssist.init.settings();
 })();
