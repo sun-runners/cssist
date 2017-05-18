@@ -430,9 +430,15 @@ __webpack_require__(1);
           getValue: getValueFromValues
         };
         cssist.value_sets.background_size_kind = {
+          regex: '(?:l|r|b|left|right|both)',
+          values: { l: 'left', r: 'right', b: 'both', left: 'left', right: 'right', both: 'both' },
+          examples: ['l', 'both'],
+          getValue: getValueFromValues
+        };
+        cssist.value_sets.clear_kind = {
           regex: '(?:cr|cn|cover|contain)',
           values: { cr: 'cover', cn: 'contain', cover: 'cover', contain: 'contain' },
-          examples: ['cr', 'cn'],
+          examples: ['cr', 'contain'],
           getValue: getValueFromValues
         };
         cssist.value_sets.display_kind = {
@@ -445,6 +451,21 @@ __webpack_require__(1);
             table_footer_group: 'table-footer-group', table_row_group: 'table-row-group', table_cell: 'table-cell', table_column: 'table-column', table_row: 'table-row'
           },
           examples: ['i', 'table_row'],
+          getValue: getValueFromValues
+        };
+        cssist.value_sets.direction_kind = {
+          regex: '(?:l|r|t|b|c|left|right|top|bottom|center)',
+          values: { l: 'left', r: 'right', t: 'top', b: 'bottom', c: 'center', left: 'left', right: 'right', top: 'top', bottom: 'bottom', center: 'center' },
+          examples: ['l', 'center'],
+          getValue: getValueFromValues
+        };
+        cssist.value_sets.direction_2D_kind = {
+          regex: '(?:lt|lc|lb|rt|rc|rb|ct|cc|cb|left_top|left_center|left_bottom|right_top|right_center|right_bottom|center_top|center_center|center_bottom)',
+          values: {
+            lt: 'left top', lc: 'left center', lb: 'left bottom', rt: 'right top', rc: 'right center', rb: 'right bottom', ct: 'center top', cc: 'center center', cb: 'center bottom',
+            left_top: 'left top', left_center: 'left center', left_bottom: 'left bottom', right_top: 'right top', right_center: 'right center', right_bottom: 'right bottom', center_top: 'center top', center_center: 'center center', center_bottom: 'center bottom'
+          },
+          examples: ['lt', 'cc'],
           getValue: getValueFromValues
         };
         cssist.value_sets.float_kind = {
@@ -460,6 +481,15 @@ __webpack_require__(1);
             medium: 'medium', xx_small: 'xx-small', x_small:'x-small', s:'small', l:'large', x_large:'x-large', xx_large:'xx-large', smaller:'smaller', larger:'larger'
           },
           examples: ['m', 'larger'],
+          getValue: getValueFromValues
+        };
+        cssist.value_sets.font_weight_kind = {
+          regex: '(?:n|m|b|br|lr|normal|medium|bold|bolder|lighter)',
+          values: {
+            n: 'normal', m: 'medium', b: 'bold', br:'bolder', lr:'lighter',
+            normal: 'normal', medium: 'medium', bold: 'bold', bolder:'bolder', lighter:'lighter',
+          },
+          examples: ['n', 'lighter'],
           getValue: getValueFromValues
         };
         cssist.value_sets.gradient_kind = {
@@ -518,8 +548,14 @@ __webpack_require__(1);
         };
         cssist.value_sets.transition_timing_function_kind = {
           regex: '(?:l|e|ei|eo|eio|ss|se|linear|ease|ease_in|ease_out|ease_in_out|step_start|step_end)',
-          values: { l: 'linear', e: 'ease', ei: 'ease-in', eo: 'ease-out', eio: 'ease-in-out', ss: 'step-start', se: 'step-end',  },
+          values: { l: 'linear', e: 'ease', ei: 'ease-in', eo: 'ease-out', eio: 'ease-in-out', ss: 'step-start', se: 'step-end' },
           examples: ['l', 'se'],
+          getValue: getValueFromValues
+        };
+        cssist.value_sets.text_trasform_kind = {
+          regex: '(?:c|u|l|capitalize|uppercase|lowercase)',
+          values: { c: 'capitalize', u: 'uppercase', l: 'lowercase', capitalize: 'capitalize', uppercase: 'uppercase', lowercase: 'lowercase' },
+          examples: ['c', 'lowercase'],
           getValue: getValueFromValues
         };
         cssist.value_sets.vertical_align_kind = {
@@ -528,7 +564,7 @@ __webpack_require__(1);
             be: 'baseline', sb: 'sub', sr: 'super', t: 'top', tt: 'text-top	', m: 'middle', b: 'bottom', tb: 'text-bottom',
             baseline: 'baseline', sub: 'sub', super: 'super', top: 'top', text_top: 'text-top	', middle: 'middle', bottom: 'bottom', text_bottom: 'text-bottom'
           },
-          examples: ['l', 'rr'],
+          examples: ['l', 'text_bottom'],
           getValue: getValueFromValues
         };
         cssist.value_sets.visibility_kind = {
@@ -549,28 +585,13 @@ __webpack_require__(1);
           examples: ['l', 'rr'],
           getValue: getValueFromValues
         };
-        cssist.value_sets.word_break_kind = {
-          regex: '(?:n|b|k|normal|break_all|keep_all)',
+        cssist.value_sets.word_wrap_kind = {
+          regex: '(?:b|break_word)',
           values: {
-            n: 'normal', b: 'break-all', k: 'keep-all',
-            normal: 'normal', break_all: 'break-all', keep_all: 'keep-all'
+            b: 'break-word',
+            break_word: 'break-word'
           },
-          examples: ['n', 'k'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.direction_kind = {
-          regex: '(?:l|r|t|b|c|left|right|top|bottom|center)',
-          values: { l: 'left', r: 'right', t: 'top', b: 'bottom', c: 'center', left: 'left', right: 'right', top: 'top', bottom: 'bottom', center: 'center' },
-          examples: ['l', 'center'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.direction_2D_kind = {
-          regex: '(?:lt|lc|lb|rt|rc|rb|ct|cc|cb|left_top|left_center|left_bottom|right_top|right_center|right_bottom|center_top|center_center|center_bottom)',
-          values: {
-            lt: 'left top', lc: 'left center', lb: 'left bottom', rt: 'right top', rc: 'right center', rb: 'right bottom', ct: 'center top', cc: 'center center', cb: 'center bottom',
-            left_top: 'left top', left_center: 'left center', left_bottom: 'left bottom', right_top: 'right top', right_center: 'right center', right_bottom: 'right bottom', center_top: 'center top', center_center: 'center center', center_bottom: 'center bottom'
-          },
-          examples: ['lt', 'cc'],
+          examples: ['b', 'break_word'],
           getValue: getValueFromValues
         };
 
@@ -594,6 +615,11 @@ __webpack_require__(1);
           regex: '(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:[01]?[0-9]?[0-9]))',
           examples: ['0', '255'],
           getValue: function(value){ return Math.floor(value)%256; }
+        };
+        cssist.value_sets.integer_hundred = {
+          regex: '(?:[1-9]00)',
+          examples: ['100', '900'],
+          getValue: getValueFromOriginalValue
         };
         cssist.value_sets.integer_3digits = {
           regex: '(?:_?[0-9]{0,3})',
@@ -986,101 +1012,122 @@ __webpack_require__(1);
       function initializePropertySets(){
         cssist.property_sets = [
           {
-            properties: { an:'animation-iteration-count' },
+            properties: { an:'animation-iteration-count', animation_iteration_count:'animation-iteration-count' },
             value_sets: [cssist.value_sets.integer_0, cssist.value_sets.infinite, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { b:'background' },
+            properties: { b:'background', background:'background' },
             value_sets: [cssist.value_sets.rgba_color, cssist.value_sets.gradient, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { bi:'background-image' },
+            properties: { bi:'background-image', background_image:'background-image' },
             value_sets: [cssist.value_sets.url, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { bs:'box-shadow', ts:'text-shadow' },
+            properties: { bs:'box-shadow', ts:'text-shadow', box_shadow:'box-shadow', text_shadow:'text-shadow' },
             value_sets: [cssist.value_sets.shadow]
           },{
-            properties: { bs:'box-sizing' },
+            properties: { bs:'box-sizing', box_sizing:'box-sizing' },
             value_sets: [cssist.value_sets.box_sizing_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { bo:'border-width', bo_t:'border-top-width', bo_b:'border-bottom-width', bo_l:'border-left-width', bo_r:'border-right-width' },
+            properties: {
+              bo:'border-width', bo_t:'border-top-width', bo_b:'border-bottom-width', bo_l:'border-left-width', bo_r:'border-right-width',
+              border_width:'border-width', border_top_width:'border-top-width', border_bottom_width:'border-bottom-width', border_left_width:'border-left-width', border_right_width:'border-right-width'
+            },
             value_sets: [cssist.value_sets.length_calc, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit, cssist.value_sets.thick_kind]
           },{
-            properties: { bs:'background-size' },
+            properties: { bs:'background-size', background_size:'background-size' },
             value_sets: [cssist.value_sets.auto, cssist.value_sets.length_calc_2D, cssist.value_sets.background_size_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { bp:'background-position' },
+            properties: { bp:'background-position', background_position:'background-position' },
             value_sets: [cssist.value_sets.direction_2D_kind, cssist.value_sets.length_calc_2D, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: {
-              c: 'color', pc: 'placeholder',
-              bc:'background-color',
-              bo:'border-color', bo_t:'border-top-color', bo_b:'border-bottom-color', bo_l:'border-left-color', bo_r:'border-right-color'
+              c: 'color', pc: 'placeholder', color: 'color', placeholder: 'placeholder',
+              bc:'background-color', background_color:'background-color',
+              bo:'border-color', bo_t:'border-top-color', bo_b:'border-bottom-color', bo_l:'border-left-color', bo_r:'border-right-color',
+              border_color:'border-color', border_top_color:'border-top-color', border_bottom_color:'border-bottom-color', border_left_color:'border-left-color', border_right_color:'border-right-color'
             },
             value_sets: [cssist.value_sets.rgba_color]
           },{
-            properties: { d:'display' },
+            properties: { c:'clear', clear:'clear' },
+            value_sets: [cssist.value_sets.clear_kind, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
+          },{
+            properties: { d:'display', display:'display' },
             value_sets: [cssist.value_sets.display_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { p:'position' },
+            properties: { p:'position', position:'position' },
             value_sets: [cssist.value_sets.position_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { f:'float' },
+            properties: { f:'float', float:'float' },
             value_sets: [cssist.value_sets.none, cssist.value_sets.float_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { f:'font-size' },
+            properties: { f:'font-size', font_size:'font-size' },
             value_sets: [cssist.value_sets.font_size_kind, cssist.value_sets.length_calc, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { t:'text-align' },
+            properties: { fw:'font-weight', font_weight:'font-weight' },
+            value_sets: [cssist.value_sets.font_weight_kind, cssist.value_sets.integer_hundred, cssist.value_sets.initial, cssist.value_sets.inherit]
+          },{
+            properties: { t:'text-align', text_align:'text-align' },
             value_sets: [cssist.value_sets.text_align_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { lh:'line-height' },
+            properties: { tt:'text-transform', text_transform:'text-transform' },
+            value_sets: [cssist.value_sets.text_trasform_kind, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
+          },{
+            properties: { lh:'line-height', line_height:'line-height' },
             value_sets: [cssist.value_sets.normal,  cssist.value_sets.length_calc, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { ls:'letter-spacing' },
+            properties: { ls:'letter-spacing', letter_spacing:'letter-spacing' },
             value_sets: [cssist.value_sets.normal, cssist.value_sets.length_calc, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { o:'opacity' },
+            properties: { o:'opacity', opacity:'opacity' },
             value_sets: [cssist.value_sets.opacity]
           },{
-            properties: { o:'overflow', ox:'overflow-x', oy:'overflow-y' },
+            properties: { o:'overflow', ox:'overflow-x', oy:'overflow-y', overflow:'overflow', overflow_x:'overflow-x', overflow_y:'overflow-y' },
             value_sets: [cssist.value_sets.overflow_kind, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: {
               p:'padding', pb:'padding-bottom', pl:'padding-left', pr:'padding-right', pt:'padding-top',
-              bor:'border-radius', bor_tl:'border-top-left-radius', bor_tr:'border-top-right-radius', bor_bl:'border-bottom-left-radius', bor_br:'border-bottom-right-radius',
+              padding:'padding', padding_bottom:'padding-bottom', padding_left:'padding-left', padding_right:'padding-right', padding_top:'padding-top',
+              border_radius:'border-radius', border_top_left_radius:'border-top-left-radius', border_top_right_radius:'border-top-right-radius', border_bottom_left_radius:'border-bottom-left-radius', border_bottom_right_radius:'border-bottom-right-radius',
             },
             value_sets: [cssist.value_sets.length_calc, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { to:'text-overflow:' },
+            properties: { to:'text-overflow', text_overflow:'text-overflow' },
             value_sets: [cssist.value_sets.text_overflow_kind]
           },{
-            properties: { tn:'transform' },
+            properties: { tn:'transform', transform:'transform' },
             value_sets: [cssist.value_sets.translate_length_calc_2D]
           },{
-            properties: { tn:'transition-property' },
-            value_sets: [cssist.value_sets.all, cssist.value_sets.variables]
+            properties: { tn:'transition-property', transition_property:'transition-property' },
+            value_sets: [cssist.value_sets.none, cssist.value_sets.all, cssist.value_sets.variables, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { tn:'transition-duration', tnd:'transition-delay', an:'animation-duration', and: 'animation-delay' },
+            properties: { tn:'transition-duration', tnd:'transition-delay', an:'animation-duration', and: 'animation-delay', transition_duration:'transition-duration', transition_delay:'transition-delay', animation_duration:'animation-duration', animation_delay: 'animation-delay' },
             value_sets: [cssist.value_sets.second, cssist.value_sets.millisecond, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { tn:'transition-timing-function', an:'animation-timing-function' },
+            properties: { tn:'transition-timing-function', an:'animation-timing-function', transition_timing_function:'transition-timing-function', animation_timing_function:'animation-timing-function' },
             value_sets: [cssist.value_sets.transition_timing_function_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { v:'visibility' },
+            properties: { v:'visibility', visibility:'visibility' },
             value_sets: [cssist.value_sets.visibility_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { v:'vertical-align' },
+            properties: { v:'vertical-align', vertical_align:'vertical-align' },
             value_sets: [cssist.value_sets.vertical_align_kind, cssist.value_sets.length_calc, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { ws:'white-space' },
+            properties: { ws:'white-space', white_space:'white-space' },
             value_sets: [cssist.value_sets.white_space_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { wb:'word-break' },
+            properties: { wb:'word-break', word_break:'word-break' },
             value_sets: [cssist.value_sets.white_break_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
+          },{
+            properties: { ww:'word-wrap', word_wrap:'word-wrap' },
+            value_sets: [cssist.value_sets.word_wrap_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: {
               w:'width', xw:'max-width', nw:'min-width', h:'height', xh:'max-height', nh:'min-height',
+              w:'width', max_width:'max-width', min_width:'min-width', height:'height', max_height:'max-height', min_height:'min-height',
               b:'bottom', r:'right', t:'top', l:'left',
+              bottom:'bottom', right:'right', top:'top', left:'left',
               m:'margin', mb:'margin-bottom', ml:'margin-left', mr:'margin-right', mt:'margin-top',
+              margin:'margin', margin_bottom:'margin-bottom', margin_left:'margin-left', margin_right:'margin-right', margin_top:'margin-top',
+              word_spacing:'word-spacing',
               ws:'word-spacing'
             },
             value_sets: [cssist.value_sets.length_calc, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit]
