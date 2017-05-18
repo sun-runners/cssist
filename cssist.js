@@ -906,23 +906,22 @@ __webpack_require__(1);
           getValue: function(value){
             var regex = new RegExp('(?:('+cssist.value_sets.google_color.regex+')|('+cssist.value_sets.hex_color.regex+')|('+cssist.value_sets.rgb_color.regex+'))'+'(?:_('+cssist.value_sets.opacity.regex+'))?');
             var matches = value.match(regex);
-            var object_rgb;
-            var opacity;
+            var object_rgb, opacity, matches_each;
             if(matches[1]){
               var regex_each = new RegExp('('+cssist.value_sets.google_color.regex+')(?:_('+cssist.value_sets.opacity.regex+'))?');
-              var matches_each = value.match(regex_each);
+              matches_each = value.match(regex_each);
               object_rgb = cssist.value_sets.google_color.getObject(matches_each[1]);
               if(matches_each[2]) opacity = cssist.value_sets.opacity.getValue(matches_each[2]);
             }
             else if(matches[2]){
               var regex_each = new RegExp('('+cssist.value_sets.hex_color.regex+')(?:_('+cssist.value_sets.opacity.regex+'))?');
-              var matches_each = value.match(regex_each);
+              matches_each = value.match(regex_each);
               object_rgb = cssist.value_sets.hex_color.getObject(matches_each[1]);
               if(matches_each[2]) opacity = cssist.value_sets.opacity.getValue(matches_each[2]);
             }
             else if(matches[3]){
               var regex_each = new RegExp('('+cssist.value_sets.rgb_color.regex+')(?:_('+cssist.value_sets.opacity.regex+'))?');
-              var matches_each = value.match(regex_each);
+              matches_each = value.match(regex_each);
               object_rgb = cssist.value_sets.rgb_color.getObject(matches_each[1]);
               if(matches_each[2]) opacity = cssist.value_sets.opacity.getValue(matches_each[2]);
             }
