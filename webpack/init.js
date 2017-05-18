@@ -1,4 +1,4 @@
-purplerequire("./make.js");
+require("./make.js");
 (function(){
   cssist.init = {
     settings : function(){

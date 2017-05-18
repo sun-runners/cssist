@@ -342,9 +342,9 @@ __webpack_require__(0);
 
 /***/ },
 /* 5 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-purplerequire("./make.js");
+__webpack_require__(1);
 (function(){
   cssist.init = {
     settings : function(){
