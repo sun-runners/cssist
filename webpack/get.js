@@ -12,21 +12,22 @@ require("./convert.js");
       for(var i=0; i<cssist.property_sets.length; i++){
         property_set = cssist.property_sets[i];
         if(property_set.properties[class_property]){
-          var property = property_set.properties[class_property]
+          var property = property_set.properties[class_property];
           for(var j=0; j<property_set.value_sets.length; j++){
             var value_set = property_set.value_sets[j];
             var regex = new RegExp(value_set.regex);
             if(class_value.match(regex)){
               var value = value_set.getValue(class_value);
-              if(!(class_name&&property&&value)) return;
-              var css = {
-                class:class_name,
-                property:property,
-                value:value,
-                event:cssist.convert.eventCode2event(class_event),
-                suffix:class_mediaquery
-              };
-              return css;
+              if(!(value === undefined || value === null)){
+                var css = {
+                  class:class_name,
+                  property:property,
+                  value:value,
+                  event:cssist.convert.eventCode2event(class_event),
+                  suffix:class_mediaquery
+                };
+                return css;
+              }
             }
           }
         }

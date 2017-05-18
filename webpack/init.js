@@ -4,6 +4,7 @@ require("./make.js");
     settings : function(){
 
       var VERSION = '0.0.2';
+      console.log(localStorage);
       if( localStorage && localStorage['cssist_VERSION'] && localStorage['cssist_VERSION']==VERSION ){
         cssist.csses = JSON.parse(localStorage['cssist_CSSES']);
         cssist.classes = JSON.parse(localStorage['cssist_CLASSES']);
@@ -15,8 +16,8 @@ require("./make.js");
       else{
         if(localStorage){
           localStorage['cssist_VERSION'] = VERSION;
-          localStorage['cssist_CSSES'] = null;
-          localStorage['cssist_CLASSES'] = null;
+          localStorage.removeItem('cssist_CSSES');
+          localStorage.removeItem('cssist_CLASSES');
         }
       }
 
@@ -258,7 +259,11 @@ require("./make.js");
         cssist.value_sets.integer_0 = {
           regex: '(?:[0-9]+)',
           examples: ['100'],
-          getValue: function(value){ return Math.abs(value); }
+          getValue: function(value){
+            var result = Math.abs(value);
+            if(isNaN(result)) return null;
+            else return result;
+          }
         };
         cssist.value_sets.integer_0_12 = {
           regex: '(?:10|11|12|[0-9])',

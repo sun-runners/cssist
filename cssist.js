@@ -289,21 +289,22 @@ __webpack_require__(0);
       for(var i=0; i<cssist.property_sets.length; i++){
         property_set = cssist.property_sets[i];
         if(property_set.properties[class_property]){
-          var property = property_set.properties[class_property]
+          var property = property_set.properties[class_property];
           for(var j=0; j<property_set.value_sets.length; j++){
             var value_set = property_set.value_sets[j];
             var regex = new RegExp(value_set.regex);
             if(class_value.match(regex)){
               var value = value_set.getValue(class_value);
-              if(!(class_name&&property&&value)) return;
-              var css = {
-                class:class_name,
-                property:property,
-                value:value,
-                event:cssist.convert.eventCode2event(class_event),
-                suffix:class_mediaquery
-              };
-              return css;
+              if(!(value === undefined || value === null)){
+                var css = {
+                  class:class_name,
+                  property:property,
+                  value:value,
+                  event:cssist.convert.eventCode2event(class_event),
+                  suffix:class_mediaquery
+                };
+                return css;
+              }
             }
           }
         }
@@ -355,6 +356,7 @@ __webpack_require__(1);
     settings : function(){
 
       var VERSION = '0.0.2';
+      console.log(localStorage);
       if( localStorage && localStorage['cssist_VERSION'] && localStorage['cssist_VERSION']==VERSION ){
         cssist.csses = JSON.parse(localStorage['cssist_CSSES']);
         cssist.classes = JSON.parse(localStorage['cssist_CLASSES']);
@@ -366,8 +368,8 @@ __webpack_require__(1);
       else{
         if(localStorage){
           localStorage['cssist_VERSION'] = VERSION;
-          localStorage['cssist_CSSES'] = null;
-          localStorage['cssist_CLASSES'] = null;
+          localStorage.removeItem('cssist_CSSES');
+          localStorage.removeItem('cssist_CLASSES');
         }
       }
 
@@ -609,7 +611,11 @@ __webpack_require__(1);
         cssist.value_sets.integer_0 = {
           regex: '(?:[0-9]+)',
           examples: ['100'],
-          getValue: function(value){ return Math.abs(value); }
+          getValue: function(value){
+            var result = Math.abs(value);
+            if(isNaN(result)) return null;
+            else return result;
+          }
         };
         cssist.value_sets.integer_0_12 = {
           regex: '(?:10|11|12|[0-9])',
