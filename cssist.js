@@ -925,6 +925,7 @@ __webpack_require__(1);
               object_rgb = cssist.value_sets.rgb_color.getObject(matches_each[1]);
               if(matches_each[2]) opacity = cssist.value_sets.opacity.getValue(matches_each[2]);
             }
+            if(!object_rgb) return null;
             if(matches_each[2]){
               return 'rgba('+object_rgb.red+','+object_rgb.green+','+object_rgb.blue+','+opacity+')';
             } else {
