@@ -883,6 +883,7 @@ __webpack_require__(1);
           examples: ['0_0_0', '10_10_10', '100_100_100', '255_255_255'],
           getValue: function(value){
             splits = value.split('_');
+            if(!(splits.length==3)) return null;
             var result = 'rgba(';
             result += splits[0]+', ';
             result += splits[1]+', ';
@@ -892,6 +893,7 @@ __webpack_require__(1);
           },
           getObject: function(value){
             splits = value.split('_');
+            if(!(splits.length==3)) return null;
             var result = {
               red:splits[0],
               green:splits[1],
