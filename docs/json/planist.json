@@ -1,0 +1,49 @@
+{
+  "launched": true,
+  "name_en": "planist",
+  "name_kr": "플랜리스트",
+  "vision": "더 이상 시작이 두렵지 않게.",
+  "description": "시간이 없는 기획자들이 사업계획서를 쉽게 작성하고 필요한 양식으로 빠르게 제작해주는 플랫폼입니다",
+  "colors": {
+    "point1": "FF8F86",
+    "point2": "FF685C",
+    "point3": "F44336",
+    "point4": "D81E0F",
+    "point5": "A90F03",
+    "white": "FFFFFF",
+    "dark1": "F5F5F5",
+    "dark2": "E0E0E0",
+    "dark3": "BDBDBD",
+    "dark4": "9E9E9E",
+    "dark5": "616161",
+    "dark6": "424242",
+    "gradient1": "F44336",
+    "gradient2": "A90F03"
+  },
+  "ment": {
+    "signIn_new": "안녕! 만나서 반가워 난 우디라고 해. 복잡한 사업계획서, 같이 작성해볼까? 내가 도와줄게~",
+    "signIn_old": "야, 어서와~  쓰면 쓸수록 완성도가 높아지는 사업계획서! 오늘도 힘내보자!",
+    "signUp1": "현재 맡고 있거나 관심있는 분야를 알려줄래?",
+    "signUp2": "그거 알아?! 한번만 가입하면 아이디스트의 모든 서비스를 이용할 수 있어!",
+    "signUp3": "마지막 단계! 사람들에게 보여질 너를 알려줘!"
+  },
+  "company_information": [{
+      "information": {
+        "icon": "ion-ios-email",
+        "text": "ceo@idist.ai"
+      }
+    },
+    {
+      "information": {
+        "icon": "ion-ios-telephone",
+        "text":"010-4084-0660"
+      }
+    },
+    {
+      "information": {
+        "icon": "ion-ios-location",
+        "text": ["서울 중구 다산로 258", "동대문리마크빌 B동"]
+      }
+    }
+  ]
+}

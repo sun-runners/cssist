@@ -1086,6 +1086,7 @@ __webpack_require__(1);
             properties: {
               p:'padding', pb:'padding-bottom', pl:'padding-left', pr:'padding-right', pt:'padding-top',
               padding:'padding', padding_bottom:'padding-bottom', padding_left:'padding-left', padding_right:'padding-right', padding_top:'padding-top',
+              bor:'border-radius', bor_tl:'border-top-left-radius', bor_tr:'border-top-right-radius', bor_bl:'border-bottom-left-radius', bor_br:'border-bottom-right-radius',
               border_radius:'border-radius', border_top_left_radius:'border-top-left-radius', border_top_right_radius:'border-top-right-radius', border_bottom_left_radius:'border-bottom-left-radius', border_bottom_right_radius:'border-bottom-right-radius',
             },
             value_sets: [cssist.value_sets.length_calc, cssist.value_sets.initial, cssist.value_sets.inherit]
@@ -1122,17 +1123,16 @@ __webpack_require__(1);
           },{
             properties: {
               w:'width', xw:'max-width', nw:'min-width', h:'height', xh:'max-height', nh:'min-height',
-              w:'width', max_width:'max-width', min_width:'min-width', height:'height', max_height:'max-height', min_height:'min-height',
+              width:'width', max_width:'max-width', min_width:'min-width', height:'height', max_height:'max-height', min_height:'min-height',
               b:'bottom', r:'right', t:'top', l:'left',
               bottom:'bottom', right:'right', top:'top', left:'left',
               m:'margin', mb:'margin-bottom', ml:'margin-left', mr:'margin-right', mt:'margin-top',
               margin:'margin', margin_bottom:'margin-bottom', margin_left:'margin-left', margin_right:'margin-right', margin_top:'margin-top',
-              word_spacing:'word-spacing',
-              ws:'word-spacing'
+              ws:'word-spacing', word_spacing:'word-spacing'
             },
             value_sets: [cssist.value_sets.length_calc, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
-            properties: { z:'z-index' },
+            properties: { z:'z-index', z_index:'z-index' },
             value_sets: [cssist.value_sets.auto, cssist.value_sets.integer, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: {

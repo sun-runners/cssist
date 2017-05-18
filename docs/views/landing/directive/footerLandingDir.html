@@ -1,0 +1,22 @@
+<div class="w-100 h-82px">
+	<div class="w-705px cen">
+		<!-- logo -->
+		<div class="w-70px h-23px">
+			<img class="w-100 h-100 c-we" ng-src="images/logos/H21px_white_idist.png">
+		</div>
+		<div class="w-635px">
+			<div class="ml-30px" ng-repeat="info in infos">
+				<button class="h-30px">
+					<div class="w-30px h-100">
+						<div class="cen">
+							<i class="f-20px c-we {{info.icon}}"></i>
+						</div>
+					</div>
+					<div class="ml-5px mt-5px h-18px">
+						<span class="d-b f-15px lh-18px c-we">{{info.text}}</span>
+					</div>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

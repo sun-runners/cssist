@@ -1,0 +1,49 @@
+{
+  "launched": true,
+  "name_en": "cssist",
+  "name_kr": "씨스트",
+  "vision": "CSS가 필요없게 느껴질 만큼.",
+  "description": "HTML에서 퍼블리싱할 수 있는 CSS 프레임워크입니다",
+  "colors": {
+    "point1": "FFD967",
+    "point2": "FFCE3D",
+    "point3": "FFC107",
+    "point4": "C99700",
+    "point5": "9E7700",
+    "white": "FFFFFF",
+    "dark1": "F5F5F5",
+    "dark2": "E0E0E0",
+    "dark3": "BDBDBD",
+    "dark4": "9E9E9E",
+    "dark5": "616161",
+    "dark6": "424242",
+    "gradient1": "FFC107",
+    "gradient2": "9E7700"
+  },
+  "ment": {
+    "signIn_new": "안녕! 만나서 반가워 난 우디라고 해. 복잡한 사업계획서, 같이 작성해볼까? 내가 도와줄게~",
+    "signIn_old": "야, 어서와~  쓰면 쓸수록 완성도가 높아지는 사업계획서! 오늘도 힘내보자!",
+    "signUp1": "현재 맡고 있거나 관심있는 분야를 알려줄래?",
+    "signUp2": "그거 알아?! 한번만 가입하면 아이디스트의 모든 서비스를 이용할 수 있어!",
+    "signUp3": "마지막 단계! 사람들에게 보여질 너를 알려줘!"
+  },
+  "company_information": [{
+      "information": {
+        "icon": "ion-ios-email",
+        "text": "ceo@idist.ai"
+      }
+    },
+    {
+      "information": {
+        "icon": "ion-ios-telephone",
+        "text":"010-4084-0660"
+      }
+    },
+    {
+      "information": {
+        "icon": "ion-ios-location",
+        "text": ["서울 중구 다산로 258", "동대문리마크빌 B동"]
+      }
+    }
+  ]
+}
