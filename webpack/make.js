@@ -22,7 +22,11 @@ require("./convert.js");
   	},
     class : function(class_name) {
   		var css = cssist.get.css(class_name);
-  		if(css) this.css(css);
+  		if(css){
+        this.css(css);
+        return true;
+      }
+      else return false;
   	},
     sheet : function(suffix){
       var style = document.createElement("STYLE");

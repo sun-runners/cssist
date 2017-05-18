@@ -18,6 +18,7 @@ require("./convert.js");
             var regex = new RegExp(value_set.regex);
             if(class_value.match(regex)){
               var value = value_set.getValue(class_value);
+              if(!(class_name&&property&&value)) return;
               var css = {
                 class:class_name,
                 property:property,

@@ -19,8 +19,9 @@ require("./make.js");
         var cssist_CLASSES = [];
         if(!cssist.classes) cssist.classes = [];
         if(cssist.classes.indexOf(class_name)==-1){
-          cssist.classes.push(class_name);
-          cssist.make.class(class_name);
+          if(cssist.make.class(class_name)){
+            cssist.classes.push(class_name);
+          }
           if(i == class_names.length-1){
             element.setAttribute('cssist','');
           }

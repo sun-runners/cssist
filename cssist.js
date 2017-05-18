@@ -191,7 +191,11 @@ __webpack_require__(0);
   	},
     class : function(class_name) {
   		var css = cssist.get.css(class_name);
-  		if(css) this.css(css);
+  		if(css){
+        this.css(css);
+        return true;
+      }
+      else return false;
   	},
     sheet : function(suffix){
       var style = document.createElement("STYLE");
@@ -291,6 +295,7 @@ __webpack_require__(0);
             var regex = new RegExp(value_set.regex);
             if(class_value.match(regex)){
               var value = value_set.getValue(class_value);
+              if(!(class_name&&property&&value)) return;
               var css = {
                 class:class_name,
                 property:property,
@@ -349,7 +354,7 @@ __webpack_require__(1);
   cssist.init = {
     settings : function(){
 
-      var VERSION = '0.0.1';
+      var VERSION = '0.0.2';
       if( localStorage && localStorage['cssist_VERSION'] && localStorage['cssist_VERSION']==VERSION ){
         cssist.csses = JSON.parse(localStorage['cssist_CSSES']);
         cssist.classes = JSON.parse(localStorage['cssist_CLASSES']);
@@ -805,7 +810,7 @@ __webpack_require__(1);
           }
         };
         cssist.value_sets.google_color = {
-          regex: '(?:red|pink|purple|deeppurple|indigo|blue|lightblue|cyan|teal|green|lightgreen|lime|yellow|amber|orange|deeporange|brown|grey|bluegrey|black|white|rd|pk|pe|dp|io|be|lb|cn|tl|gn|lg|le|yw|ar|oe|de|bn|gy|by|bk|we|)(?:[1-9]00|50)?',
+          regex: '(?:red|pink|purple|deeppurple|indigo|blue|lightblue|cyan|teal|green|lightgreen|lime|yellow|amber|orange|deeporange|brown|grey|bluegrey|black|white|rd|pk|pe|dp|io|be|lb|cn|tl|gn|lg|le|yw|ar|oe|de|bn|gy|by|bk|we)(?:[1-9]00|50)?',
           values: {
             rd:'F44336', rd50: 'FFEBEE', rd100: 'FFCDD2', rd200: 'EF9A9A', rd300: 'E57373', rd400: 'EF5350', rd500: 'F44336', rd600: 'E53935', rd700: 'D32F2F', rd800: 'C62828', rd900: 'B71C1C', //Red
             red:'F44336', red50: 'FFEBEE', red100: 'FFCDD2', red200: 'EF9A9A', red300: 'E57373', red400: 'EF5350', red500: 'F44336', red600: 'E53935', red700: 'D32F2F', red800: 'C62828', red900: 'B71C1C', //Red
@@ -1195,8 +1200,9 @@ __webpack_require__(1);
         var cssist_CLASSES = [];
         if(!cssist.classes) cssist.classes = [];
         if(cssist.classes.indexOf(class_name)==-1){
-          cssist.classes.push(class_name);
-          cssist.make.class(class_name);
+          if(cssist.make.class(class_name)){
+            cssist.classes.push(class_name);
+          }
           if(i == class_names.length-1){
             element.setAttribute('cssist','');
           }
