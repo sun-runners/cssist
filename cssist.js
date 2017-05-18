@@ -61,7 +61,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -167,7 +167,7 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-__webpack_require__(3);
+__webpack_require__(4);
 __webpack_require__(0);
 (function(){
   cssist.make = {
@@ -220,7 +220,7 @@ __webpack_require__(0);
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-__webpack_require__(5);
+__webpack_require__(6);
 (function(){
   cssist.watch = {
     change : function(){
@@ -243,6 +243,32 @@ __webpack_require__(5);
 
 /***/ },
 /* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(7);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(9)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../../node_modules/css-loader/index.js!./cssist.css", function() {
+			var newContent = require("!!../../../../node_modules/css-loader/index.js!./cssist.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ },
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 __webpack_require__(0);
@@ -315,10 +341,10 @@ __webpack_require__(0);
 
 
 /***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
+/* 5 */
+/***/ function(module, exports) {
 
-__webpack_require__(1);
+purplerequire("./make.js");
 (function(){
   cssist.init = {
     settings : function(){
@@ -348,77 +374,92 @@ __webpack_require__(1);
 
         // CONSTANT
         cssist.value_sets.auto = {
-          regex: '(?:a)',
-          values: { a: 'auto' },
-          examples: ['a'],
+          regex: '(?:a|auto)',
+          values: { a: 'auto', auto: 'auto' },
+          examples: ['a', 'auto'],
           getValue: getValueFromValues
         };
         cssist.value_sets.all = {
-          regex: '(?:a)',
-          values: { a: 'all' },
-          examples: ['a'],
+          regex: '(?:a|all)',
+          values: { a: 'all', all: 'all' },
+          examples: ['a', 'all'],
           getValue: getValueFromValues
         };
         cssist.value_sets.initial = {
-          regex: '(?:il)',
-          values: { il: 'initial' },
-          examples: ['il'],
+          regex: '(?:il|initial)',
+          values: { il: 'initial', initial: 'initial' },
+          examples: ['il', 'initial'],
           getValue: getValueFromValues
         };
         cssist.value_sets.inherit = {
-          regex: '(?:it)',
-          values: { it: 'inherit' },
-          examples: ['it'],
+          regex: '(?:it|inherit)',
+          values: { it: 'inherit', inherit: 'inherit' },
+          examples: ['it', 'inherit'],
+          getValue: getValueFromValues
+        };
+        cssist.value_sets.infinite = {
+          regex: '(?:i|infinite)',
+          values: { i: 'infinite', infinite: 'infinite' },
+          examples: ['i', 'infinite'],
           getValue: getValueFromValues
         };
         cssist.value_sets.none = {
-          regex: '(?:n)',
-          values: { n: 'none' },
-          examples: ['n'],
+          regex: '(?:n|none)',
+          values: { n: 'none', none: 'none' },
+          examples: ['n', 'none'],
           getValue: getValueFromValues
         };
         cssist.value_sets.normal = {
-          regex: '(?:n)',
-          values: { n: 'normal' },
-          examples: ['n'],
+          regex: '(?:n|normal)',
+          values: { n: 'normal', normal: 'normal' },
+          examples: ['n', 'normal'],
           getValue: getValueFromValues
         };
 
         // KIND
         cssist.value_sets.animation_direction = {
-          regex: '(?:c|b)',
-          values: { n: 'normal', r: 'reverse', a: 'alternate', ar: 'alternate-reverse' },
-          examples: ['n', 'ar'],
+          regex: '(?:n|r|a|ar|normal|reverse|alternate|alternate_reverse)',
+          values: { n: 'normal', r: 'reverse', a: 'alternate', ar: 'alternate-reverse', normal: 'normal', reverse: 'reverse', alternate: 'alternate', alternate_reverse: 'alternate-reverse' },
+          examples: ['n', 'alternate_reverse'],
           getValue: getValueFromValues
         };
         cssist.value_sets.box_sizing_kind = {
-          regex: '(?:c|b)',
-          values: { c: 'content-box', b: 'border-box' },
+          regex: '(?:c|b|content_box|border_box)',
+          values: { c: 'content-box', b: 'border-box', content_box: 'content-box', border_box: 'border-box' },
           examples: ['c', 'b'],
           getValue: getValueFromValues
         };
         cssist.value_sets.background_size_kind = {
-          regex: '(?:cr|cn)',
-          values: { cr: 'cover', cn: 'contain' },
+          regex: '(?:cr|cn|cover|contain)',
+          values: { cr: 'cover', cn: 'contain', cover: 'cover', contain: 'contain' },
           examples: ['cr', 'cn'],
           getValue: getValueFromValues
         };
         cssist.value_sets.display_kind = {
-          regex: '(?:i|b|f|ib|if|it|li|ri|t)',
-          values: { i: 'inline', b: 'block', f: 'flex', ib: 'inline-block', if: 'inline-flex', it: 'inline-table', li: 'list-item', ri: 'run-in', t: 'table' },
-          examples: ['l', 'rr'],
+          regex: '(?:i|b|f|ib|inline|block|flex|inline_block|inline_flex|inline_table|list_item|run_in|table|table_caption|table_column_group|table_header_group|table_footer_group|table_row_group|table_cell|table_column|table_row)',
+          values: {
+            i: 'inline', b: 'block', f: 'flex', ib: 'inline-block',
+            inline: 'inline', block: 'block', flex: 'flex', inline_block: 'inline-block', inline_flex: 'inline-flex',
+            inline_table: 'inline-table', list_item: 'list-item', run_in: 'run-in',
+            table: 'table', table_caption: 'table-caption', table_column_group: 'table-column-group', table_header_group: 'table-header-group',
+            table_footer_group: 'table-footer-group', table_row_group: 'table-row-group', table_cell: 'table-cell', table_column: 'table-column', table_row: 'table-row'
+          },
+          examples: ['i', 'table_row'],
           getValue: getValueFromValues
         };
         cssist.value_sets.float_kind = {
-          regex: '(?:l|r)',
-          values: { l: 'left', r: 'right' },
-          examples: ['l', 'r'],
+          regex: '(?:l|r|left|right)',
+          values: { l: 'left', r: 'right', left: 'left', right: 'right' },
+          examples: ['l', 'right'],
           getValue: getValueFromValues
         };
         cssist.value_sets.font_size_kind = {
-          regex: '(?:m|xxs|xs|s|l|xl|xxl|sr|lr)',
-          values: { m: 'medium', xxs: 'xx-small', xs:'x-small', s:'small', l:'large', xl:'x-large', xxl:'xx-large', sr:'smaller', lr:'larger' },
-          examples: ['m', 'lr'],
+          regex: '(?:m|xxs|xs|s|l|xl|xxl|sr|lr|medium|xx_small|x_small|small|large|x_large|xx_large|smaller|larger)',
+          values: {
+            m: 'medium', xxs: 'xx-small', xs:'x-small', s:'small', l:'large', xl:'x-large', xxl:'xx-large', sr:'smaller', lr:'larger',
+            medium: 'medium', xx_small: 'xx-small', x_small:'x-small', s:'small', l:'large', x_large:'x-large', xx_large:'xx-large', smaller:'smaller', larger:'larger'
+          },
+          examples: ['m', 'larger'],
           getValue: getValueFromValues
         };
         cssist.value_sets.gradient_kind = {
@@ -430,67 +471,106 @@ __webpack_require__(1);
         cssist.value_sets.length_unit_kind = {
           regex: '(?:em|ex|ch|rem|vw|vh|vmax|vmin|cm|mm|in|px|pt|pc|p|n)',
           values: { em: 'em', ex: 'ex', ch: 'ch', rem: 'rem', vw:'vw' , vh: 'vh', vmax:'vmax', vmin:'vmin', cm:'cm', mm:'mm', in:'in', px:'px', pt:'pt', pc:'pc', p:'%', n:'' },
-          examples: ['em', 'p'],
+          examples: ['em', 'n'],
           getValue: getValueFromValues
         };
         cssist.value_sets.overflow_kind = {
-          regex: '(?:h|o|s|v)',
-          values: { h: 'hidden', o: 'overlay', s: 'scroll', v: 'visible' },
-          examples: ['h', 'v'],
+          regex: '(?:h|o|s|v|hidden|overlay|scroll|visible)',
+          values: {
+            h: 'hidden', o: 'overlay', s: 'scroll', v: 'visible',
+            hidden: 'hidden', overlay: 'overlay', scroll: 'scroll', visible: 'visible'
+          },
+          examples: ['h', 'visible'],
           getValue: getValueFromValues
         };
         cssist.value_sets.position_kind = {
-          regex: '(?:s|a|f|r)',
-          values: { s: 'static', a: 'absolute', f: 'fixed', r: 'relative' },
-          examples: ['s', 'r'],
+          regex: '(?:s|a|f|r|static|absolute|fixed|relative)',
+          values: {
+            s: 'static', a: 'absolute', f: 'fixed', r: 'relative',
+            static: 'static', absolute: 'absolute', fixed: 'fixed', relative: 'relative'
+          },
+          examples: ['s', 'relative'],
           getValue: getValueFromValues
         };
         cssist.value_sets.text_overflow_kind = {
-          regex: '(?:c|e|s)',
-          values: { c: 'clip', e: 'ellipsis', s: 'string' },
+          regex: '(?:c|e|s|clip|ellipsis|string)',
+          values: {
+            c: 'clip', e: 'ellipsis', s: 'string',
+            clip: 'clip', ellipsis: 'ellipsis', string: 'string'
+          },
           examples: ['c', 's'],
           getValue: getValueFromValues
         };
         cssist.value_sets.text_align_kind = {
-          regex: '(?:l|r|c|j)',
-          values: { l: 'left', r: 'right', c: 'center', j: 'justify' },
+          regex: '(?:l|r|c|j|left|right|center|justify)',
+          values: {
+            l: 'left', r: 'right', c: 'center', j: 'justify',
+            left: 'left', right: 'right', center: 'center', justify: 'justify'
+          },
           examples: ['l', 'j'],
           getValue: getValueFromValues
         };
         cssist.value_sets.thick_kind = {
-          regex: '(?:m|tn|tk)',
+          regex: '(?:m|tn|tk|medium|thin|thick)',
           values: { m: 'medium', tn: 'thin', tk:'thick' },
           examples: ['m', 'tk'],
           getValue: getValueFromValues
         };
         cssist.value_sets.transition_timing_function_kind = {
-          regex: '(?:l|e|ei|eo|eio|ss|se)',
+          regex: '(?:l|e|ei|eo|eio|ss|se|linear|ease|ease_in|ease_out|ease_in_out|step_start|step_end)',
           values: { l: 'linear', e: 'ease', ei: 'ease-in', eo: 'ease-out', eio: 'ease-in-out', ss: 'step-start', se: 'step-end',  },
           examples: ['l', 'se'],
           getValue: getValueFromValues
         };
         cssist.value_sets.vertical_align_kind = {
-          regex: '(?:rl|rr|l|r)',
-          values: { be: 'baseline', sb: 'sub', sr: 'super', t: 'top', tt: 'text-top	', m: 'middle', b: 'bottom', tb: 'text-bottom' },
+          regex: '(?:be|sb|sr|t|tt|m|b|tb|baseline|sub|super|top|text_top|middle|bottom|text_bottom)',
+          values: {
+            be: 'baseline', sb: 'sub', sr: 'super', t: 'top', tt: 'text-top	', m: 'middle', b: 'bottom', tb: 'text-bottom',
+            baseline: 'baseline', sub: 'sub', super: 'super', top: 'top', text_top: 'text-top	', middle: 'middle', bottom: 'bottom', text_bottom: 'text-bottom'
+          },
           examples: ['l', 'rr'],
           getValue: getValueFromValues
         };
         cssist.value_sets.visibility_kind = {
-          regex: '(?:v|h|c)',
-          values: { v: 'visible', h: 'hidden', c: 'collapse' },
+          regex: '(?:v|h|c|visible|hidden|collapse)',
+          values: {
+            v: 'visible', h: 'hidden', c: 'collapse',
+            visible: 'visible', hidden: 'hidden', collapse: 'collapse'
+          },
           examples: ['v', 'c'],
           getValue: getValueFromValues
         };
         cssist.value_sets.white_space_kind = {
-          regex: '(?:rl|rr|l|r)',
-          values: { n: 'normal', nw: 'nowrap', p: 'pre', pl: 'pre-line', pw: 'pre-wrap' },
+          regex: '(?:rl|rr|l|r|normal|nowrap|pre|pre_line|pre_wrap)',
+          values: {
+            n: 'normal', nw: 'nowrap', p: 'pre', pl: 'pre-line', pw: 'pre-wrap',
+            normal: 'normal', nowrap: 'nowrap', pre: 'pre', pre_line: 'pre-line', pre_wrap: 'pre-wrap'
+          },
           examples: ['l', 'rr'],
           getValue: getValueFromValues
         };
         cssist.value_sets.word_break_kind = {
-          regex: '(?:n|b|k)',
-          values: { n: 'normal', b: 'break-all', k: 'keep-all' },
+          regex: '(?:n|b|k|normal|break_all|keep_all)',
+          values: {
+            n: 'normal', b: 'break-all', k: 'keep-all',
+            normal: 'normal', break_all: 'break-all', keep_all: 'keep-all'
+          },
           examples: ['n', 'k'],
+          getValue: getValueFromValues
+        };
+        cssist.value_sets.direction_kind = {
+          regex: '(?:l|r|t|b|c|left|right|top|bottom|center)',
+          values: { l: 'left', r: 'right', t: 'top', b: 'bottom', c: 'center', left: 'left', right: 'right', top: 'top', bottom: 'bottom', center: 'center' },
+          examples: ['l', 'center'],
+          getValue: getValueFromValues
+        };
+        cssist.value_sets.direction_2D_kind = {
+          regex: '(?:lt|lc|lb|rt|rc|rb|ct|cc|cb|left_top|left_center|left_bottom|right_top|right_center|right_bottom|center_top|center_center|center_bottom)',
+          values: {
+            lt: 'left top', lc: 'left center', lb: 'left bottom', rt: 'right top', rc: 'right center', rb: 'right bottom', ct: 'center top', cc: 'center center', cb: 'center bottom',
+            left_top: 'left top', left_center: 'left center', left_bottom: 'left bottom', right_top: 'right top', right_center: 'right center', right_bottom: 'right bottom', center_top: 'center top', center_center: 'center center', center_bottom: 'center bottom'
+          },
+          examples: ['lt', 'cc'],
           getValue: getValueFromValues
         };
 
@@ -677,20 +757,6 @@ __webpack_require__(1);
           }
         };
 
-        // DIRECTION
-        cssist.value_sets.direction = {
-          regex: '(?:l|r|t|b|c)',
-          values: { l: 'left', r: 'left', t: 'top', b: 'bottom', c: 'center' },
-          examples: ['l', 'c'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.direction_2D = {
-          regex: '(?:lt|lc|lb|rt|rc|rb|ct|cc|cb)',
-          values: { lt: 'left top', lc: 'left center', lb: 'left bottom', rt: 'right top', rc: 'right center', rb: 'right bottom', ct: 'center top', cc: 'center center', cb: 'center bottom' },
-          examples: ['lt', 'cc'],
-          getValue: getValueFromValues
-        };
-
         // COLOR
         cssist.value_sets.hex_color = {
           regex: '(?:[0-9a-fA-F]{6})',
@@ -713,29 +779,70 @@ __webpack_require__(1);
           }
         };
         cssist.value_sets.google_color = {
-          regex: '(?:rd|pk|pe|dp|io|be|lb|cn|tl|gn|lg|le|yw|ar|oe|de|bn|gy|by|bk|we)(?:[1-9]00|50)?',
+          regex: '(?:red|pink|purple|deeppurple|indigo|blue|lightblue|cyan|teal|green|lightgreen|lime|yellow|amber|orange|deeporange|brown|grey|bluegrey|black|white|rd|pk|pe|dp|io|be|lb|cn|tl|gn|lg|le|yw|ar|oe|de|bn|gy|by|bk|we|)(?:[1-9]00|50)?',
           values: {
             rd:'F44336', rd50: 'FFEBEE', rd100: 'FFCDD2', rd200: 'EF9A9A', rd300: 'E57373', rd400: 'EF5350', rd500: 'F44336', rd600: 'E53935', rd700: 'D32F2F', rd800: 'C62828', rd900: 'B71C1C', //Red
+            red:'F44336', red50: 'FFEBEE', red100: 'FFCDD2', red200: 'EF9A9A', red300: 'E57373', red400: 'EF5350', red500: 'F44336', red600: 'E53935', red700: 'D32F2F', red800: 'C62828', red900: 'B71C1C', //Red
+
             pk:'E91E63', pk50: 'FCE4EC', pk100: 'F8BBD0', pk200: 'F48FB1', pk300: 'F06292', pk400: 'EC407A', pk500: 'E91E63', pk600: 'D81B60', pk700: 'C2185B', pk800: 'AD1457', pk900: '880E4F', //Pink
+            pink:'E91E63', pink50: 'FCE4EC', pink100: 'F8BBD0', pink200: 'F48FB1', pink300: 'F06292', pink400: 'EC407A', pink500: 'E91E63', pink600: 'D81B60', pink700: 'C2185B', pink800: 'AD1457', pink900: '880E4F', //Pink
+
             pe:'9C27B0', pe50: 'F3E5F5', pe100: 'E1BEE7', pe200: 'CE93D8', pe300: 'BA68C8', pe400: 'AB47BC', pe500: '9C27B0', pe600: '8E24AA', pe700: '7B1FA2', pe800: '6A1B9A', pe900: '4A148C', //Purple
+            purple:'9C27B0', purple50: 'F3E5F5', purple100: 'E1BEE7', purple200: 'CE93D8', purple300: 'BA68C8', purple400: 'AB47BC', purple500: '9C27B0', purple600: '8E24AA', purple700: '7B1FA2', purple800: '6A1B9A', purple900: '4A148C', //Purple
+
             dp:'673AB7', dp50: 'EDE7F6', dp100: 'D1C4E9', dp200: 'B39DDB', dp300: '9575CD', dp400: '7E57C2', dp500: '673AB7', dp600: '5E35B1', dp700: '512DA8', dp800: '4527A0', dp900: '311B92', //Deep Purple
+            deeppurple:'673AB7', deeppurple50: 'EDE7F6', deeppurple100: 'D1C4E9', deeppurple200: 'B39DDB', deeppurple300: '9575CD', deeppurple400: '7E57C2', deeppurple500: '673AB7', deeppurple600: '5E35B1', deeppurple700: '512DA8', deeppurple800: '4527A0', deeppurple900: '311B92', //Deep Purple
+
             io:'3F51B5', io50: 'E8EAF6', io100: 'C5CAE9', io200: '9FA8DA', io300: '7986CB', io400: '5C6BC0', io500: '3F51B5', io600: '3949AB', io700: '303F9F', io800: '283593', io900: '1A237E', //Indigo
+            indigo:'3F51B5', indigo50: 'E8EAF6', indigo100: 'C5CAE9', indigo200: '9FA8DA', indigo300: '7986CB', indigo400: '5C6BC0', indigo500: '3F51B5', indigo600: '3949AB', indigo700: '303F9F', indigo800: '283593', indigo900: '1A237E', //Indigo
+
             be:'2196F3', be50: 'E3F2FD', be100: 'BBDEFB', be200: '90CAF9', be300: '64B5F6', be400: '42A5F5', be500: '2196F3', be600: '1E88E5', be700: '1976D2', be800: '1565C0', be900: '0D47A1', //Blue
+            blue:'2196F3', blue50: 'E3F2FD', blue100: 'BBDEFB', blue200: '90CAF9', blue300: '64B5F6', blue400: '42A5F5', blue500: '2196F3', blue600: '1E88E5', blue700: '1976D2', blue800: '1565C0', blue900: '0D47A1', //Blue
+
             lb:'03A9F4', lb50: 'E1F5FE', lb100: 'B3E5FC', lb200: '81D4FA', lb300: '4FC3F7', lb400: '29B6F6', lb500: '03A9F4', lb600: '039BE5', lb700: '0288D1', lb800: '0277BD', lb900: '01579B', //Light Blue
+            lightblue:'03A9F4', lightblue50: 'E1F5FE', lightblue100: 'B3E5FC', lightblue200: '81D4FA', lightblue300: '4FC3F7', lightblue400: '29B6F6', lightblue500: '03A9F4', lightblue600: '039BE5', lightblue700: '0288D1', lightblue800: '0277BD', lightblue900: '01579B', //Light Blue
+
             cn:'00BCD4', cn50: 'E0F7FA', cn100: 'B2EBF2', cn200: '80DEEA', cn300: '4DD0E1', cn400: '26C6DA', cn500: '00BCD4', cn600: '00ACC1', cn700: '0097A7', cn800: '00838F', cn900: '006064', //Cyan
+            cyan:'00BCD4', cyan50: 'E0F7FA', cyan100: 'B2EBF2', cyan200: '80DEEA', cyan300: '4DD0E1', cyan400: '26C6DA', cyan500: '00BCD4', cyan600: '00ACC1', cyan700: '0097A7', cyan800: '00838F', cyan900: '006064', //Cyan
+
             tl:'009688', tl50: 'E0F2F1', tl100: 'B2DFDB', tl200: '80CBC4', tl300: '4DB6AC', tl400: '26A69A', tl500: '009688', tl600: '00897B', tl700: '00796B', tl800: '00695C', tl900: '004D40', //Teal
+            teal:'009688', teal50: 'E0F2F1', teal100: 'B2DFDB', teal200: '80CBC4', teal300: '4DB6AC', teal400: '26A69A', teal500: '009688', teal600: '00897B', teal700: '00796B', teal800: '00695C', teal900: '004D40', //Teal
+
             gn:'4CAF50', gn50: 'E8F5E9', gn100: 'C8E6C9', gn200: 'A5D6A7', gn300: '81C784', gn400: '66BB6A', gn500: '4CAF50', gn600: '43A047', gn700: '388E3C', gn800: '2E7D32', gn900: '1B5E20', //Green
+            green:'4CAF50', green50: 'E8F5E9', green100: 'C8E6C9', green200: 'A5D6A7', green300: '81C784', green400: '66BB6A', green500: '4CAF50', green600: '43A047', green700: '388E3C', green800: '2E7D32', green900: '1B5E20', //Green
+
             lg:'8BC34A', lg50: 'F1F8E9', lg100: 'DCEDC8', lg200: 'C5E1A5', lg300: 'AED581', lg400: '9CCC65', lg500: '8BC34A', lg600: '7CB342', lg700: '689F38', lg800: '558B2F', lg900: '33691E', //Light Green
+            lightgreen:'8BC34A', lightgreen50: 'F1F8E9', lightgreen100: 'DCEDC8', lightgreen200: 'C5E1A5', lightgreen300: 'AED581', lightgreen400: '9CCC65', lightgreen500: '8BC34A', lightgreen600: '7CB342', lightgreen700: '689F38', lightgreen800: '558B2F', lightgreen900: '33691E', //Light Green
+
             le:'CDDC39', le50: 'F9FBE7', le100: 'F0F4C3', le200: 'E6EE9C', le300: 'DCE775', le400: 'D4E157', le500: 'CDDC39', le600: 'C0CA33', le700: 'AFB42B', le800: '9E9D24', le900: '827717', //Lime
+            lime:'CDDC39', lime50: 'F9FBE7', lime100: 'F0F4C3', lime200: 'E6EE9C', lime300: 'DCE775', lime400: 'D4E157', lime500: 'CDDC39', lime600: 'C0CA33', lime700: 'AFB42B', lime800: '9E9D24', lime900: '827717', //Lime
+
             yw:'FFEB3B', yw50: 'FFFDE7', yw100: 'FFF9C4', yw200: 'FFF59D', yw300: 'FFF176', yw400: 'FFEE58', yw500: 'FFEB3B', yw600: 'FDD835', yw700: 'FBC02D', yw800: 'F9A825', yw900: 'F57F17', //Yellow
+            yellow:'FFEB3B', yellow50: 'FFFDE7', yellow100: 'FFF9C4', yellow200: 'FFF59D', yellow300: 'FFF176', yellow400: 'FFEE58', yellow500: 'FFEB3B', yellow600: 'FDD835', yellow700: 'FBC02D', yellow800: 'F9A825', yellow900: 'F57F17', //Yellow
+
             ar:'FFC107', ar50: 'FFF8E1', ar100: 'FFECB3', ar200: 'FFE082', ar300: 'FFD54F', ar400: 'FFCA28', ar500: 'FFC107', ar600: 'FFB300', ar700: 'FFA000', ar800: 'FF8F00', ar900: 'FF6F00', //Amber
+            amber:'FFC107', amber50: 'FFF8E1', amber100: 'FFECB3', amber200: 'FFE082', amber300: 'FFD54F', amber400: 'FFCA28', amber500: 'FFC107', amber600: 'FFB300', amber700: 'FFA000', amber800: 'FF8F00', amber900: 'FF6F00', //Amber
+
             oe:'FF9800', oe50: 'FFF3E0', oe100: 'FFE0B2', oe200: 'FFCC80', oe300: 'FFB74D', oe400: 'FFA726', oe500: 'FF9800', oe600: 'FB8C00', oe700: 'F57C00', oe800: 'EF6C00', oe900: 'E65100', //Orange
+            orange:'FF9800', orange50: 'FFF3E0', orange100: 'FFE0B2', orange200: 'FFCC80', orange300: 'FFB74D', orange400: 'FFA726', orange500: 'FF9800', orange600: 'FB8C00', orange700: 'F57C00', orange800: 'EF6C00', orange900: 'E65100', //Orange
+
             de:'FF5722', de50: 'FBE9E7', de100: 'FFCCBC', de200: 'FFAB91', de300: 'FF8A65', de400: 'FF7043', de500: 'FF5722', de600: 'F4511E', de700: 'E64A19', de800: 'D84315', de900: 'BF360C', //Deep Orange
+            deeporange:'FF5722', deeporange50: 'FBE9E7', deeporange100: 'FFCCBC', deeporange200: 'FFAB91', deeporange300: 'FF8A65', deeporange400: 'FF7043', deeporange500: 'FF5722', deeporange600: 'F4511E', deeporange700: 'E64A19', deeporange800: 'D84315', deeporange900: 'BF360C', //Deep Orange
+
             bn:'795548', bn50: 'EFEBE9', bn100: 'D7CCC8', bn200: 'BCAAA4', bn300: 'A1887F', bn400: '8D6E63', bn500: '795548', bn600: '6D4C41', bn700: '5D4037', bn800: '4E342E', bn900: '3E2723', //Brown
+            brown:'795548', brown50: 'EFEBE9', brown100: 'D7CCC8', brown200: 'BCAAA4', brown300: 'A1887F', brown400: '8D6E63', brown500: '795548', brown600: '6D4C41', brown700: '5D4037', brown800: '4E342E', brown900: '3E2723', //Brown
+
             gy:'9E9E9E', gy50: 'FAFAFA', gy100: 'F5F5F5', gy200: 'EEEEEE', gy300: 'E0E0E0', gy400: 'BDBDBD', gy500: '9E9E9E', gy600: '757575', gy700: '616161', gy800: '424242', gy900: '212121', //Grey
+            grey:'9E9E9E', grey50: 'FAFAFA', grey100: 'F5F5F5', grey200: 'EEEEEE', grey300: 'E0E0E0', grey400: 'BDBDBD', grey500: '9E9E9E', grey600: '757575', grey700: '616161', grey800: '424242', grey900: '212121', //Grey
+
             by:'607D8B', by50: 'ECEFF1', by100: 'CFD8DC', by200: 'B0BEC5', by300: '90A4AE', by400: '78909C', by500: '607D8B', by600: '546E7A', by700: '455A64', by800: '37474F', by900: '263238', //Blue Grey
+            bluegrey:'607D8B', bluegrey50: 'ECEFF1', bluegrey100: 'CFD8DC', bluegrey200: 'B0BEC5', bluegrey300: '90A4AE', bluegrey400: '78909C', bluegrey500: '607D8B', bluegrey600: '546E7A', bluegrey700: '455A64', bluegrey800: '37474F', bluegrey900: '263238', //Blue Grey
+
             bk:'000000', //Black
-            we:'FFFFFF' //White
+            black:'000000', //Black
+
+            we:'FFFFFF', //White
+            white:'FFFFFF' //White
           },
           examples: ['yw', 'rd500'],
           getValue: function(value){
@@ -879,6 +986,9 @@ __webpack_require__(1);
       function initializePropertySets(){
         cssist.property_sets = [
           {
+            properties: { an:'animation-iteration-count' },
+            value_sets: [cssist.value_sets.integer_0, cssist.value_sets.infinite, cssist.value_sets.initial, cssist.value_sets.inherit]
+          },{
             properties: { b:'background' },
             value_sets: [cssist.value_sets.rgba_color, cssist.value_sets.gradient, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
@@ -898,7 +1008,7 @@ __webpack_require__(1);
             value_sets: [cssist.value_sets.auto, cssist.value_sets.length_calc_2D, cssist.value_sets.background_size_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { bp:'background-position' },
-            value_sets: [cssist.value_sets.direction_2D, cssist.value_sets.length_calc_2D, cssist.value_sets.initial, cssist.value_sets.inherit]
+            value_sets: [cssist.value_sets.direction_2D_kind, cssist.value_sets.length_calc_2D, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: {
               c: 'color', pc: 'placeholder',
@@ -1012,10 +1122,10 @@ __webpack_require__(1);
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-__webpack_require__(4);
+__webpack_require__(5);
 __webpack_require__(1);
 (function(){
   if (typeof(MutationObserver) !== 'undefined') {
@@ -1070,46 +1180,10 @@ __webpack_require__(1);
 
 
 /***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-window.cssist={};
-__webpack_require__(2);
-__webpack_require__(7);
-cssist.watch.start();
-
-
-/***/ },
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(8);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// add the styles to the DOM
-var update = __webpack_require__(10)(content, {});
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../../node_modules/css-loader/index.js!./cssist.css", function() {
-			var newContent = require("!!../../../../node_modules/css-loader/index.js!./cssist.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(9)(undefined);
+exports = module.exports = __webpack_require__(8)(undefined);
 // imports
 
 
@@ -1120,7 +1194,7 @@ exports.push([module.i, "/*Basic Css*/\n\n/* Remove the margin */\n* {\n\tmargin
 
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports) {
 
 /*
@@ -1202,7 +1276,7 @@ function toComment(sourceMap) {
 
 
 /***/ },
-/* 10 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 /*
@@ -1239,7 +1313,7 @@ var stylesInDom = {},
 	singletonElement = null,
 	singletonCounter = 0,
 	styleElementsInsertedAtTop = [],
-	fixUrls = __webpack_require__(11);
+	fixUrls = __webpack_require__(10);
 
 module.exports = function(list, options) {
 	if(typeof DEBUG !== "undefined" && DEBUG) {
@@ -1498,7 +1572,7 @@ function updateLink(linkElement, options, obj) {
 
 
 /***/ },
-/* 11 */
+/* 10 */
 /***/ function(module, exports) {
 
 
@@ -1590,6 +1664,16 @@ module.exports = function (css) {
 	// send back the fixed css
 	return fixedCss;
 };
+
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+window.cssist={};
+__webpack_require__(2);
+__webpack_require__(3);
+cssist.watch.start();
 
 
 /***/ }
