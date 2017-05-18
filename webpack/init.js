@@ -4,7 +4,6 @@ require("./make.js");
     settings : function(){
 
       var VERSION = '0.0.2';
-      console.log(localStorage);
       if( localStorage && localStorage['cssist_VERSION'] && localStorage['cssist_VERSION']==VERSION ){
         cssist.csses = JSON.parse(localStorage['cssist_CSSES']);
         cssist.classes = JSON.parse(localStorage['cssist_CLASSES']);
