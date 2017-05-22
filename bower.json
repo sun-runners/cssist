@@ -14,8 +14,9 @@
     "bower_components",
     "scripts",
     "cssist_webpack.js",
-    "webpack.config.js"
-    "docs"
+    "webpack.config.js",
+    "docs",
+    "webpack"
   ],
   "dependencies": {
     "animate.css": "^3.5.2",
