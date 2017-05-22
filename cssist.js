@@ -198,6 +198,8 @@ __webpack_require__(0);
       else return false;
   	},
     sheet : function(suffix){
+      console.log('sheet');
+      console.log(suffix);
       var style = document.createElement("STYLE");
       var media = 'all';
       var media_queries = cssist.convert.mediaQueryCodes2mediaQueries(suffix);
@@ -356,7 +358,6 @@ __webpack_require__(1);
     settings : function(){
 
       var VERSION = '0.0.2';
-      console.log(localStorage);
       if( localStorage && localStorage['cssist_VERSION'] && localStorage['cssist_VERSION']==VERSION ){
         cssist.csses = JSON.parse(localStorage['cssist_CSSES']);
         cssist.classes = JSON.parse(localStorage['cssist_CLASSES']);
@@ -796,7 +797,7 @@ __webpack_require__(1);
 
         // COLOR
         cssist.value_sets.hex_color = {
-          regex: '(?:[0-9a-fA-F]{6})',
+          regex: '(?:[0-9A-F]{6})',
           examples: ['000000', 'aaaaaa', 'FFFFFF'],
           getValue: function(value){
             var result = 'rgba(';
@@ -1034,6 +1035,9 @@ __webpack_require__(1);
             properties: { bi:'background-image', background_image:'background-image' },
             value_sets: [cssist.value_sets.url, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
+            properties: { bs:'background-size', background_size:'background-size' },
+            value_sets: [cssist.value_sets.auto, cssist.value_sets.length_calc_2D, cssist.value_sets.background_size_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
+          },{
             properties: { bs:'box-shadow', ts:'text-shadow', box_shadow:'box-shadow', text_shadow:'text-shadow' },
             value_sets: [cssist.value_sets.shadow]
           },{
@@ -1045,9 +1049,6 @@ __webpack_require__(1);
               border_width:'border-width', border_top_width:'border-top-width', border_bottom_width:'border-bottom-width', border_left_width:'border-left-width', border_right_width:'border-right-width'
             },
             value_sets: [cssist.value_sets.length_calc, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit, cssist.value_sets.thick_kind]
-          },{
-            properties: { bs:'background-size', background_size:'background-size' },
-            value_sets: [cssist.value_sets.auto, cssist.value_sets.length_calc_2D, cssist.value_sets.background_size_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { bp:'background-position', background_position:'background-position' },
             value_sets: [cssist.value_sets.direction_2D_kind, cssist.value_sets.length_calc_2D, cssist.value_sets.initial, cssist.value_sets.inherit]
@@ -1065,9 +1066,6 @@ __webpack_require__(1);
           },{
             properties: { d:'display', display:'display' },
             value_sets: [cssist.value_sets.display_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
-          },{
-            properties: { p:'position', position:'position' },
-            value_sets: [cssist.value_sets.position_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { f:'float', float:'float' },
             value_sets: [cssist.value_sets.none, cssist.value_sets.float_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
@@ -1095,6 +1093,9 @@ __webpack_require__(1);
           },{
             properties: { o:'overflow', ox:'overflow-x', oy:'overflow-y', overflow:'overflow', overflow_x:'overflow-x', overflow_y:'overflow-y' },
             value_sets: [cssist.value_sets.overflow_kind, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit]
+          },{
+            properties: { p:'position', position:'position' },
+            value_sets: [cssist.value_sets.position_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: {
               p:'padding', pb:'padding-bottom', pl:'padding-left', pr:'padding-right', pt:'padding-top',
@@ -1249,7 +1250,7 @@ exports = module.exports = __webpack_require__(8)(undefined);
 
 
 // module
-exports.push([module.i, "/*Basic Css*/\n\n/* Remove the margin */\n* {\n\tmargin: 0;\n\tpadding: 0;\n\tborder: 0;\n\tfont-size: 100%;\n\tfont: inherit;\n  background: none;\n\tbox-shadow: none;\n  vertical-align: baseline;\n\t-ms-touch-action: manipulation;\n\ttouch-action: manipulation;\n\t-webkit-box-sizing: border-box;\n\t-moz-box-sizing: border-box;\n\tbox-sizing: border-box;\n\tborder-style: solid;\n}\n\n/* Remove outline */\n*:focus, *:active {\n\t\toutline: none !important;\n}\n\n/* Set default font family */\nhtml {\n  /*font-family: sans-serif;*/\n  -ms-text-size-adjust: 100%;\n  -webkit-text-size-adjust: 100%;\n}\n\n/* Correct display */\narticle, aside, details, figcaption, figure, footer, header, main, menu, nav, section, summary {\n  display: block;\n}\naudio, canvas, progress, video {\n  display: inline-block;\n}\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\ntemplate, [hidden] {\n  display: none;\n}\n\n/* Correct vertical alignment */\nprogress {\n  vertical-align: baseline;\n}\n\n/* Correct link */\na {\n  background-color: transparent;\n  -webkit-text-decoration-skip: objects;\n}\na:active, a:hover {\n  outline-width: 0;\n}\n\n/* Correct text */\nabbr[title] {\n  border-bottom: none;\n  text-decoration: underline;\n  text-decoration: underline dotted;\n}\nb, strong {\n  font-weight: inherit;\n}\nb, strong {\n  font-weight: bolder;\n}\ndfn {\n  font-style: italic;\n}\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\nmark {\n  background-color: #ff0;\n  color: #000;\n}\nsmall {\n  font-size: 80%;\n}\nsub, sup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\nsub {\n  bottom: -0.25em;\n}\nsup {\n  top: -0.5em;\n}\n\n/* Correct embedded content */\nimg {\n  border-style: none;\n}\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Correct grouping content */\ncode, kbd, pre, samp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\nfigure {\n  margin: 1em 40px;\n}\nhr {\n  box-sizing: content-box;\n  height: 0;\n  overflow: visible;\n}\n\n/* Correct forms */\nbutton, input, select, textarea {\n  font: inherit;\n  margin: 0;\n}\noptgroup {\n  font-weight: bold;\n}\nbutton, input {\n  overflow: visible;\n}\nbutton, select {\n  text-transform: none;\n}\nbutton, html [type=\"button\"], [type=\"reset\"], [type=\"submit\"] {\n  -webkit-appearance: button;\n}\nbutton::-moz-focus-inner, [type=\"button\"]::-moz-focus-inner, [type=\"reset\"]::-moz-focus-inner, [type=\"submit\"]::-moz-focus-inner {\n  border-style: none;\n  padding: 0;\n}\nbutton:-moz-focusring, [type=\"button\"]:-moz-focusring, [type=\"reset\"]:-moz-focusring, [type=\"submit\"]:-moz-focusring {\n  outline: 1px dotted ButtonText;\n}\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\nlegend {\n  box-sizing: border-box;\n  color: inherit;\n  display: table;\n  max-width: 100%;\n  padding: 0;\n  white-space: normal;\n}\ntextarea {\n  overflow: auto;\n}\n[type=\"checkbox\"], [type=\"radio\"] {\n  box-sizing: border-box;\n  padding: 0;\n}\n[type=\"number\"]::-webkit-inner-spin-button, [type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n[type=\"search\"] {\n  -webkit-appearance: textfield;\n  outline-offset: -2px;\n}\n[type=\"search\"]::-webkit-search-cancel-button, [type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n::-webkit-input-placeholder {\n  color: inherit;\n  opacity: 0.54;\n}\n::-webkit-file-upload-button {\n  -webkit-appearance: button;\n  font: inherit;\n}\ndiv, button, span, input, textarea, img {\n\tdisplay: block;\n\tposition: relative;\n\tfloat: left;\n}\ni {\n\tposition: relative;\n}\nth, td {\n  vertical-align: middle;\n}\n.cen {\n\tposition: relative;\n\tfloat: left;\n  top: 50%;\n  left:50%;\n\ttransform: translate(-50%, -50%);\n  -webkit-transform: translate(-50%, -50%);\n  -ms-transform: translate(-50%, -50%);\n  -moz-transform: translate(-50%, -50%);\n  -o-transform: translate(-50%, -50%);\n}\n.cen-x {\n\tposition: relative;\n\tfloat: left;\n  left: 50%;\n  transform: translateX(-50%);\n  -webkit-transform: translateX(-50%);\n  -ms-transform: translateX(-50%);\n  -moz-transform: translateX(-50%);\n  -o-transform: translateX(-50%);\n}\n.cen-y {\n\tposition: relative;\n\tfloat: left;\n  top: 50%;\n  transform: translateY(-50%);\n  -webkit-transform: translateY(-50%);\n  -ms-transform: translateY(-50%);\n  -moz-transform: translateY(-50%);\n  -o-transform: translateY(-50%);\n}\n.b-img {\n\tbackground-size: cover;\n\t-webkit-background-size: cover;\n\t-moz-background-size: cover;\n\t-o-background-size: cover;\n\tbackground-repeat: no-repeat;\n\tbackground-position: center center;\n\tobject-fit: cover;\n\t-webkit-object-fit: cover;\n\t-ms-object-fit: cover;\n\t-moz-object-fit: cover;\n\t-o-object-fit: cover;\n}\n", ""]);
+exports.push([module.i, "/*Reset Css*/\n\n/* Remove the margin */\n* {\n\tmargin: 0;\n\tpadding: 0;\n\tborder: 0;\n\tfont-size: 100%;\n\tfont: inherit;\n  background: none;\n\tbox-shadow: none;\n  vertical-align: baseline;\n\t-ms-touch-action: manipulation;\n\ttouch-action: manipulation;\n\t-webkit-box-sizing: border-box;\n\t-moz-box-sizing: border-box;\n\tbox-sizing: border-box;\n\tborder-style: solid;\n}\n\n/* Remove outline */\n*:focus, *:active {\n\t\toutline: none !important;\n}\n\n/* Set default font family */\nhtml {\n  /*font-family: sans-serif;*/\n  -ms-text-size-adjust: 100%;\n  -webkit-text-size-adjust: 100%;\n}\n\n/* Correct display */\narticle, aside, details, figcaption, figure, footer, header, main, menu, nav, section, summary {\n  display: block;\n}\naudio, canvas, progress, video {\n  display: inline-block;\n}\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\ntemplate, [hidden] {\n  display: none;\n}\n\n/* Correct vertical alignment */\nprogress {\n  vertical-align: baseline;\n}\n\n/* Correct link */\na {\n  background-color: transparent;\n  -webkit-text-decoration-skip: objects;\n}\na:active, a:hover {\n  outline-width: 0;\n}\n\n/* Correct text */\nabbr[title] {\n  border-bottom: none;\n  text-decoration: underline;\n  text-decoration: underline dotted;\n}\nb, strong {\n  font-weight: inherit;\n}\nb, strong {\n  font-weight: bolder;\n}\ndfn {\n  font-style: italic;\n}\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\nmark {\n  background-color: #ff0;\n  color: #000;\n}\nsmall {\n  font-size: 80%;\n}\nsub, sup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\nsub {\n  bottom: -0.25em;\n}\nsup {\n  top: -0.5em;\n}\n\n/* Correct embedded content */\nimg {\n  border-style: none;\n}\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Correct grouping content */\ncode, kbd, pre, samp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\nfigure {\n  margin: 1em 40px;\n}\nhr {\n  box-sizing: content-box;\n  height: 0;\n  overflow: visible;\n}\n\n/* Correct forms */\nbutton, input, select, textarea {\n  font: inherit;\n  margin: 0;\n}\noptgroup {\n  font-weight: bold;\n}\nbutton, input {\n  overflow: visible;\n}\nbutton, select {\n  text-transform: none;\n}\nbutton, html [type=\"button\"], [type=\"reset\"], [type=\"submit\"] {\n  -webkit-appearance: button;\n}\nbutton::-moz-focus-inner, [type=\"button\"]::-moz-focus-inner, [type=\"reset\"]::-moz-focus-inner, [type=\"submit\"]::-moz-focus-inner {\n  border-style: none;\n  padding: 0;\n}\nbutton:-moz-focusring, [type=\"button\"]:-moz-focusring, [type=\"reset\"]:-moz-focusring, [type=\"submit\"]:-moz-focusring {\n  outline: 1px dotted ButtonText;\n}\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\nlegend {\n  box-sizing: border-box;\n  color: inherit;\n  display: table;\n  max-width: 100%;\n  padding: 0;\n  white-space: normal;\n}\ntextarea {\n  overflow: auto;\n}\n[type=\"checkbox\"], [type=\"radio\"] {\n  box-sizing: border-box;\n  padding: 0;\n}\n[type=\"number\"]::-webkit-inner-spin-button, [type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n[type=\"search\"] {\n  -webkit-appearance: textfield;\n  outline-offset: -2px;\n}\n[type=\"search\"]::-webkit-search-cancel-button, [type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n::-webkit-input-placeholder {\n  color: inherit;\n  opacity: 0.54;\n}\n::-webkit-file-upload-button {\n  -webkit-appearance: button;\n  font: inherit;\n}\ndiv, button, span, input, textarea, img {\n\tdisplay: block;\n\tposition: relative;\n\tfloat: left;\n}\ni {\n\tposition: relative;\n}\nth, td {\n  vertical-align: middle;\n}\n.cen {\n  top: 50%;\n  left:50%;\n\ttransform: translate(-50%, -50%);\n  -webkit-transform: translate(-50%, -50%);\n  -ms-transform: translate(-50%, -50%);\n  -moz-transform: translate(-50%, -50%);\n  -o-transform: translate(-50%, -50%);\n}\n.cen-x {\n  left: 50%;\n  transform: translateX(-50%);\n  -webkit-transform: translateX(-50%);\n  -ms-transform: translateX(-50%);\n  -moz-transform: translateX(-50%);\n  -o-transform: translateX(-50%);\n}\n.cen-y {\n  top: 50%;\n  transform: translateY(-50%);\n  -webkit-transform: translateY(-50%);\n  -ms-transform: translateY(-50%);\n  -moz-transform: translateY(-50%);\n  -o-transform: translateY(-50%);\n}\n.b-img {\n\tbackground-size: cover;\n\t-webkit-background-size: cover;\n\t-moz-background-size: cover;\n\t-o-background-size: cover;\n\tbackground-repeat: no-repeat;\n\tbackground-position: center center;\n\tobject-fit: cover;\n\t-webkit-object-fit: cover;\n\t-ms-object-fit: cover;\n\t-moz-object-fit: cover;\n\t-o-object-fit: cover;\n}\n", ""]);
 
 // exports
 

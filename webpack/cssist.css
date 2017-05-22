@@ -1,4 +1,4 @@
-/*Basic Css*/
+/*Reset Css*/
 
 /* Remove the margin */
 * {
@@ -194,8 +194,6 @@ th, td {
   vertical-align: middle;
 }
 .cen {
-	position: relative;
-	float: left;
   top: 50%;
   left:50%;
 	transform: translate(-50%, -50%);
@@ -205,8 +203,6 @@ th, td {
   -o-transform: translate(-50%, -50%);
 }
 .cen-x {
-	position: relative;
-	float: left;
   left: 50%;
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
@@ -215,8 +211,6 @@ th, td {
   -o-transform: translateX(-50%);
 }
 .cen-y {
-	position: relative;
-	float: left;
   top: 50%;
   transform: translateY(-50%);
   -webkit-transform: translateY(-50%);

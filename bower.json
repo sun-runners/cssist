@@ -17,6 +17,7 @@
     "webpack.config.js"
   ],
   "dependencies": {
-    "animate.css": "^3.5.2"
+    "animate.css": "^3.5.2",
+    "downloadjs": "^1.4.7"
   }
 }

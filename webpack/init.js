@@ -443,7 +443,7 @@ require("./make.js");
 
         // COLOR
         cssist.value_sets.hex_color = {
-          regex: '(?:[0-9a-fA-F]{6})',
+          regex: '(?:[0-9A-F]{6})',
           examples: ['000000', 'aaaaaa', 'FFFFFF'],
           getValue: function(value){
             var result = 'rgba(';
@@ -681,6 +681,9 @@ require("./make.js");
             properties: { bi:'background-image', background_image:'background-image' },
             value_sets: [cssist.value_sets.url, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
+            properties: { bs:'background-size', background_size:'background-size' },
+            value_sets: [cssist.value_sets.auto, cssist.value_sets.length_calc_2D, cssist.value_sets.background_size_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
+          },{
             properties: { bs:'box-shadow', ts:'text-shadow', box_shadow:'box-shadow', text_shadow:'text-shadow' },
             value_sets: [cssist.value_sets.shadow]
           },{
@@ -692,9 +695,6 @@ require("./make.js");
               border_width:'border-width', border_top_width:'border-top-width', border_bottom_width:'border-bottom-width', border_left_width:'border-left-width', border_right_width:'border-right-width'
             },
             value_sets: [cssist.value_sets.length_calc, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit, cssist.value_sets.thick_kind]
-          },{
-            properties: { bs:'background-size', background_size:'background-size' },
-            value_sets: [cssist.value_sets.auto, cssist.value_sets.length_calc_2D, cssist.value_sets.background_size_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { bp:'background-position', background_position:'background-position' },
             value_sets: [cssist.value_sets.direction_2D_kind, cssist.value_sets.length_calc_2D, cssist.value_sets.initial, cssist.value_sets.inherit]
@@ -712,9 +712,6 @@ require("./make.js");
           },{
             properties: { d:'display', display:'display' },
             value_sets: [cssist.value_sets.display_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
-          },{
-            properties: { p:'position', position:'position' },
-            value_sets: [cssist.value_sets.position_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { f:'float', float:'float' },
             value_sets: [cssist.value_sets.none, cssist.value_sets.float_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
@@ -742,6 +739,9 @@ require("./make.js");
           },{
             properties: { o:'overflow', ox:'overflow-x', oy:'overflow-y', overflow:'overflow', overflow_x:'overflow-x', overflow_y:'overflow-y' },
             value_sets: [cssist.value_sets.overflow_kind, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit]
+          },{
+            properties: { p:'position', position:'position' },
+            value_sets: [cssist.value_sets.position_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: {
               p:'padding', pb:'padding-bottom', pl:'padding-left', pr:'padding-right', pt:'padding-top',

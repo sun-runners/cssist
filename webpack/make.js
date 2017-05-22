@@ -29,6 +29,8 @@ require("./convert.js");
       else return false;
   	},
     sheet : function(suffix){
+      console.log('sheet');
+      console.log(suffix);
       var style = document.createElement("STYLE");
       var media = 'all';
       var media_queries = cssist.convert.mediaQueryCodes2mediaQueries(suffix);
