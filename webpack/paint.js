@@ -24,8 +24,10 @@ require("./make.js");
         if(cssist.get.styleElement().innerHTML.indexOf('.'+class_name+' {')==-1
           &&cssist.get.styleElement().innerHTML.indexOf('.'+class_name+':')==-1
           &&cssist.classes_success.indexOf(class_name)==-1
-          &&cssist.classes_fail.indexOf(class_name)==-1
+          &&cssist.classes_fail.indexOf()==-1
+          &&['cen', 'cen-x', 'cen-y', 'b-img'].indexOf(class_name)==-1
         ){
+          console.log(class_name);
           var result = cssist.make.classToStyleSheet(class_name);
           if(result) cssist.classes_success.push(class_name);
           else cssist.classes_fail.push(class_name);

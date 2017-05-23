@@ -3,7 +3,7 @@ require("./make.js");
   cssist.init = {
     settings : function(){
 
-      var VERSION = '0.0.2';
+      var VERSION = '0.0.3';
       if( localStorage
       && localStorage['cssist_VERSION']
       && localStorage['cssist_VERSION']==VERSION
