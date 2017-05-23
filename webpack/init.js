@@ -3,17 +3,17 @@ require("./make.js");
   cssist.init = {
     settings : function(){
 
-      var VERSION = '0.0.3';
+      cssist.VERSION = '0.0.3';
       if( localStorage
       && localStorage['cssist_VERSION']
-      && localStorage['cssist_VERSION']==VERSION
+      && localStorage['cssist_VERSION']==cssist.VERSION
       && localStorage['cssist_style'] ){
         var style_element = cssist.get.styleElement();
         style_element.innerHTML = JSON.parse(localStorage['cssist_style']);
       }
       else{
         if(localStorage){
-          localStorage['cssist_VERSION'] = VERSION;
+          localStorage['cssist_VERSION'] = cssist.VERSION;
           localStorage.removeItem('cssist_style');
         }
       }

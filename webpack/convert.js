@@ -41,10 +41,10 @@
     mediaQueryCode2mediaQuery : function(media_query_code){
       if(!media_query_code) return null;
       var media_query = {};
-      if(media_query_code.match(/^XH/)) media_query.key = 'max_height';
-      else if(media_query_code.match(/^NH/)) media_query.key = 'min_height';
-      else if(media_query_code.match(/^XW/)||media_query_code.match(/^X/)) media_query.key = 'max_width';
-      else if(media_query_code.match(/^NW/)||media_query_code.match(/^N/)) media_query.key = 'min_width';
+      if(media_query_code.match(/^XW[0-9]+/)||media_query_code.match(/^X[0-9]+/)) media_query.key = 'max_width';
+      else if(media_query_code.match(/^NW[0-9]+/)||media_query_code.match(/^N[0-9]+/)) media_query.key = 'min_width';
+      else if(media_query_code.match(/^XH[0-9]+/)) media_query.key = 'max_height';
+      else if(media_query_code.match(/^NH[0-9]+/)) media_query.key = 'min_height';
       else return null;
       media_query.value = media_query_code.match(/[0-9]+$/)[0]+'px';
       return media_query;

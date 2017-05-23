@@ -111,10 +111,10 @@
     mediaQueryCode2mediaQuery : function(media_query_code){
       if(!media_query_code) return null;
       var media_query = {};
-      if(media_query_code.match(/^XH/)) media_query.key = 'max_height';
-      else if(media_query_code.match(/^NH/)) media_query.key = 'min_height';
-      else if(media_query_code.match(/^XW/)||media_query_code.match(/^X/)) media_query.key = 'max_width';
-      else if(media_query_code.match(/^NW/)||media_query_code.match(/^N/)) media_query.key = 'min_width';
+      if(media_query_code.match(/^XW[0-9]+/)||media_query_code.match(/^X[0-9]+/)) media_query.key = 'max_width';
+      else if(media_query_code.match(/^NW[0-9]+/)||media_query_code.match(/^N[0-9]+/)) media_query.key = 'min_width';
+      else if(media_query_code.match(/^XH[0-9]+/)) media_query.key = 'max_height';
+      else if(media_query_code.match(/^NH[0-9]+/)) media_query.key = 'min_height';
       else return null;
       media_query.value = media_query_code.match(/[0-9]+$/)[0]+'px';
       return media_query;
@@ -274,19 +274,43 @@ __webpack_require__(0);
 __webpack_require__(1);
 __webpack_require__(0);
 (function(){
+  var timeout;
   cssist.make = {
     cssToStyleSheet : function(css){
-      // @media only screen and (max-width : 1140px) { header { display: none; } }
       var style_element = cssist.get.styleElement();
       var css_class = cssist.convert.css2css_class(css);
       var css_text = cssist.convert.css2css_text(css);
       var css_style = "."+css_class+" { "+css_text+" }";
+      if(css.max_width||css.min_width||css.max_height||css.min_height){
+        var css_mediaqueries = [];
+        if(css.max_width) css_mediaqueries.push('max-width:'+css.max_width);
+        if(css.min_width) css_mediaqueries.push('min-width:'+css.min_width);
+        if(css.max_height) css_mediaqueries.push('max-height:'+css.max_height);
+        if(css.min_height) css_mediaqueries.push('min-height:'+css.min_height);
+        css_style = '@media ('+css_mediaqueries.join(' and ')+') {'+css_style+' }';
+      }
+
       if(style_element.innerHTML.indexOf(css_style)==-1){
         style_element.innerHTML += css_style+'\n';
       }
-      localStorage['cssist_style'] = JSON.stringify(style_element.innerHTML);
-  	},
-    classToStyleSheet : function(class_name) {
+      clearTimeout(timeout);
+      timeout = setTimeout(function(){
+        localStorage['cssist_style'] = JSON.stringify(style_element.innerHTML);
+        console.log('%c'+style_element.innerHTML, "color:#616161; font-size:9px; line-height:18px;");
+        var console_text = '%c****************************************** CSSIST NOTICE *******************************************\n'
+        +'                                                                                                    \n'
+        +'Hi! I am Cssist. Your cssist css is updated!                                                        \n'
+        +'If you want to open the webpage faster at the first time, there are two ways.                       \n'
+        +'1. Paste the above "css" codes into your css file.                                                  \n'
+        +'2. You can download your "cssist.css" file by typing "cssist.download();" command into this console.\n'
+        +'Cssist Version: '+cssist.VERSION+'                                                                               \n'
+        +'                                                                                                    \n'
+        +'****************************************************************************************************\n';
+        var console_style = "width:100%; color:#FFC107; background:#000000; font-size:12px; padding-top:12px; padding-bottom:12px; line-height:36px;";
+        console.log(console_text, console_style);
+      });
+    },
+    classToStyleSheet: function(class_name) {
   		var css = cssist.get.cssOfClass(class_name);
   		if(css){
         this.cssToStyleSheet(css);
@@ -377,17 +401,17 @@ __webpack_require__(2);
   cssist.init = {
     settings : function(){
 
-      var VERSION = '0.0.3';
+      cssist.VERSION = '0.0.3';
       if( localStorage
       && localStorage['cssist_VERSION']
-      && localStorage['cssist_VERSION']==VERSION
+      && localStorage['cssist_VERSION']==cssist.VERSION
       && localStorage['cssist_style'] ){
         var style_element = cssist.get.styleElement();
         style_element.innerHTML = JSON.parse(localStorage['cssist_style']);
       }
       else{
         if(localStorage){
-          localStorage['cssist_VERSION'] = VERSION;
+          localStorage['cssist_VERSION'] = cssist.VERSION;
           localStorage.removeItem('cssist_style');
         }
       }
@@ -1230,10 +1254,9 @@ __webpack_require__(2);
         if(cssist.get.styleElement().innerHTML.indexOf('.'+class_name+' {')==-1
           &&cssist.get.styleElement().innerHTML.indexOf('.'+class_name+':')==-1
           &&cssist.classes_success.indexOf(class_name)==-1
-          &&cssist.classes_fail.indexOf()==-1
+          &&cssist.classes_fail.indexOf(class_name)==-1
           &&['cen', 'cen-x', 'cen-y', 'b-img'].indexOf(class_name)==-1
         ){
-          console.log(class_name);
           var result = cssist.make.classToStyleSheet(class_name);
           if(result) cssist.classes_success.push(class_name);
           else cssist.classes_fail.push(class_name);
