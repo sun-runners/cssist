@@ -1,9 +1,5 @@
 require("./make.js");
 (function(){
-  cssist.download = function(){
-    var style_element = cssist.get.styleElement();
-    download(style_element.innerHTML, 'cssist.css', 'text/css');
-  };
   cssist.init = {
     settings : function(){
 
