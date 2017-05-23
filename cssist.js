@@ -99,66 +99,71 @@
     },
     mediaQueryCodes2mediaQueries : function(media_query_codes){
       var self = this;
-      if(!( media_query_codes && media_query_codes.match(/(^(?:NX|NH|X|N)[0-9]+)?((?:NX|NH|X|N)[0-9]+)?$/) )) return;
-      var media_query_codes_matches = media_query_codes.match(/(^(?:NX|NH|X|N)[0-9]+)?((?:NX|NH|X|N)[0-9]+)?$/);
-      var media_queries = [];
+      var media_queries = {};
+      if(!media_query_codes) return media_queries;
+      var media_query_codes_matches = media_query_codes.match(/(^(?:XH|NH|XW|NW|X|N)[0-9]+)?((?:XH|NH|XW|NW|X|N)[0-9]+)?$/);
       for(i=1; i<=media_query_codes_matches.length-1; i++){
-        if(media_query_codes_matches[i]) media_queries.push(self.mediaQueryCode2mediaQuery(media_query_codes_matches[i]));
+        var media_query = self.mediaQueryCode2mediaQuery(media_query_codes_matches[i]);
+        media_queries[media_query.key] = media_query.value;
       }
       return media_queries;
     },
     mediaQueryCode2mediaQuery : function(media_query_code){
       if(!media_query_code) return null;
       var media_query = {};
-      if(media_query_code.match(/^NX/)) media_query.key = 'max-height';
-      else if(media_query_code.match(/^NH/)) media_query.key = 'min-height';
-      else if(media_query_code.match(/^X/)) media_query.key = 'max-width';
-      else if(media_query_code.match(/^N/)) media_query.key = 'min-width';
+      if(media_query_code.match(/^XH/)) media_query.key = 'max_height';
+      else if(media_query_code.match(/^NH/)) media_query.key = 'min_height';
+      else if(media_query_code.match(/^XW/)||media_query_code.match(/^X/)) media_query.key = 'max_width';
+      else if(media_query_code.match(/^NW/)||media_query_code.match(/^N/)) media_query.key = 'min_width';
       else return null;
       media_query.value = media_query_code.match(/[0-9]+$/)[0]+'px';
-      media_query.code = media_query_code;
       return media_query;
     },
-    property2property_cors : function(property, value){
-  		if(!(property&&value)) return;
-      var css_content='';
-      if(Array.isArray(value)){
-        for(var i=0; i<value.length; i++){
-          if(value[i].property&&value[i].value){
-            css_content += value[i].property+': '+value[i].value+'; ';
+    css2css_text : function(css){
+  		if(!(css.property&&css.value)) return;
+      var css_text='';
+      if(Array.isArray(css.value)){
+        for(var i=0; i<css.value.length; i++){
+          if(css.value[i].property&&css.value[i].value){
+            css_text += css.value[i].property+': '+css.value[i].value+'; ';
           }
           else{
-            css_content += property+': '+value[i]+'; '
+            css_text += css.property+': '+css.value[i]+'; '
           }
         }
-        return css_content;
+        return css_text;
       }
       else{
-        var broswer = ['webkit', 'moz', 'o', 'ms'];
-        if(property.property) css_content = property.property+': '+value+'; ';
-        else css_content = property+': '+value+'; ';
-        for(var i=0; i<broswer.length; i++){
-          css_content += '-'+broswer[i]+'-'+property+': '+value+'; '
+        var broswers = ['webkit', 'moz', 'o', 'ms'];
+        if(css.property) css_text = css.property+': '+css.value+'; ';
+        else css_text = css.property+': '+css.value+'; ';
+        for(var i=0; i<broswers.length; i++){
+          css_text += '-'+broswers[i]+'-'+css.property+': '+css.value+'; '
         }
-        return css_content;
+        return css_text;
       }
   	},
-    css2css_cors : function(css, css_content){
-      if(!css.property.cors) return '.'+css.class+(css.event?':'+css.event:'')+css_content;
-      var css_cors = '';
-      if(css.property&&css.property.cors&&css.property.cors.type&&css.property.cors.type == 'class'){
-        for(var i=0; i<css.property.cors.list.length; i++){
-          css_cors+='.'+css.class+(css.event?':'+css.event:'')+css.property.cors.list[i]+css_content;
-          if(i!=css.property.cors.list.length-1){ css_cors+='\n\n'; }
-        }
-      }
-      return css_cors;
-  	},
-    css2css_text : function(css){
-      var css_content = ' {'+this.property2property_cors(css.property, css.value)+'}';
-      var css_text = this.css2css_cors(css, css_content);
-      return css_text;
-    }
+    css2css_class : function(css){
+  		if(!(css.class)) return;
+      return css.class+(css.event?':'+css.event:'');
+  	}
+    // ,
+    // css2css_cors : function(css, css_content){
+    //   // if(!css.property.cors) return '.'+css.class+(css.event?':'+css.event:'')+css_content;
+    //   // var css_cors = '';
+    //   // if(css.property&&css.property.cors&&css.property.cors.type&&css.property.cors.type == 'class'){
+    //   //   for(var i=0; i<css.property.cors.list.length; i++){
+    //   //     css_cors+='.'+css.class+(css.event?':'+css.event:'')+css.property.cors.list[i]+css_content;
+    //   //     if(i!=css.property.cors.list.length-1){ css_cors+='\n\n'; }
+    //   //   }
+    //   // }
+    //   // return css_cors;
+  	// },
+    // css2css_text : function(css){
+    //   var css_content = ' {'+this.property2property_cors(css.property, css.value)+'}';
+    //   // var css_text = this.css2css_cors(css, css_content);
+    //   return css_text;
+    // }
   };
 })();
 
@@ -171,52 +176,24 @@ __webpack_require__(4);
 __webpack_require__(0);
 (function(){
   cssist.make = {
-    css : function(css){
-      if(!css) return;
-  		if(!(css.suffix&&css.suffix.match(/(^(?:NX|NH|X|N)[0-9]+)((?:NX|NH|X|N)[0-9]+)?$/))) css.suffix = 'BASIC';
-      css.text = cssist.convert.css2css_text(css);
-      if(!cssist.styles) cssist.csses = {};
-      if(!cssist.csses[css.suffix]) cssist.csses[css.suffix] = '';
-  		if(cssist.csses[css.suffix].indexOf(css.text)==-1){
-        cssist.csses[css.suffix] += '\n'+css.text+'\n';
+    cssToStyleSheet : function(css){
+      // @media only screen and (max-width : 1140px) { header { display: none; } }
+      var style_element = cssist.get.styleElement();
+      var css_class = cssist.convert.css2css_class(css);
+      var css_text = cssist.convert.css2css_text(css);
+      var css_style = "."+css_class+" { "+css_text+" }";
+      if(style_element.innerHTML.indexOf(css_style)==-1){
+        style_element.innerHTML += css_style+'\n';
       }
-      if(!cssist.styles) cssist.styles = {};
-      if(!cssist.styles[css.suffix]) this.sheet(css.suffix);
-
-      if(!cssist.timeout) cssist.timeout = {};
-      if(cssist.timeout[css.suffix]) clearTimeout(cssist.timeout[css.suffix]);
-      cssist.timeout[css.suffix] = setTimeout(function(){
-        cssist.styles[css.suffix].innerHTML = cssist.csses[css.suffix];
-      }, 0);
+      localStorage['cssist_style'] = JSON.stringify(style_element.innerHTML);
   	},
-    class : function(class_name) {
-  		var css = cssist.get.css(class_name);
+    classToStyleSheet : function(class_name) {
+  		var css = cssist.get.cssOfClass(class_name);
   		if(css){
-        this.css(css);
+        this.cssToStyleSheet(css);
         return true;
       }
       else return false;
-  	},
-    sheet : function(suffix){
-      console.log('sheet');
-      console.log(suffix);
-      var style = document.createElement("STYLE");
-      var media = 'all';
-      var media_queries = cssist.convert.mediaQueryCodes2mediaQueries(suffix);
-      if(media_queries&&media_queries.length==1&&media_queries[0].key=='max-width'){
-        media_queries.unshift({ key:'min-width', value:'1px' });
-      }
-      if(media_queries&&media_queries.length>=1){
-        for(var i=0; i<media_queries.length; i++){
-          if(media_queries[i]) media += ' and ('+media_queries[i].key+':'+media_queries[i].value+')';
-        }
-      }
-      style.setAttribute("media", media);
-      style.setAttribute("type", 'text/css');
-      style.setAttribute("id", suffix);
-  		document.head.appendChild(style);
-      if(!cssist.styles) cssist.styles = {};
-      cssist.styles[suffix] = style;
   	}
   };
 })();
@@ -248,102 +225,101 @@ __webpack_require__(6);
 
 
 /***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(7);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// add the styles to the DOM
-var update = __webpack_require__(9)(content, {});
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../../node_modules/css-loader/index.js!./cssist.css", function() {
-			var newContent = require("!!../../../../node_modules/css-loader/index.js!./cssist.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ },
+/* 3 */,
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 __webpack_require__(0);
 (function(){
   cssist.get = {
-    css : function(class_name){
+
+    // Classes
+    classesOfElement : function(element){
+      var classNames = [];
+      if(element && element.className && element.className.length>=1) classNames = element.className.split(' ');
+      return classNames;
+    },
+    classPiecesOfClass: function(class_name){
       if(!class_name){ return; }
-      var class_name_pieces = class_name.match(/^([a-zA-Z\_]+)-((?:[a-zA-Z0-9\_]|(?:\-\-))*)(?:-([a-zA-Z]{1,2}))?(?:-((?:(?:NX|NH|X|N)[0-9]+)+))?$/);
-      if(!(class_name_pieces && class_name_pieces && class_name_pieces[1] && class_name_pieces[2] ) ){ return; }
-      if(class_name_pieces[1]) var class_property = class_name_pieces[1];
-      if(class_name_pieces[2]) var class_value = class_name_pieces[2];
-      if(class_name_pieces[3]) var class_event = class_name_pieces[3];
-      if(class_name_pieces[4]) var class_mediaquery = class_name_pieces[4];
+      var class_pieces = class_name.match(/^([a-zA-Z\_]+)-((?:[a-zA-Z0-9\_]|(?:\-\-))*)(?:-([a-zA-Z]{1,2}))?(?:-((?:(?:XH|NH|XW|NW|X|N)[0-9]+)+))?$/);
+      if(!(class_pieces&&class_pieces[1]&&class_pieces[2] ) ){ return; }
+      return {
+        class_name: class_name,
+        property: class_pieces[1],
+        value: class_pieces[2],
+        event: class_pieces[3]?class_pieces[3]:null,
+        media_query: class_pieces[4]?class_pieces[4]:null
+      };
+    },
+
+    // Css
+    cssSetsOfClassPieces: function(class_pieces){
       for(var i=0; i<cssist.property_sets.length; i++){
-        property_set = cssist.property_sets[i];
-        if(property_set.properties[class_property]){
-          var property = property_set.properties[class_property];
+        var property_set = cssist.property_sets[i];
+        if(property_set.properties[class_pieces.property]){
           for(var j=0; j<property_set.value_sets.length; j++){
             var value_set = property_set.value_sets[j];
             var regex = new RegExp(value_set.regex);
-            if(class_value.match(regex)){
-              var value = value_set.getValue(class_value);
-              if(!(value === undefined || value === null)){
-                var css = {
-                  class:class_name,
-                  property:property,
-                  value:value,
-                  event:cssist.convert.eventCode2event(class_event),
-                  suffix:class_mediaquery
-                };
-                return css;
-              }
+            if(class_pieces.value.match(regex)){
+              return {
+                property_set : property_set,
+                value_set : value_set
+              };
             }
           }
         }
-        // if(class_value.match('^('+cssist.palette[i].match+')$')
-        //   && cssist.palette[i].property[class_property]
-        //   && cssist.palette[i].getValue(class_value)){
-        //   var css = {
-        //     class:class_name,
-        //     property:cssist.palette[i].property[class_property],
-        //     value:cssist.palette[i].getValue(class_value),
-        //     event:cssist.convert.eventCode2event(class_event),
-        //     suffix:class_mediaquery
-        //   };
-        //   return css;
-        // }
+      }
+    },
+    cssOfCssSetsAndClassPieces: function(class_pieces, css_sets){
+      var class_name = class_pieces.class_name;
+      var property = css_sets.property_set.properties[class_pieces.property];
+      var value = css_sets.value_set.getValue(class_pieces.value);
+      var event = cssist.convert.eventCode2event(class_pieces.event);
+      var media_queries = cssist.convert.mediaQueryCodes2mediaQueries(class_pieces.media_query);
+      if((value === undefined || value === null)) return;
+      return {
+        class:class_name,
+        property:property,
+        value:value,
+        event:event,
+        max_height:media_queries.max_height?media_queries.max_height:null,
+        min_height:media_queries.min_height?media_queries.min_height:null,
+        max_width:media_queries.max_width?media_queries.max_width:null,
+        min_width:media_queries.min_width?media_queries.min_width:null
+      };
+    },
+    cssOfClass : function(class_name){
+      var class_pieces, css_sets, css;
+      class_pieces = this.classPiecesOfClass(class_name);
+      if(!class_pieces) return;
+      css_sets = this.cssSetsOfClassPieces(class_pieces);
+      if(!css_sets) return;
+      css = this.cssOfCssSetsAndClassPieces(class_pieces, css_sets);
+      if(!css) return;
+      return css;
+    },
 
+    // Style
+    styleElement: function(){
+      var style_element;
+      if(document.querySelectorAll('style#cssist')&&document.querySelectorAll('style#cssist')[0]){
+        return document.querySelectorAll('style#cssist')[0];
       }
+      var style = document.createElement("STYLE");
+
+      // WebKit hack :(
+      style.appendChild(document.createTextNode(''));
+
+      style.setAttribute("type", 'text/css');
+      style.setAttribute("id", "cssist");
+      document.head.appendChild(style);
+      return style;
     },
-    property : function(class_name){
-      if(!class_name){ return; }
-      var class_name_pieces = class_name.match(/^([a-zA-Z\_]+)-((?:[a-zA-Z0-9\_]|(?:\-\-))*)(?:-([a-zA-Z]{1,2}))?(?:-((?:(?:NX|NH|X|N)[0-9]+)+))?$/);
-      if(!(class_name_pieces && class_name_pieces && class_name_pieces[1] && class_name_pieces[2] ) ){ return; }
-      if(class_name_pieces[1]) var class_property = class_name_pieces[1];
-      if(class_name_pieces[2]) var class_value = class_name_pieces[2];
-      for(var i=0; i<cssist.palette.length; i++){
-        if(class_value.match('^('+cssist.palette[i].match+')$')
-          && cssist.palette[i].property[class_property]
-          && cssist.palette[i].getValue(class_value)){
-          return cssist.palette[i].property[class_property];
-        }
-      }
-    },
-    classes : function(element){
-      var classNames = [];
-      if(element && element.className && element.className.length>=1){ classNames = element.className.split(' ');}
-      return classNames;
+    styleSheet: function(){
+      var style_element = this.styleElement();
+      return style_element.styleSheet || style_element.sheet;
     }
+
   };
 })();
 
@@ -354,23 +330,25 @@ __webpack_require__(0);
 
 __webpack_require__(1);
 (function(){
+  cssist.download = function(){
+    var style_element = cssist.get.styleElement();
+    download(style_element.innerHTML, 'cssist.css', 'text/css');
+  };
   cssist.init = {
     settings : function(){
 
       var VERSION = '0.0.2';
-      if( localStorage && localStorage['cssist_VERSION'] && localStorage['cssist_VERSION']==VERSION ){
-        cssist.csses = JSON.parse(localStorage['cssist_CSSES']);
-        cssist.classes = JSON.parse(localStorage['cssist_CLASSES']);
-        for(var suffix in cssist.csses){
-          cssist.make.sheet(suffix);
-          cssist.styles[suffix].innerHTML = cssist.csses[suffix];
-        }
+      if( localStorage
+      && localStorage['cssist_VERSION']
+      && localStorage['cssist_VERSION']==VERSION
+      && localStorage['cssist_style'] ){
+        var style_element = cssist.get.styleElement();
+        style_element.innerHTML = JSON.parse(localStorage['cssist_style']);
       }
       else{
         if(localStorage){
           localStorage['cssist_VERSION'] = VERSION;
-          localStorage.removeItem('cssist_CSSES');
-          localStorage.removeItem('cssist_CLASSES');
+          localStorage.removeItem('cssist_style');
         }
       }
 
@@ -1201,18 +1179,22 @@ __webpack_require__(1);
   }
   cssist.paint = {
     element : function(element){
-			var class_names = cssist.get.classes(element);
+			var class_names = cssist.get.classesOfElement(element);
       for(var i=0; i<class_names.length; i++){
         var class_name = class_names[i];
-        var cssist_CLASSES = [];
-        if(!cssist.classes) cssist.classes = [];
-        if(cssist.classes.indexOf(class_name)==-1){
-          if(cssist.make.class(class_name)){
-            cssist.classes.push(class_name);
-          }
-          if(i == class_names.length-1){
-            element.setAttribute('cssist','');
-          }
+        if(i == class_names.length-1){
+          element.setAttribute('cssist','');
+        }
+        if(!cssist.classes_success) cssist.classes_success = [];
+        if(!cssist.classes_fail) cssist.classes_fail = [];
+        if(cssist.get.styleElement().innerHTML.indexOf('.'+class_name+' {')==-1
+          &&cssist.get.styleElement().innerHTML.indexOf('.'+class_name+':')==-1
+          &&cssist.classes_success.indexOf(class_name)==-1
+          &&cssist.classes_fail.indexOf(class_name)==-1
+        ){
+          var result = cssist.make.classToStyleSheet(class_name);
+          if(result) cssist.classes_success.push(class_name);
+          else cssist.classes_fail.push(class_name);
         }
       }
     },
@@ -1231,10 +1213,6 @@ __webpack_require__(1);
             mutationObserver.observe(element_child, { attributes: true,  attributeFilter: ['class'] });
           }
       	}
-        if(localStorage){
-          localStorage['cssist_CSSES'] = JSON.stringify(cssist.csses);
-          localStorage['cssist_CLASSES'] = JSON.stringify(cssist.classes);
-        }
   		}
     }
   };
@@ -1242,499 +1220,16 @@ __webpack_require__(1);
 
 
 /***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(8)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "/*Reset Css*/\n\n/* Remove the margin */\n* {\n\tmargin: 0;\n\tpadding: 0;\n\tborder: 0;\n\tfont-size: 100%;\n\tfont: inherit;\n  background: none;\n\tbox-shadow: none;\n  vertical-align: baseline;\n\t-ms-touch-action: manipulation;\n\ttouch-action: manipulation;\n\t-webkit-box-sizing: border-box;\n\t-moz-box-sizing: border-box;\n\tbox-sizing: border-box;\n\tborder-style: solid;\n}\n\n/* Remove outline */\n*:focus, *:active {\n\t\toutline: none !important;\n}\n\n/* Set default font family */\nhtml {\n  /*font-family: sans-serif;*/\n  -ms-text-size-adjust: 100%;\n  -webkit-text-size-adjust: 100%;\n}\n\n/* Correct display */\narticle, aside, details, figcaption, figure, footer, header, main, menu, nav, section, summary {\n  display: block;\n}\naudio, canvas, progress, video {\n  display: inline-block;\n}\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\ntemplate, [hidden] {\n  display: none;\n}\n\n/* Correct vertical alignment */\nprogress {\n  vertical-align: baseline;\n}\n\n/* Correct link */\na {\n  background-color: transparent;\n  -webkit-text-decoration-skip: objects;\n}\na:active, a:hover {\n  outline-width: 0;\n}\n\n/* Correct text */\nabbr[title] {\n  border-bottom: none;\n  text-decoration: underline;\n  text-decoration: underline dotted;\n}\nb, strong {\n  font-weight: inherit;\n}\nb, strong {\n  font-weight: bolder;\n}\ndfn {\n  font-style: italic;\n}\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\nmark {\n  background-color: #ff0;\n  color: #000;\n}\nsmall {\n  font-size: 80%;\n}\nsub, sup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\nsub {\n  bottom: -0.25em;\n}\nsup {\n  top: -0.5em;\n}\n\n/* Correct embedded content */\nimg {\n  border-style: none;\n}\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Correct grouping content */\ncode, kbd, pre, samp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\nfigure {\n  margin: 1em 40px;\n}\nhr {\n  box-sizing: content-box;\n  height: 0;\n  overflow: visible;\n}\n\n/* Correct forms */\nbutton, input, select, textarea {\n  font: inherit;\n  margin: 0;\n}\noptgroup {\n  font-weight: bold;\n}\nbutton, input {\n  overflow: visible;\n}\nbutton, select {\n  text-transform: none;\n}\nbutton, html [type=\"button\"], [type=\"reset\"], [type=\"submit\"] {\n  -webkit-appearance: button;\n}\nbutton::-moz-focus-inner, [type=\"button\"]::-moz-focus-inner, [type=\"reset\"]::-moz-focus-inner, [type=\"submit\"]::-moz-focus-inner {\n  border-style: none;\n  padding: 0;\n}\nbutton:-moz-focusring, [type=\"button\"]:-moz-focusring, [type=\"reset\"]:-moz-focusring, [type=\"submit\"]:-moz-focusring {\n  outline: 1px dotted ButtonText;\n}\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\nlegend {\n  box-sizing: border-box;\n  color: inherit;\n  display: table;\n  max-width: 100%;\n  padding: 0;\n  white-space: normal;\n}\ntextarea {\n  overflow: auto;\n}\n[type=\"checkbox\"], [type=\"radio\"] {\n  box-sizing: border-box;\n  padding: 0;\n}\n[type=\"number\"]::-webkit-inner-spin-button, [type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n[type=\"search\"] {\n  -webkit-appearance: textfield;\n  outline-offset: -2px;\n}\n[type=\"search\"]::-webkit-search-cancel-button, [type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n::-webkit-input-placeholder {\n  color: inherit;\n  opacity: 0.54;\n}\n::-webkit-file-upload-button {\n  -webkit-appearance: button;\n  font: inherit;\n}\ndiv, button, span, input, textarea, img {\n\tdisplay: block;\n\tposition: relative;\n\tfloat: left;\n}\ni {\n\tposition: relative;\n}\nth, td {\n  vertical-align: middle;\n}\n.cen {\n  top: 50%;\n  left:50%;\n\ttransform: translate(-50%, -50%);\n  -webkit-transform: translate(-50%, -50%);\n  -ms-transform: translate(-50%, -50%);\n  -moz-transform: translate(-50%, -50%);\n  -o-transform: translate(-50%, -50%);\n}\n.cen-x {\n  left: 50%;\n  transform: translateX(-50%);\n  -webkit-transform: translateX(-50%);\n  -ms-transform: translateX(-50%);\n  -moz-transform: translateX(-50%);\n  -o-transform: translateX(-50%);\n}\n.cen-y {\n  top: 50%;\n  transform: translateY(-50%);\n  -webkit-transform: translateY(-50%);\n  -ms-transform: translateY(-50%);\n  -moz-transform: translateY(-50%);\n  -o-transform: translateY(-50%);\n}\n.b-img {\n\tbackground-size: cover;\n\t-webkit-background-size: cover;\n\t-moz-background-size: cover;\n\t-o-background-size: cover;\n\tbackground-repeat: no-repeat;\n\tbackground-position: center center;\n\tobject-fit: cover;\n\t-webkit-object-fit: cover;\n\t-ms-object-fit: cover;\n\t-moz-object-fit: cover;\n\t-o-object-fit: cover;\n}\n", ""]);
-
-// exports
-
-
-/***/ },
-/* 8 */
-/***/ function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-var stylesInDom = {},
-	memoize = function(fn) {
-		var memo;
-		return function () {
-			if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-			return memo;
-		};
-	},
-	isOldIE = memoize(function() {
-		// Test for IE <= 9 as proposed by Browserhacks
-		// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
-		// Tests for existence of standard globals is to allow style-loader 
-		// to operate correctly into non-standard environments
-		// @see https://github.com/webpack-contrib/style-loader/issues/177
-		return window && document && document.all && !window.atob;
-	}),
-	getElement = (function(fn) {
-		var memo = {};
-		return function(selector) {
-			if (typeof memo[selector] === "undefined") {
-				memo[selector] = fn.call(this, selector);
-			}
-			return memo[selector]
-		};
-	})(function (styleTarget) {
-		return document.querySelector(styleTarget)
-	}),
-	singletonElement = null,
-	singletonCounter = 0,
-	styleElementsInsertedAtTop = [],
-	fixUrls = __webpack_require__(10);
-
-module.exports = function(list, options) {
-	if(typeof DEBUG !== "undefined" && DEBUG) {
-		if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
-	}
-
-	options = options || {};
-	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
-
-	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-	// tags it will allow on a page
-	if (typeof options.singleton === "undefined") options.singleton = isOldIE();
-
-	// By default, add <style> tags to the <head> element
-	if (typeof options.insertInto === "undefined") options.insertInto = "head";
-
-	// By default, add <style> tags to the bottom of the target
-	if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
-
-	var styles = listToStyles(list);
-	addStylesToDom(styles, options);
-
-	return function update(newList) {
-		var mayRemove = [];
-		for(var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
-			domStyle.refs--;
-			mayRemove.push(domStyle);
-		}
-		if(newList) {
-			var newStyles = listToStyles(newList);
-			addStylesToDom(newStyles, options);
-		}
-		for(var i = 0; i < mayRemove.length; i++) {
-			var domStyle = mayRemove[i];
-			if(domStyle.refs === 0) {
-				for(var j = 0; j < domStyle.parts.length; j++)
-					domStyle.parts[j]();
-				delete stylesInDom[domStyle.id];
-			}
-		}
-	};
-};
-
-function addStylesToDom(styles, options) {
-	for(var i = 0; i < styles.length; i++) {
-		var item = styles[i];
-		var domStyle = stylesInDom[item.id];
-		if(domStyle) {
-			domStyle.refs++;
-			for(var j = 0; j < domStyle.parts.length; j++) {
-				domStyle.parts[j](item.parts[j]);
-			}
-			for(; j < item.parts.length; j++) {
-				domStyle.parts.push(addStyle(item.parts[j], options));
-			}
-		} else {
-			var parts = [];
-			for(var j = 0; j < item.parts.length; j++) {
-				parts.push(addStyle(item.parts[j], options));
-			}
-			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
-		}
-	}
-}
-
-function listToStyles(list) {
-	var styles = [];
-	var newStyles = {};
-	for(var i = 0; i < list.length; i++) {
-		var item = list[i];
-		var id = item[0];
-		var css = item[1];
-		var media = item[2];
-		var sourceMap = item[3];
-		var part = {css: css, media: media, sourceMap: sourceMap};
-		if(!newStyles[id])
-			styles.push(newStyles[id] = {id: id, parts: [part]});
-		else
-			newStyles[id].parts.push(part);
-	}
-	return styles;
-}
-
-function insertStyleElement(options, styleElement) {
-	var styleTarget = getElement(options.insertInto)
-	if (!styleTarget) {
-		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
-	}
-	var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
-	if (options.insertAt === "top") {
-		if(!lastStyleElementInsertedAtTop) {
-			styleTarget.insertBefore(styleElement, styleTarget.firstChild);
-		} else if(lastStyleElementInsertedAtTop.nextSibling) {
-			styleTarget.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
-		} else {
-			styleTarget.appendChild(styleElement);
-		}
-		styleElementsInsertedAtTop.push(styleElement);
-	} else if (options.insertAt === "bottom") {
-		styleTarget.appendChild(styleElement);
-	} else {
-		throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
-	}
-}
-
-function removeStyleElement(styleElement) {
-	styleElement.parentNode.removeChild(styleElement);
-	var idx = styleElementsInsertedAtTop.indexOf(styleElement);
-	if(idx >= 0) {
-		styleElementsInsertedAtTop.splice(idx, 1);
-	}
-}
-
-function createStyleElement(options) {
-	var styleElement = document.createElement("style");
-	options.attrs.type = "text/css";
-
-	attachTagAttrs(styleElement, options.attrs);
-	insertStyleElement(options, styleElement);
-	return styleElement;
-}
-
-function createLinkElement(options) {
-	var linkElement = document.createElement("link");
-	options.attrs.type = "text/css";
-	options.attrs.rel = "stylesheet";
-
-	attachTagAttrs(linkElement, options.attrs);
-	insertStyleElement(options, linkElement);
-	return linkElement;
-}
-
-function attachTagAttrs(element, attrs) {
-	Object.keys(attrs).forEach(function (key) {
-		element.setAttribute(key, attrs[key]);
-	});
-}
-
-function addStyle(obj, options) {
-	var styleElement, update, remove;
-
-	if (options.singleton) {
-		var styleIndex = singletonCounter++;
-		styleElement = singletonElement || (singletonElement = createStyleElement(options));
-		update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
-		remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
-	} else if(obj.sourceMap &&
-		typeof URL === "function" &&
-		typeof URL.createObjectURL === "function" &&
-		typeof URL.revokeObjectURL === "function" &&
-		typeof Blob === "function" &&
-		typeof btoa === "function") {
-		styleElement = createLinkElement(options);
-		update = updateLink.bind(null, styleElement, options);
-		remove = function() {
-			removeStyleElement(styleElement);
-			if(styleElement.href)
-				URL.revokeObjectURL(styleElement.href);
-		};
-	} else {
-		styleElement = createStyleElement(options);
-		update = applyToTag.bind(null, styleElement);
-		remove = function() {
-			removeStyleElement(styleElement);
-		};
-	}
-
-	update(obj);
-
-	return function updateStyle(newObj) {
-		if(newObj) {
-			if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
-				return;
-			update(obj = newObj);
-		} else {
-			remove();
-		}
-	};
-}
-
-var replaceText = (function () {
-	var textStore = [];
-
-	return function (index, replacement) {
-		textStore[index] = replacement;
-		return textStore.filter(Boolean).join('\n');
-	};
-})();
-
-function applyToSingletonTag(styleElement, index, remove, obj) {
-	var css = remove ? "" : obj.css;
-
-	if (styleElement.styleSheet) {
-		styleElement.styleSheet.cssText = replaceText(index, css);
-	} else {
-		var cssNode = document.createTextNode(css);
-		var childNodes = styleElement.childNodes;
-		if (childNodes[index]) styleElement.removeChild(childNodes[index]);
-		if (childNodes.length) {
-			styleElement.insertBefore(cssNode, childNodes[index]);
-		} else {
-			styleElement.appendChild(cssNode);
-		}
-	}
-}
-
-function applyToTag(styleElement, obj) {
-	var css = obj.css;
-	var media = obj.media;
-
-	if(media) {
-		styleElement.setAttribute("media", media)
-	}
-
-	if(styleElement.styleSheet) {
-		styleElement.styleSheet.cssText = css;
-	} else {
-		while(styleElement.firstChild) {
-			styleElement.removeChild(styleElement.firstChild);
-		}
-		styleElement.appendChild(document.createTextNode(css));
-	}
-}
-
-function updateLink(linkElement, options, obj) {
-	var css = obj.css;
-	var sourceMap = obj.sourceMap;
-
-	/* If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
-	and there is no publicPath defined then lets turn convertToAbsoluteUrls
-	on by default.  Otherwise default to the convertToAbsoluteUrls option
-	directly
-	*/
-	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
-
-	if (options.convertToAbsoluteUrls || autoFixUrls){
-		css = fixUrls(css);
-	}
-
-	if(sourceMap) {
-		// http://stackoverflow.com/a/26603875
-		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
-	}
-
-	var blob = new Blob([css], { type: "text/css" });
-
-	var oldSrc = linkElement.href;
-
-	linkElement.href = URL.createObjectURL(blob);
-
-	if(oldSrc)
-		URL.revokeObjectURL(oldSrc);
-}
-
-
-/***/ },
-/* 10 */
-/***/ function(module, exports) {
-
-
-/**
- * When source maps are enabled, `style-loader` uses a link element with a data-uri to
- * embed the css on the page. This breaks all relative urls because now they are relative to a
- * bundle instead of the current page.
- *
- * One solution is to only use full urls, but that may be impossible.
- *
- * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
- *
- * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
- *
- */
-
-module.exports = function (css) {
-  // get current location
-  var location = typeof window !== "undefined" && window.location;
-
-  if (!location) {
-    throw new Error("fixUrls requires window.location");
-  }
-
-	// blank or null?
-	if (!css || typeof css !== "string") {
-	  return css;
-  }
-
-  var baseUrl = location.protocol + "//" + location.host;
-  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
-
-	// convert each url(...)
-	/*
-	This regular expression is just a way to recursively match brackets within
-	a string.
-
-	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
-	   (  = Start a capturing group
-	     (?:  = Start a non-capturing group
-	         [^)(]  = Match anything that isn't a parentheses
-	         |  = OR
-	         \(  = Match a start parentheses
-	             (?:  = Start another non-capturing groups
-	                 [^)(]+  = Match anything that isn't a parentheses
-	                 |  = OR
-	                 \(  = Match a start parentheses
-	                     [^)(]*  = Match anything that isn't a parentheses
-	                 \)  = Match a end parentheses
-	             )  = End Group
-              *\) = Match anything and then a close parens
-          )  = Close non-capturing group
-          *  = Match anything
-       )  = Close capturing group
-	 \)  = Match a close parens
-
-	 /gi  = Get all matches, not the first.  Be case insensitive.
-	 */
-	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
-		// strip quotes (if they exist)
-		var unquotedOrigUrl = origUrl
-			.trim()
-			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
-			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
-
-		// already a full url? no change
-		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/)/i.test(unquotedOrigUrl)) {
-		  return fullMatch;
-		}
-
-		// convert the url to a full url
-		var newUrl;
-
-		if (unquotedOrigUrl.indexOf("//") === 0) {
-		  	//TODO: should we add protocol?
-			newUrl = unquotedOrigUrl;
-		} else if (unquotedOrigUrl.indexOf("/") === 0) {
-			// path should be relative to the base url
-			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
-		} else {
-			// path should be relative to current directory
-			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
-		}
-
-		// send back the fixed url(...)
-		return "url(" + JSON.stringify(newUrl) + ")";
-	});
-
-	// send back the fixed css
-	return fixedCss;
-};
-
-
-/***/ },
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */,
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 window.cssist={};
 __webpack_require__(2);
-__webpack_require__(3);
+// require('!style!css!./cssist.css');
 cssist.watch.start();
 
 

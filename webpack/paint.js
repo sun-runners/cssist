@@ -13,18 +13,22 @@ require("./make.js");
   }
   cssist.paint = {
     element : function(element){
-			var class_names = cssist.get.classes(element);
+			var class_names = cssist.get.classesOfElement(element);
       for(var i=0; i<class_names.length; i++){
         var class_name = class_names[i];
-        var cssist_CLASSES = [];
-        if(!cssist.classes) cssist.classes = [];
-        if(cssist.classes.indexOf(class_name)==-1){
-          if(cssist.make.class(class_name)){
-            cssist.classes.push(class_name);
-          }
-          if(i == class_names.length-1){
-            element.setAttribute('cssist','');
-          }
+        if(i == class_names.length-1){
+          element.setAttribute('cssist','');
+        }
+        if(!cssist.classes_success) cssist.classes_success = [];
+        if(!cssist.classes_fail) cssist.classes_fail = [];
+        if(cssist.get.styleElement().innerHTML.indexOf('.'+class_name+' {')==-1
+          &&cssist.get.styleElement().innerHTML.indexOf('.'+class_name+':')==-1
+          &&cssist.classes_success.indexOf(class_name)==-1
+          &&cssist.classes_fail.indexOf(class_name)==-1
+        ){
+          var result = cssist.make.classToStyleSheet(class_name);
+          if(result) cssist.classes_success.push(class_name);
+          else cssist.classes_fail.push(class_name);
         }
       }
     },
@@ -43,10 +47,6 @@ require("./make.js");
             mutationObserver.observe(element_child, { attributes: true,  attributeFilter: ['class'] });
           }
       	}
-        if(localStorage){
-          localStorage['cssist_CSSES'] = JSON.stringify(cssist.csses);
-          localStorage['cssist_CLASSES'] = JSON.stringify(cssist.classes);
-        }
   		}
     }
   };

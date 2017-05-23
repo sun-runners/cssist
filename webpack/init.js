@@ -1,22 +1,24 @@
 require("./make.js");
 (function(){
+  cssist.download = function(){
+    var style_element = cssist.get.styleElement();
+    download(style_element.innerHTML, 'cssist.css', 'text/css');
+  };
   cssist.init = {
     settings : function(){
 
       var VERSION = '0.0.2';
-      if( localStorage && localStorage['cssist_VERSION'] && localStorage['cssist_VERSION']==VERSION ){
-        cssist.csses = JSON.parse(localStorage['cssist_CSSES']);
-        cssist.classes = JSON.parse(localStorage['cssist_CLASSES']);
-        for(var suffix in cssist.csses){
-          cssist.make.sheet(suffix);
-          cssist.styles[suffix].innerHTML = cssist.csses[suffix];
-        }
+      if( localStorage
+      && localStorage['cssist_VERSION']
+      && localStorage['cssist_VERSION']==VERSION
+      && localStorage['cssist_style'] ){
+        var style_element = cssist.get.styleElement();
+        style_element.innerHTML = JSON.parse(localStorage['cssist_style']);
       }
       else{
         if(localStorage){
           localStorage['cssist_VERSION'] = VERSION;
-          localStorage.removeItem('cssist_CSSES');
-          localStorage.removeItem('cssist_CLASSES');
+          localStorage.removeItem('cssist_style');
         }
       }
 

@@ -2,52 +2,24 @@ require("./get.js");
 require("./convert.js");
 (function(){
   cssist.make = {
-    css : function(css){
-      if(!css) return;
-  		if(!(css.suffix&&css.suffix.match(/(^(?:NX|NH|X|N)[0-9]+)((?:NX|NH|X|N)[0-9]+)?$/))) css.suffix = 'BASIC';
-      css.text = cssist.convert.css2css_text(css);
-      if(!cssist.styles) cssist.csses = {};
-      if(!cssist.csses[css.suffix]) cssist.csses[css.suffix] = '';
-  		if(cssist.csses[css.suffix].indexOf(css.text)==-1){
-        cssist.csses[css.suffix] += '\n'+css.text+'\n';
+    cssToStyleSheet : function(css){
+      // @media only screen and (max-width : 1140px) { header { display: none; } }
+      var style_element = cssist.get.styleElement();
+      var css_class = cssist.convert.css2css_class(css);
+      var css_text = cssist.convert.css2css_text(css);
+      var css_style = "."+css_class+" { "+css_text+" }";
+      if(style_element.innerHTML.indexOf(css_style)==-1){
+        style_element.innerHTML += css_style+'\n';
       }
-      if(!cssist.styles) cssist.styles = {};
-      if(!cssist.styles[css.suffix]) this.sheet(css.suffix);
-
-      if(!cssist.timeout) cssist.timeout = {};
-      if(cssist.timeout[css.suffix]) clearTimeout(cssist.timeout[css.suffix]);
-      cssist.timeout[css.suffix] = setTimeout(function(){
-        cssist.styles[css.suffix].innerHTML = cssist.csses[css.suffix];
-      }, 0);
+      localStorage['cssist_style'] = JSON.stringify(style_element.innerHTML);
   	},
-    class : function(class_name) {
-  		var css = cssist.get.css(class_name);
+    classToStyleSheet : function(class_name) {
+  		var css = cssist.get.cssOfClass(class_name);
   		if(css){
-        this.css(css);
+        this.cssToStyleSheet(css);
         return true;
       }
       else return false;
-  	},
-    sheet : function(suffix){
-      console.log('sheet');
-      console.log(suffix);
-      var style = document.createElement("STYLE");
-      var media = 'all';
-      var media_queries = cssist.convert.mediaQueryCodes2mediaQueries(suffix);
-      if(media_queries&&media_queries.length==1&&media_queries[0].key=='max-width'){
-        media_queries.unshift({ key:'min-width', value:'1px' });
-      }
-      if(media_queries&&media_queries.length>=1){
-        for(var i=0; i<media_queries.length; i++){
-          if(media_queries[i]) media += ' and ('+media_queries[i].key+':'+media_queries[i].value+')';
-        }
-      }
-      style.setAttribute("media", media);
-      style.setAttribute("type", 'text/css');
-      style.setAttribute("id", suffix);
-  		document.head.appendChild(style);
-      if(!cssist.styles) cssist.styles = {};
-      cssist.styles[suffix] = style;
   	}
   };
 })();

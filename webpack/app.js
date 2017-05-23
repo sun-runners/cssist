@@ -1,4 +1,4 @@
 window.cssist={};
 require("./watch.js");
-require('!style!css!./cssist.css');
+// require('!style!css!./cssist.css');
 cssist.watch.start();
