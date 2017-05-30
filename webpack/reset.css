@@ -193,6 +193,10 @@ i {
 th, td {
   vertical-align: middle;
 }
+image {
+	-webkit-touch-callout: none;
+  -webkit-user-select: none;
+}
 .cen {
   top: 50%;
   left:50%;
