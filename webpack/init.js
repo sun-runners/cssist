@@ -824,3 +824,150 @@ require("./make.js");
   };
   cssist.init.settings();
 })();
+// CSSIST, 클래스 기반 자동 CSS 프레임워크, 이 사이트는 cssist.js 로 만들어졌습니다.
+//
+// INTRODUCTION 소개
+// - 수식계산
+// - 반응형 클래스
+// - 이벤트형 클래스
+// - 크로스브라우징 대응
+//
+// INSTALLATION 설치
+// - bower install cssist
+//
+// CLASSES
+//
+// ALPHABET
+//
+// animation : an:'animation-iteration-count', an:'animation-duration', and: 'animation-delay', an:'animation-timing-function'
+// background : b:'background', bi:'background-image', bs:'background-size', bp:'background-position'
+// shadow : bs:'box-shadow', ts:'text-shadow'
+// box-sizing : bs:'box-sizing'
+// border : bo:'border-width', bo_t:'border-top-width', bo_b:'border-bottom-width', bo_l:'border-left-width', bo_r:'border-right-width', bor:'border-radius', bor_tl:'border-top-left-radius', bor_tr:'border-top-right-radius', bor_bl:'border-bottom-left-radius', bor_br:'border-bottom-right-radius'
+// color : c: 'color', pc: 'placeholder', bo:'border-color', bo_t:'border-top-color', bo_b:'border-bottom-color', bo_l:'border-left-color', bo_r:'border-right-color',
+// clear : c:'clear'
+// display : d:'display'
+// float : f:'float'
+// font : f:'font-size', fw:'font-weight'
+// height : h:'height', xh:'max-height', nh:'min-height'
+// letter : ls:'letter-spacing'
+// line : lh:'line-height'
+// margin : m:'margin', mb:'margin-bottom', ml:'margin-left', mr:'margin-right', mt:'margin-top',
+// opacity : o:'opacity'
+// overflow : o:'overflow', ox:'overflow-x', oy:'overflow-y'
+// padding : p:'padding', pb:'padding-bottom', pl:'padding-left', pr:'padding-right', pt:'padding-top',
+// position : p:'position'
+// text : t:'text-align', tt:'text-transform', to:'text-overflow'
+// transform : tn:'transform',
+// transition : tn:'transition-property', tn:'transition-duration', tn:'transition-timing-function'
+// visibility : v:'visibility'
+// vertical-align : v:'vertical-align'
+// width : w:'width', xw:'max-width', nw:'min-width'
+// white-space : ws:'white-space'
+// word : wb:'word-break', ww:'word-wrap', ws:'word-spacing'
+// z-index : z:'z-index'
+//
+//
+// LEVEL
+//
+// {
+//   chapter: 'Color',
+//   sections: [
+//     { property: 'color', prefix:'c' },
+//     { property: 'opacity', prefix:'o' },
+//     { property: 'placeholder', prefix:'pc' },
+//     { property: 'border-color', prefix:'bo' },
+//     { property: 'border-top-color', prefix:'bo_t' },
+//     { property: 'border-bottom-color', prefix:'bo_b' },
+//     { property: 'border-left-color', prefix:'bo_l' },
+//     { property: 'border-right-color', prefix:'bo_r' },
+//     { property: 'box-shadow', prefix:'bs' },
+//     { property: 'text-shadow', prefix:'ts' },
+//   ]
+// },{
+//   chapter: 'Background',
+//   sections: [
+//     { property: 'background', prefix:'b' },
+//     { property: 'background-image', prefix:'bi' },
+//     { property: 'background-size', prefix:'bs' },
+//     { property: 'background-position', prefix:'bp' },
+//   ]
+// },{
+//   chapter: 'Box',
+//   sections: [
+//     { property: 'width', prefix:'w' },
+//     { property: 'max-width', prefix:'xw' },
+//     { property: 'min-width', prefix:'nw' },
+//     { property: 'height', prefix:'h' },
+//     { property: 'max-height', prefix:'xh' },
+//     { property: 'min-height', prefix:'nh' },
+//     { property: 'margin', prefix:'m' },
+//     { property: 'margin-bottom', prefix:'mb' },
+//     { property: 'margin-left', prefix:'ml' },
+//     { property: 'margin-right', prefix:'mr' },
+//     { property: 'margin-top', prefix:'mt' },
+//     { property: 'padding', prefix:'p' },
+//     { property: 'padding-bottom', prefix:'pb' },
+//     { property: 'padding-left', prefix:'pl' },
+//     { property: 'padding-right', prefix:'pr' },
+//     { property: 'padding-top', prefix:'pt' },
+//     { property: 'overflow', prefix:'o' },
+//     { property: 'overflow-x', prefix:'ox' },
+//     { property: 'overflow-y', prefix:'oy' },
+//     { property: 'position', prefix:'p' },
+//     { property: 'display', prefix:'d' },
+//     { property: 'float', prefix:'f' },
+//     { property: 'box-sizing', prefix:'bs' },
+//     { property: 'z-index', prefix:'z' },
+//     { property: 'visibility', prefix:'v' },
+//     { property: 'vertical-align', prefix:'v' },
+//     { property: 'transform', prefix:'tn' },
+//     { property: 'clear', prefix:'c' },
+//   ]
+// },{
+//   chapter: 'Border',
+//   sections: [
+//     { property: 'border-width', prefix:'bo' },
+//     { property: 'border-top-width', prefix:'bo_t' },
+//     { property: 'border-bottom-width', prefix:'bo_b' },
+//     { property: 'border-left-width', prefix:'bo_l' },
+//     { property: 'border-right-width', prefix:'bo_r' },
+//     { property: 'border-radius', prefix:'bo_r' },
+//     { property: 'border-top-left-radius', prefix:'bor_tl' },
+//     { property: 'border-top-right-radius', prefix:'bor_tr' },
+//     { property: 'border-bottom-left-radius', prefix:'bor_bl' },
+//     { property: 'border-bottom-right-radius', prefix:'bor_br' },
+//   ]
+// },{
+//   chapter: 'Text',
+//   sections: [
+//     { property: 'font-size', prefix:'f' },
+//     { property: 'font-weight', prefix:'fw' },
+//     { property: 'letter-spacing', prefix:'ls' },
+//     { property: 'line-height', prefix:'lh' },
+//     { property: 'letter-spacing', prefix:'ls' },
+//     { property: 'text-align', prefix:'t' },
+//     { property: 'text-transform', prefix:'tt' },
+//     { property: 'text-overflow', prefix:'to' },
+//     { property: 'white-space', prefix:'ws' },
+//     { property: 'word-break', prefix:'wb' },
+//     { property: 'word-wrap', prefix:'ww' },
+//     { property: 'word-spacing', prefix:'ws' }
+//   ]
+// },{
+//   chapter: 'Animation',
+//   sections: [
+//     { tn:'transition-property' },
+//     { tn:'transition-duration' },
+//     { tn:'transition-timing-function' },
+//     { an:'animation-iteration-count' },
+//     { an:'animation-duration' },
+//     { and:'animation-delay' },
+//     { an:'animation-timing-function' }
+//   ]
+// },{
+//   chapter: 'Transform',
+//   sections: [
+//     transform : tn:'transform',
+//   ]
+// }
