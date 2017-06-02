@@ -287,7 +287,7 @@ __webpack_require__(0);
         if(css.min_width) css_mediaqueries.push('min-width:'+css.min_width);
         if(css.max_height) css_mediaqueries.push('max-height:'+css.max_height);
         if(css.min_height) css_mediaqueries.push('min-height:'+css.min_height);
-        css_style = '@media all ('+css_mediaqueries.join(') and (')+') {'+css_style+' }';
+        css_style = '@media all and ('+css_mediaqueries.join(') and (')+') {'+css_style+' }';
       }
 
       if(style_element.innerHTML.indexOf(css_style)==-1){
