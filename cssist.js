@@ -287,7 +287,7 @@ __webpack_require__(0);
         if(css.min_width) css_mediaqueries.push('min-width:'+css.min_width);
         if(css.max_height) css_mediaqueries.push('max-height:'+css.max_height);
         if(css.min_height) css_mediaqueries.push('min-height:'+css.min_height);
-        css_style = '@media ('+css_mediaqueries.join(' and ')+') {'+css_style+' }';
+        css_style = '@media all and ('+css_mediaqueries.join(' and ')+') {'+css_style+' }';
       }
 
       if(style_element.innerHTML.indexOf(css_style)==-1){
@@ -1107,7 +1107,7 @@ __webpack_require__(2);
             value_sets: [cssist.value_sets.clear_kind, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { d:'display', display:'display' },
-            value_sets: [cssist.value_sets.display_kind, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
+            value_sets: [cssist.value_sets.display_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { f:'float', float:'float' },
             value_sets: [cssist.value_sets.none, cssist.value_sets.float_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
@@ -1546,7 +1546,7 @@ var stylesInDom = {},
 	isOldIE = memoize(function() {
 		// Test for IE <= 9 as proposed by Browserhacks
 		// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
-		// Tests for existence of standard globals is to allow style-loader
+		// Tests for existence of standard globals is to allow style-loader 
 		// to operate correctly into non-standard environments
 		// @see https://github.com/webpack-contrib/style-loader/issues/177
 		return window && document && document.all && !window.atob;
