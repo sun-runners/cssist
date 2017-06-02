@@ -709,7 +709,7 @@ require("./make.js");
             value_sets: [cssist.value_sets.clear_kind, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { d:'display', display:'display' },
-            value_sets: [cssist.value_sets.display_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
+            value_sets: [cssist.value_sets.display_kind, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { f:'float', float:'float' },
             value_sets: [cssist.value_sets.none, cssist.value_sets.float_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
