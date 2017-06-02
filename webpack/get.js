@@ -28,7 +28,7 @@ require("./convert.js");
         if(property_set.properties[class_pieces.property]){
           for(var j=0; j<property_set.value_sets.length; j++){
             var value_set = property_set.value_sets[j];
-            var regex = new RegExp(value_set.regex);
+            var regex = new RegExp('^'+value_set.regex+'$');
             if(class_pieces.value.match(regex)){
               return {
                 property_set : property_set,

@@ -278,7 +278,7 @@ require("./make.js");
           getValue: getValueFromOriginalValue
         };
         cssist.value_sets.integer_3digits = {
-          regex: '(?:_?[0-9]{0,3})',
+          regex: '(?:_?[0-9]{1,3})',
           examples: ['_999', '999'],
           getValue: function(value){ return Math.floor(cssist.value_sets.integer.getValue(value))%1000; }
         };
@@ -601,9 +601,18 @@ require("./make.js");
 
         // SHADOW
         cssist.value_sets.shadow = {
-          regex: cssist.value_sets.integer_3digits.regex+'_'+cssist.value_sets.integer_3digits.regex+'(?:_'+cssist.value_sets.integer_3digits.regex+')?'+'(?:_'+cssist.value_sets.rgba_color.regex+')',
+          regex: cssist.value_sets.integer_3digits.regex+'(?:_'+cssist.value_sets.integer_3digits.regex+'){0,3}(?:_'+cssist.value_sets.rgba_color.regex+')',
           examples: ['2_2_bk_30', '2_2_2_000000_50'],
-          getValue: function(value){ return value; }
+          getValue: function(value){
+            var result = '';
+            var regex = new RegExp('('+cssist.value_sets.integer_3digits.regex+')(?:_('+cssist.value_sets.integer_3digits.regex+'))?(?:_('+cssist.value_sets.integer_3digits.regex+'))?(?:_('+cssist.value_sets.integer_3digits.regex+'))?(?:_('+cssist.value_sets.rgba_color.regex+'))');
+            var matches = value.match(regex);
+    				if(!(matches)) return null;
+            var shadows = [];
+            for(var i=1; i<=4; i++){ shadows.push(matches[i]); }
+    				result = shadows.join('px ')+cssist.value_sets.rgba_color.getValue(matches[5]);
+            return result;
+          }
         };
 
         // URL

@@ -202,7 +202,7 @@ __webpack_require__(0);
         if(property_set.properties[class_pieces.property]){
           for(var j=0; j<property_set.value_sets.length; j++){
             var value_set = property_set.value_sets[j];
-            var regex = new RegExp(value_set.regex);
+            var regex = new RegExp('^'+value_set.regex+'$');
             if(class_pieces.value.match(regex)){
               return {
                 property_set : property_set,
@@ -676,7 +676,7 @@ __webpack_require__(2);
           getValue: getValueFromOriginalValue
         };
         cssist.value_sets.integer_3digits = {
-          regex: '(?:_?[0-9]{0,3})',
+          regex: '(?:_?[0-9]{1,3})',
           examples: ['_999', '999'],
           getValue: function(value){ return Math.floor(cssist.value_sets.integer.getValue(value))%1000; }
         };
@@ -999,9 +999,18 @@ __webpack_require__(2);
 
         // SHADOW
         cssist.value_sets.shadow = {
-          regex: cssist.value_sets.integer_3digits.regex+'_'+cssist.value_sets.integer_3digits.regex+'(?:_'+cssist.value_sets.integer_3digits.regex+')?'+'(?:_'+cssist.value_sets.rgba_color.regex+')',
+          regex: cssist.value_sets.integer_3digits.regex+'(?:_'+cssist.value_sets.integer_3digits.regex+'){0,3}(?:_'+cssist.value_sets.rgba_color.regex+')',
           examples: ['2_2_bk_30', '2_2_2_000000_50'],
-          getValue: function(value){ return value; }
+          getValue: function(value){
+            var result = '';
+            var regex = new RegExp('('+cssist.value_sets.integer_3digits.regex+')(?:_('+cssist.value_sets.integer_3digits.regex+'))?(?:_('+cssist.value_sets.integer_3digits.regex+'))?(?:_('+cssist.value_sets.integer_3digits.regex+'))?(?:_('+cssist.value_sets.rgba_color.regex+'))');
+            var matches = value.match(regex);
+    				if(!(matches)) return null;
+            var shadows = [];
+            for(var i=1; i<=4; i++){ shadows.push(matches[i]); }
+    				result = shadows.join('px ')+cssist.value_sets.rgba_color.getValue(matches[5]);
+            return result;
+          }
         };
 
         // URL
