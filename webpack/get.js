@@ -5,12 +5,12 @@ require("./convert.js");
     // Classes
     classesOfElement : function(element){
       var classNames = [];
-      if(element && element.className && element.className.length>=1) classNames = element.className.split(' ');
+      if(element && element.className && element.className.length>=1) classNames = element.className.split(/\s|↵/);
       return classNames;
     },
     classPiecesOfClass: function(class_name){
       if(!class_name){ return; }
-      var class_pieces = class_name.match(/^([a-zA-Z\_]+)-((?:[a-zA-Z0-9\_]|(?:\-\-))*)(?:-([a-zA-Z]{1,2}))?(?:-((?:(?:XH|NH|XW|NW|X|N)[0-9]+)+))?$/);
+      var class_pieces = class_name.match(/^([a-zA-Z\_]+)-((?:[a-zA-Z0-9]|(?:\_)|(?:\-\-))+)(?:-([a-zA-Z]{1,2}))?(?:-((?:(?:XH|NH|XW|NW|X|N)[0-9]+)+))?$/);
       if(!(class_pieces&&class_pieces[1]&&class_pieces[2] ) ){ return; }
       return {
         class_name: class_name,
