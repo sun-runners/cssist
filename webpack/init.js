@@ -216,7 +216,7 @@ require("./make.js");
             be: 'baseline', sb: 'sub', sr: 'super', t: 'top', tt: 'text-top	', m: 'middle', b: 'bottom', tb: 'text-bottom',
             baseline: 'baseline', sub: 'sub', super: 'super', top: 'top', text_top: 'text-top	', middle: 'middle', bottom: 'bottom', text_bottom: 'text-bottom'
           },
-          examples: ['l', 'text_bottom'],
+          examples: ['be', 'text_bottom'],
           getValue: getValueFromValues
         };
         cssist.value_sets.visibility_kind = {
@@ -442,7 +442,7 @@ require("./make.js");
         // COLOR
         cssist.value_sets.hex_color = {
           regex: '(?:[0-9A-F]{6})',
-          examples: ['000000', 'aaaaaa', 'FFFFFF'],
+          examples: ['000000', 'FFFFFF'],
           getValue: function(value){
             var result = 'rgba(';
             result += parseInt(value.substring(0,2), 16)+', ';
@@ -560,7 +560,7 @@ require("./make.js");
         };
         cssist.value_sets.rgba_color = {
           regex: '(?:'+cssist.value_sets.google_color.regex+'|'+cssist.value_sets.hex_color.regex+'|'+cssist.value_sets.rgb_color.regex+')'+'(?:_'+cssist.value_sets.opacity.regex+')?',
-          examples: ['rd_0','yw500_25','123456_50', 'abcDEF_75', '255_255_255_100','255_255_255'],
+          examples: ['rd_0','yw500_25','123456_50', '255_255_255_100','255_255_255'],
           getValue: function(value){
             var regex = new RegExp('(?:('+cssist.value_sets.google_color.regex+')|('+cssist.value_sets.hex_color.regex+')|('+cssist.value_sets.rgb_color.regex+'))'+'(?:_('+cssist.value_sets.opacity.regex+'))?');
             var matches = value.match(regex);
@@ -594,9 +594,15 @@ require("./make.js");
 
         // GRADIENT
         cssist.value_sets.gradient = {
-          regex: '(?:'+cssist.value_sets.gradient_kind.regex+'_)?'+'(?:'+cssist.value_sets.degree.regex+'|'+cssist.value_sets.hour.regex+')'+'(?:_'+cssist.value_sets.rgba_color.regex+'){2,}',
+          regex: '(?:'+cssist.value_sets.gradient_kind.regex+'_)?'+'(?:'+cssist.value_sets.degree.regex+'|'+cssist.value_sets.hour.regex+')'+'((?:_'+cssist.value_sets.rgba_color.regex+'){2,})',
           examples: ['l_30d_rd_oe_yw_gn_be_io_pe', 'rr_1h_000000_50_FFFFFF_50'],
-          getValue: function(value){ return value; }
+          getValue: function(value){
+            var result = '';
+            var regex = new RegExp('(?:('+cssist.value_sets.gradient_kind.regex+')_)?(?:('+cssist.value_sets.degree.regex+')|('+cssist.value_sets.hour.regex+'))(?:_('+cssist.value_sets.rgba_color.regex+'){2,}');
+            var matches = value.match(regex);
+            console.log('matches');
+            console.log(matches);
+          }
         };
 
         // SHADOW
@@ -674,7 +680,7 @@ require("./make.js");
         }
       };
       initializeValueSets();
-      // testValueSets();
+      testValueSets();
 
       function initializePropertySets(){
         cssist.property_sets = [
