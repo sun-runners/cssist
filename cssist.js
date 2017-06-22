@@ -992,14 +992,26 @@ __webpack_require__(2);
 
         // GRADIENT
         cssist.value_sets.gradient = {
-          regex: '(?:'+cssist.value_sets.gradient_kind.regex+'_)?'+'(?:'+cssist.value_sets.degree.regex+'|'+cssist.value_sets.hour.regex+')'+'((?:_'+cssist.value_sets.rgba_color.regex+'){2,})',
-          examples: ['l_30d_rd_oe_yw_gn_be_io_pe', 'rr_1h_000000_50_FFFFFF_50'],
+          regex: '(?:'+cssist.value_sets.gradient_kind.regex+'_)?'+'(?:'+cssist.value_sets.degree.regex+')((?:_'+cssist.value_sets.rgba_color.regex+'){2,})',
+          examples: ['l_30d_rd_oe_yw_gn_be_io_pe'],
           getValue: function(value){
             var result = '';
-            var regex = new RegExp('(?:('+cssist.value_sets.gradient_kind.regex+')_)?(?:('+cssist.value_sets.degree.regex+')|('+cssist.value_sets.hour.regex+'))(?:_('+cssist.value_sets.rgba_color.regex+'){2,}');
+            var regex = new RegExp('(?:('+cssist.value_sets.gradient_kind.regex+')_)?('+cssist.value_sets.degree.regex+')((?:_'+cssist.value_sets.rgba_color.regex+'){2,})');
             var matches = value.match(regex);
-            console.log('matches');
-            console.log(matches);
+            var gradient_kind=null, degree=null, hour=null, rgba_colors=[];
+            if(matches[1]) gradient_kind = cssist.value_sets.gradient_kind.getValue(matches[1]);
+            if(matches[2]) degree = cssist.value_sets.degree.getValue(matches[2]);
+            if(matches[3]) {
+              var regex_rgba_color = new RegExp(cssist.value_sets.rgba_color.regex, 'g');
+              var matches_rgba_color = matches[3].match(regex_rgba_color);
+              for(var i=0; i<matches_rgba_color.length; i++){
+                var rgba_color = cssist.value_sets.rgba_color.getValue(matches_rgba_color[i]);
+                if(rgba_color) rgba_colors.push(rgba_color);
+              }
+            }
+            if(gradient_kind&&degree&&rgba_colors.length>=1){
+              return gradient_kind+'('+degree+','+rgba_colors.join(', ')+')';
+            }
           }
         };
 
