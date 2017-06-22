@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('idistApp')
-  .controller('TutorialCtrl', function ($scope, $rootScope, ParagraphR) {
+  .controller('TutorialCtrl', function ($scope, $rootScope) {
 
     // Load Function Section
     $scope.load = function(){
