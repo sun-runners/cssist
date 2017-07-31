@@ -125,27 +125,38 @@
       if(Array.isArray(css.value)){
         for(var i=0; i<css.value.length; i++){
           if(css.value[i].property&&css.value[i].value){
-            css_text += css.value[i].property+': '+css.value[i].value+'; ';
+            css_text += (css.value[i].property.name?css.value[i].property.name:css.value[i].property)+': '+css.value[i].value+'; ';
           }
           else{
-            css_text += css.property+': '+css.value[i]+'; '
+            css_text += (css.property.name?css.property.name:css.property)+': '+css.value[i]+'; '
           }
         }
         return css_text;
       }
       else{
         var broswers = ['webkit', 'moz', 'o', 'ms'];
-        if(css.property) css_text = css.property+': '+css.value+'; ';
-        else css_text = css.property+': '+css.value+'; ';
+        if(css.property) css_text = (css.property.name?css.property.name:css.property)+': '+css.value+'; ';
+        else css_text = (css.property.name?css.property.name:css.property)+': '+css.value+'; ';
         for(var i=0; i<broswers.length; i++){
-          css_text += '-'+broswers[i]+'-'+css.property+': '+css.value+'; '
+          css_text += '-'+broswers[i]+'-'+(css.property.name?css.property.name:css.property)+': '+css.value+'; '
         }
         return css_text;
       }
   	},
     css2css_class : function(css){
   		if(!(css.class)) return;
-      return css.class+(css.event?':'+css.event:'');
+      var class_event = css.class+(css.event?':'+css.event:'');
+      var result = class_event;
+      if(!angular.isString(css.property)){
+        if(css.property&&css.property.afters&&css.property.afters.length>=1){
+          result = '';
+          for(var i=0; i<css.property.afters.length; i++){
+            if(i>0) result += ','
+            result += class_event+css.property.afters[i];
+          }
+        }
+      }
+      return result;
   	}
     // ,
     // css2css_cors : function(css, css_content){
@@ -185,14 +196,26 @@ __webpack_require__(0);
     classPiecesOfClass: function(class_name){
       if(!class_name){ return; }
       var class_pieces = class_name.match(/^([a-zA-Z\_]+)-((?:[a-zA-Z0-9]|(?:\_)|(?:\-\-))+)(?:-([a-zA-Z]{1,2}))?(?:-((?:(?:XH|NH|XW|NW|X|N)[0-9]+)+))?$/);
-      if(!(class_pieces&&class_pieces[1]&&class_pieces[2] ) ){ return; }
-      return {
-        class_name: class_name,
-        property: class_pieces[1],
-        value: class_pieces[2],
-        event: class_pieces[3]?class_pieces[3]:null,
-        media_query: class_pieces[4]?class_pieces[4]:null
-      };
+      var special_class_pieces = class_name.match(/^(cen)(?:-((?:[a-zA-Z0-9]|(?:\_)|(?:\-\-))+))?(?:-([a-zA-Z]{1,2}))?(?:-((?:(?:XH|NH|XW|NW|X|N)[0-9]+)+))?$/);
+      if(!(class_pieces&&class_pieces[1]&&class_pieces[2])&&!(special_class_pieces&&special_class_pieces[0])){ return; }
+      if(class_pieces&&class_pieces[1]&&class_pieces[2]){
+        return {
+          class_name: class_name,
+          property: class_pieces[1],
+          value: class_pieces[2],
+          event: class_pieces[3]?class_pieces[3]:null,
+          media_query: class_pieces[4]?class_pieces[4]:null
+        };
+      }
+      else{
+        return {
+          class_name: class_name,
+          property: special_class_pieces[1],
+          value: special_class_pieces[2],
+          event: special_class_pieces[3]?special_class_pieces[3]:null,
+          media_query: special_class_pieces[4]?special_class_pieces[4]:null
+        };
+      }
     },
 
     // Css
@@ -215,11 +238,31 @@ __webpack_require__(0);
     },
     cssOfCssSetsAndClassPieces: function(class_pieces, css_sets){
       var class_name = class_pieces.class_name;
-      var property = css_sets.property_set.properties[class_pieces.property];
-      var value = css_sets.value_set.getValue(class_pieces.value);
-      var event = cssist.convert.eventCode2event(class_pieces.event);
-      var media_queries = cssist.convert.mediaQueryCodes2mediaQueries(class_pieces.media_query);
+
+      var property;
+      if(css_sets.property_set&&css_sets.property_set.properties&&css_sets.property_set.properties[class_pieces.property]){
+        property = css_sets.property_set.properties[class_pieces.property];
+      }
+      else return;
+
+      var value;
+      if(css_sets.value_set&&css_sets.value_set.getValue(class_pieces.value)){
+        value = css_sets.value_set.getValue(class_pieces.value);
+      }
+      else return;
+
+      var event;
+      if(cssist.convert.eventCode2event(class_pieces.event)){
+        event = cssist.convert.eventCode2event(class_pieces.event);
+      }
+
+      var media_queries;
+      if(cssist.convert.mediaQueryCodes2mediaQueries(class_pieces.media_query)){
+        media_queries = cssist.convert.mediaQueryCodes2mediaQueries(class_pieces.media_query);
+      }
+
       if((value === undefined || value === null)) return;
+
       return {
         class:class_name,
         property:property,
@@ -231,13 +274,55 @@ __webpack_require__(0);
         min_width:media_queries.min_width?media_queries.min_width:null
       };
     },
+    cssesOfCssSetsAndClassPieces: function(class_pieces, classes){
+      if(!(class_pieces&&classes&&classes.length>=1)) return;
+      var class_name = class_pieces.class_name;
+
+      var event;
+      if(cssist.convert.eventCode2event(class_pieces.event)){
+        event = cssist.convert.eventCode2event(class_pieces.event);
+      }
+
+      var media_queries;
+      if(cssist.convert.mediaQueryCodes2mediaQueries(class_pieces.media_query)){
+        media_queries = cssist.convert.mediaQueryCodes2mediaQueries(class_pieces.media_query);
+      }
+
+      css = {
+        class:class_name,
+        list:[],
+        event:event,
+        max_height:media_queries.max_height?media_queries.max_height:null,
+        min_height:media_queries.min_height?media_queries.min_height:null,
+        max_width:media_queries.max_width?media_queries.max_width:null,
+        min_width:media_queries.min_width?media_queries.min_width:null
+      };
+
+      for(var i=0; i<classes.length; i++){
+        class_pieces_ith = this.classPiecesOfClass(classes[i]);
+        if(!class_pieces_ith) continue;
+        css_sets_ith = this.cssSetsOfClassPieces(class_pieces_ith);
+        if(!css_sets_ith) continue;
+        css_ith = this.cssOfCssSetsAndClassPieces(class_pieces_ith, css_sets_ith);
+        if(!css_ith) continue;
+        css.list.push(css_ith);
+      }
+      return css;
+    },
     cssOfClass : function(class_name){
       var class_pieces, css_sets, css;
       class_pieces = this.classPiecesOfClass(class_name);
       if(!class_pieces) return;
       css_sets = this.cssSetsOfClassPieces(class_pieces);
-      if(!css_sets) return;
-      css = this.cssOfCssSetsAndClassPieces(class_pieces, css_sets);
+      var css;
+      if(!css_sets){
+        var special_class = cssist.special_classes[class_pieces.property];
+        if(!special_class){ return; }
+        var classes = special_class.getClasses(class_pieces.value);
+        css = this.cssesOfCssSetsAndClassPieces(class_pieces, classes);
+      } else {
+        css = this.cssOfCssSetsAndClassPieces(class_pieces, css_sets);
+      }
       if(!css) return;
       return css;
     },
@@ -279,7 +364,15 @@ __webpack_require__(0);
     cssToStyleSheet : function(css){
       var style_element = cssist.get.styleElement();
       var css_class = cssist.convert.css2css_class(css);
-      var css_text = cssist.convert.css2css_text(css);
+      var css_text = '';
+      if(css.list&&css.list.length>=1){
+        for(var i=0; i<css.list.length; i++){
+          css_text += cssist.convert.css2css_text(css.list[i]);
+        }
+      } else{
+        css_text = cssist.convert.css2css_text(css);
+      }
+
       var css_style = "."+css_class+" { "+css_text+" }";
       if(css.max_width||css.min_width||css.max_height||css.min_height){
         var css_mediaqueries = [];
@@ -401,7 +494,7 @@ __webpack_require__(2);
   cssist.init = {
     settings : function(){
 
-      cssist.VERSION = '0.0.3';
+      cssist.VERSION = '0.0.5';
       if( localStorage
       && localStorage['cssist_VERSION']
       && localStorage['cssist_VERSION']==cssist.VERSION
@@ -417,6 +510,34 @@ __webpack_require__(2);
       }
 
       cssist.value_sets = {}, cssist.property_sets = {};
+      cssist.value_sets.integer_3digits = {
+        regex: '(?:_?[0-9]{1,3})',
+        examples: ['_999', '999'],
+        getValue: function(value){ return Math.floor(cssist.value_sets.integer.getValue(value))%1000; }
+      };
+      cssist.special_classes = {
+        cen: {
+          property: 'cen',
+          value_set: [ 'xy', 'x', 'y' ],
+          getClasses: function(value){
+            var result;
+            if(value=='x') result = ['l-50', 'tn-X_50'];
+            else if(value=='y') result = ['t-50', 'tn-Y_50'];
+            else result = ['t-50', 'l-50', 'tn-X_50Y_50'];
+            return result;
+          }
+        },
+        b: {
+          property: 'b',
+          value_set: [ 'img' ],
+          getClasses: function(value){
+            var result = ['background_size-cover', 'background_repeat-centerCenter', 'background_position-cc', 'object_fit-cover'];
+            return result;
+          }
+        }
+      }
+
+
       function initializeValueSets(){
 
         var getValueFromValues = function(value){ return this.values[value]; }
@@ -727,10 +848,10 @@ __webpack_require__(2);
           examples: ['__','_','D','M'],
           getValue: function(value){
             var result = null;
-            if(value=='__'){ result = ' + '; }
-            else if(value=='_'){ result = ' - '; }
-            else if(value=='M'){ result = ' * '; }
-            else if(value=='D'){ result = ' / '; }
+            if(value=='__'){ result = '+'; }
+            else if(value=='_'){ result = '-'; }
+            else if(value=='M'){ result = '*'; }
+            else if(value=='D'){ result = '/'; }
             return result;
           }
         };
@@ -740,11 +861,12 @@ __webpack_require__(2);
           getValue: function(value){
             var regex = new RegExp('('+cssist.value_sets.calc.regex+'?'+cssist.value_sets.length.regex+')', 'g');
             var matches = value.match(regex);
-            var result = 'calc( ';
+            var result = '';
             for(var i=0; i<matches.length; i++){
               var regex_each = new RegExp('('+cssist.value_sets.calc.regex+')?('+cssist.value_sets.length.regex+')');
               var matches_each = matches[i].match(regex_each);
               if(matches_each[1]){
+                if(result.length>=1){ result += ' '; }
                 result += cssist.value_sets.calc.getValue(matches_each[1]);
               }
               if(!(matches_each[1]=='D'||matches_each[1]=='M')&&matches_each[2]){
@@ -753,7 +875,7 @@ __webpack_require__(2);
                 result += matches_each[2];
               }
             }
-            result += ' )';
+            result = 'calc( ' + result + ' )';
             return result;
           }
         };
@@ -813,10 +935,9 @@ __webpack_require__(2);
         // TRANSFORM
         cssist.value_sets.translate_length_calc_2D = {
           regex: '(?:[X|Y]'+cssist.value_sets.length_calc.regex+')+',
-          examples: ['X100pxY50px', 'X100_10pxY50pxM10'],
           examples: ['X100pxY50px', 'X100_10pxY50pxM10', 'X100M2_100vwD3__100cmD4_100pxD5_100M6_100vwD7__100cmD8_100pxD9'],
           getValue: function(value){
-            var result = 'translate(';
+            var result = 'translate( ';
             var regex_X = new RegExp('X('+cssist.value_sets.length_calc.regex+')');
             var matches_X = value.match(regex_X);
             if(matches_X){
@@ -832,7 +953,7 @@ __webpack_require__(2);
             } else {
               result += 0;
             }
-            result += ')';
+            result += ' )';
             return result;
           }
         };
@@ -1123,7 +1244,8 @@ __webpack_require__(2);
             value_sets: [cssist.value_sets.direction_2D_kind, cssist.value_sets.length_calc_2D, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: {
-              c: 'color', pc: 'placeholder', color: 'color', placeholder: 'placeholder',
+              c: 'color', pc: { name:'color', afters: ['::-webkit-input-placeholder', '::-moz-placeholder', ':-ms-input-placeholder', ':-moz-placeholder'] },
+              color: 'color', placeholder: { name:'color', afters: ['::-webkit-input-placeholder', '::-moz-placeholder', ':-ms-input-placeholder', ':-moz-placeholder'] },
               bc:'background-color', background_color:'background-color',
               bo:'border-color', bo_t:'border-top-color', bo_b:'border-bottom-color', bo_l:'border-left-color', bo_r:'border-right-color',
               border_color:'border-color', border_top_color:'border-top-color', border_bottom_color:'border-bottom-color', border_left_color:'border-left-color', border_right_color:'border-right-color'
@@ -1429,11 +1551,11 @@ __webpack_require__(2);
           &&cssist.get.styleElement().innerHTML.indexOf('.'+class_name+':')==-1
           &&cssist.classes_success.indexOf(class_name)==-1
           &&cssist.classes_fail.indexOf(class_name)==-1
-          &&['cen', 'cen-x', 'cen-y', 'b-img'].indexOf(class_name)==-1
         ){
+          console.log(class_name);
           var result = cssist.make.classToStyleSheet(class_name);
-          if(result) cssist.classes_success.push(class_name);
-          else cssist.classes_fail.push(class_name);
+          if(result){ cssist.classes_success.push(class_name); }
+          else { cssist.classes_fail.push(class_name); }
         }
       }
     },
@@ -1467,7 +1589,7 @@ exports = module.exports = __webpack_require__(9)(undefined);
 
 
 // module
-exports.push([module.i, "/* Cssist Reset Css */\n\n/* Remove the margin */\n* {\n\tmargin: 0;\n\tpadding: 0;\n\tborder: 0;\n\tfont-size: 100%;\n\tfont: inherit;\n  background: none;\n\tbox-shadow: none;\n  vertical-align: baseline;\n\t-ms-touch-action: manipulation;\n\ttouch-action: manipulation;\n\t-webkit-box-sizing: border-box;\n\t-moz-box-sizing: border-box;\n\tbox-sizing: border-box;\n\tborder-style: solid;\n}\n\n/* Remove outline */\n*:focus, *:active {\n\t\toutline: none !important;\n}\n\n/* Set default font family */\nhtml {\n  /*font-family: sans-serif;*/\n  -ms-text-size-adjust: 100%;\n  -webkit-text-size-adjust: 100%;\n}\n\n/* Correct display */\narticle, aside, details, figcaption, figure, footer, header, main, menu, nav, section, summary {\n  display: block;\n}\naudio, canvas, progress, video {\n  display: inline-block;\n}\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\ntemplate, [hidden] {\n  display: none;\n}\n\n/* Correct vertical alignment */\nprogress {\n  vertical-align: baseline;\n}\n\n/* Correct link */\na {\n  background-color: transparent;\n  -webkit-text-decoration-skip: objects;\n}\na:active, a:hover {\n  outline-width: 0;\n}\n\n/* Correct text */\nabbr[title] {\n  border-bottom: none;\n  text-decoration: underline;\n  text-decoration: underline dotted;\n}\nb, strong {\n  font-weight: inherit;\n}\nb, strong {\n  font-weight: bolder;\n}\ndfn {\n  font-style: italic;\n}\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\nmark {\n  background-color: #ff0;\n  color: #000;\n}\nsmall {\n  font-size: 80%;\n}\nsub, sup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\nsub {\n  bottom: -0.25em;\n}\nsup {\n  top: -0.5em;\n}\n\n/* Correct embedded content */\nimg {\n  border-style: none;\n}\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Correct grouping content */\ncode, kbd, pre, samp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\nfigure {\n  margin: 1em 40px;\n}\nhr {\n  box-sizing: content-box;\n  height: 0;\n  overflow: visible;\n}\n\n/* Correct forms */\nbutton, input, select, textarea {\n  font: inherit;\n  margin: 0;\n}\noptgroup {\n  font-weight: bold;\n}\nbutton, input {\n  overflow: visible;\n}\nbutton, select {\n  text-transform: none;\n}\nbutton, html [type=\"button\"], [type=\"reset\"], [type=\"submit\"] {\n  -webkit-appearance: button;\n}\nbutton::-moz-focus-inner, [type=\"button\"]::-moz-focus-inner, [type=\"reset\"]::-moz-focus-inner, [type=\"submit\"]::-moz-focus-inner {\n  border-style: none;\n  padding: 0;\n}\nbutton:-moz-focusring, [type=\"button\"]:-moz-focusring, [type=\"reset\"]:-moz-focusring, [type=\"submit\"]:-moz-focusring {\n  outline: 1px dotted ButtonText;\n}\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\nlegend {\n  box-sizing: border-box;\n  color: inherit;\n  display: table;\n  max-width: 100%;\n  padding: 0;\n  white-space: normal;\n}\ntextarea {\n  overflow: auto;\n}\n[type=\"checkbox\"], [type=\"radio\"] {\n  box-sizing: border-box;\n  padding: 0;\n}\n[type=\"number\"]::-webkit-inner-spin-button, [type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n[type=\"search\"] {\n  -webkit-appearance: textfield;\n  outline-offset: -2px;\n}\n[type=\"search\"]::-webkit-search-cancel-button, [type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n::-webkit-input-placeholder {\n  color: inherit;\n  opacity: 0.54;\n}\n::-webkit-file-upload-button {\n  -webkit-appearance: button;\n  font: inherit;\n}\ndiv, button, span, input, textarea, img {\n\tdisplay: block;\n\tposition: relative;\n\tfloat: left;\n}\ni {\n\tposition: relative;\n}\nth, td {\n  vertical-align: middle;\n}\nimage {\n\t-webkit-touch-callout: none;\n  -webkit-user-select: none;\n}\n.cen {\n  top: 50%;\n  left:50%;\n\ttransform: translate(-50%, -50%);\n  -webkit-transform: translate(-50%, -50%);\n  -ms-transform: translate(-50%, -50%);\n  -moz-transform: translate(-50%, -50%);\n  -o-transform: translate(-50%, -50%);\n}\n.cen-x {\n  left: 50%;\n  transform: translateX(-50%);\n  -webkit-transform: translateX(-50%);\n  -ms-transform: translateX(-50%);\n  -moz-transform: translateX(-50%);\n  -o-transform: translateX(-50%);\n}\n.cen-y {\n  top: 50%;\n  transform: translateY(-50%);\n  -webkit-transform: translateY(-50%);\n  -ms-transform: translateY(-50%);\n  -moz-transform: translateY(-50%);\n  -o-transform: translateY(-50%);\n}\n.b-img {\n\tbackground-size: cover;\n\t-webkit-background-size: cover;\n\t-moz-background-size: cover;\n\t-o-background-size: cover;\n\tbackground-repeat: no-repeat;\n\tbackground-position: center center;\n\tobject-fit: cover;\n\t-webkit-object-fit: cover;\n\t-ms-object-fit: cover;\n\t-moz-object-fit: cover;\n\t-o-object-fit: cover;\n}\n", ""]);
+exports.push([module.i, "/* Cssist Reset Css */\n\n/* Remove the margin */\n* {\n\tmargin: 0;\n\tpadding: 0;\n\tborder: 0;\n\tfont-size: 100%;\n\tfont: inherit;\n  background: none;\n\tbox-shadow: none;\n  vertical-align: baseline;\n\t-ms-touch-action: manipulation;\n\ttouch-action: manipulation;\n\t-webkit-box-sizing: border-box;\n\t-moz-box-sizing: border-box;\n\tbox-sizing: border-box;\n\tborder-style: solid;\n}\n\n/* Remove outline */\n*:focus, *:active {\n\t\toutline: none !important;\n}\n\n/* Set default font family */\nhtml {\n  /*font-family: sans-serif;*/\n  -ms-text-size-adjust: 100%;\n  -webkit-text-size-adjust: 100%;\n}\n\n/* Correct display */\narticle, aside, details, figcaption, figure, footer, header, main, menu, nav, section, summary {\n  display: block;\n}\naudio, canvas, progress, video {\n  display: inline-block;\n}\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\ntemplate, [hidden] {\n  display: none;\n}\n\n/* Correct vertical alignment */\nprogress {\n  vertical-align: baseline;\n}\n\n/* Correct link */\na {\n  background-color: transparent;\n  -webkit-text-decoration-skip: objects;\n}\na:active, a:hover {\n  outline-width: 0;\n}\n\n/* Correct text */\nabbr[title] {\n  border-bottom: none;\n  text-decoration: underline;\n  text-decoration: underline dotted;\n}\nb, strong {\n  font-weight: inherit;\n}\nb, strong {\n  font-weight: bolder;\n}\ndfn {\n  font-style: italic;\n}\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\nmark {\n  background-color: #ff0;\n  color: #000;\n}\nsmall {\n  font-size: 80%;\n}\nsub, sup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\nsub {\n  bottom: -0.25em;\n}\nsup {\n  top: -0.5em;\n}\n\n/* Correct embedded content */\nimg {\n  border-style: none;\n}\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Correct grouping content */\ncode, kbd, pre, samp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\nfigure {\n  margin: 1em 40px;\n}\nhr {\n  box-sizing: content-box;\n  height: 0;\n  overflow: visible;\n}\n\n/* Correct forms */\nbutton, input, select, textarea {\n  font: inherit;\n  margin: 0;\n}\noptgroup {\n  font-weight: bold;\n}\nbutton, input {\n  overflow: visible;\n}\nbutton, select {\n  text-transform: none;\n}\nbutton, html [type=\"button\"], [type=\"reset\"], [type=\"submit\"] {\n  -webkit-appearance: button;\n}\nbutton::-moz-focus-inner, [type=\"button\"]::-moz-focus-inner, [type=\"reset\"]::-moz-focus-inner, [type=\"submit\"]::-moz-focus-inner {\n  border-style: none;\n  padding: 0;\n}\nbutton:-moz-focusring, [type=\"button\"]:-moz-focusring, [type=\"reset\"]:-moz-focusring, [type=\"submit\"]:-moz-focusring {\n  outline: 1px dotted ButtonText;\n}\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\nlegend {\n  box-sizing: border-box;\n  color: inherit;\n  display: table;\n  max-width: 100%;\n  padding: 0;\n  white-space: normal;\n}\ntextarea {\n  overflow: auto;\n}\n[type=\"checkbox\"], [type=\"radio\"] {\n  box-sizing: border-box;\n  padding: 0;\n}\n[type=\"number\"]::-webkit-inner-spin-button, [type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n[type=\"search\"] {\n  -webkit-appearance: textfield;\n  outline-offset: -2px;\n}\n[type=\"search\"]::-webkit-search-cancel-button, [type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n::-webkit-input-placeholder {\n  color: inherit;\n  opacity: 0.54;\n}\n::-webkit-file-upload-button {\n  -webkit-appearance: button;\n  font: inherit;\n}\ndiv, button, span, input, textarea, img {\n\tdisplay: block;\n\tposition: relative;\n\tfloat: left;\n}\ni {\n\tposition: relative;\n}\nth, td {\n  vertical-align: middle;\n}\nimage {\n\t-webkit-touch-callout: none;\n  -webkit-user-select: none;\n}\n", ""]);
 
 // exports
 

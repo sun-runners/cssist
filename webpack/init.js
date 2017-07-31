@@ -3,7 +3,7 @@ require("./make.js");
   cssist.init = {
     settings : function(){
 
-      cssist.VERSION = '0.0.3';
+      cssist.VERSION = '0.0.5';
       if( localStorage
       && localStorage['cssist_VERSION']
       && localStorage['cssist_VERSION']==cssist.VERSION
@@ -19,6 +19,34 @@ require("./make.js");
       }
 
       cssist.value_sets = {}, cssist.property_sets = {};
+      cssist.value_sets.integer_3digits = {
+        regex: '(?:_?[0-9]{1,3})',
+        examples: ['_999', '999'],
+        getValue: function(value){ return Math.floor(cssist.value_sets.integer.getValue(value))%1000; }
+      };
+      cssist.special_classes = {
+        cen: {
+          property: 'cen',
+          value_set: [ 'xy', 'x', 'y' ],
+          getClasses: function(value){
+            var result;
+            if(value=='x') result = ['l-50', 'tn-X_50'];
+            else if(value=='y') result = ['t-50', 'tn-Y_50'];
+            else result = ['t-50', 'l-50', 'tn-X_50Y_50'];
+            return result;
+          }
+        },
+        b: {
+          property: 'b',
+          value_set: [ 'img' ],
+          getClasses: function(value){
+            var result = ['background_size-cover', 'background_repeat-centerCenter', 'background_position-cc', 'object_fit-cover'];
+            return result;
+          }
+        }
+      }
+
+
       function initializeValueSets(){
 
         var getValueFromValues = function(value){ return this.values[value]; }
@@ -329,10 +357,10 @@ require("./make.js");
           examples: ['__','_','D','M'],
           getValue: function(value){
             var result = null;
-            if(value=='__'){ result = ' + '; }
-            else if(value=='_'){ result = ' - '; }
-            else if(value=='M'){ result = ' * '; }
-            else if(value=='D'){ result = ' / '; }
+            if(value=='__'){ result = '+'; }
+            else if(value=='_'){ result = '-'; }
+            else if(value=='M'){ result = '*'; }
+            else if(value=='D'){ result = '/'; }
             return result;
           }
         };
@@ -342,11 +370,12 @@ require("./make.js");
           getValue: function(value){
             var regex = new RegExp('('+cssist.value_sets.calc.regex+'?'+cssist.value_sets.length.regex+')', 'g');
             var matches = value.match(regex);
-            var result = 'calc( ';
+            var result = '';
             for(var i=0; i<matches.length; i++){
               var regex_each = new RegExp('('+cssist.value_sets.calc.regex+')?('+cssist.value_sets.length.regex+')');
               var matches_each = matches[i].match(regex_each);
               if(matches_each[1]){
+                if(result.length>=1){ result += ' '; }
                 result += cssist.value_sets.calc.getValue(matches_each[1]);
               }
               if(!(matches_each[1]=='D'||matches_each[1]=='M')&&matches_each[2]){
@@ -355,7 +384,7 @@ require("./make.js");
                 result += matches_each[2];
               }
             }
-            result += ' )';
+            result = 'calc( ' + result + ' )';
             return result;
           }
         };
@@ -415,10 +444,9 @@ require("./make.js");
         // TRANSFORM
         cssist.value_sets.translate_length_calc_2D = {
           regex: '(?:[X|Y]'+cssist.value_sets.length_calc.regex+')+',
-          examples: ['X100pxY50px', 'X100_10pxY50pxM10'],
           examples: ['X100pxY50px', 'X100_10pxY50pxM10', 'X100M2_100vwD3__100cmD4_100pxD5_100M6_100vwD7__100cmD8_100pxD9'],
           getValue: function(value){
-            var result = 'translate(';
+            var result = 'translate( ';
             var regex_X = new RegExp('X('+cssist.value_sets.length_calc.regex+')');
             var matches_X = value.match(regex_X);
             if(matches_X){
@@ -434,7 +462,7 @@ require("./make.js");
             } else {
               result += 0;
             }
-            result += ')';
+            result += ' )';
             return result;
           }
         };
@@ -725,7 +753,8 @@ require("./make.js");
             value_sets: [cssist.value_sets.direction_2D_kind, cssist.value_sets.length_calc_2D, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: {
-              c: 'color', pc: 'placeholder', color: 'color', placeholder: 'placeholder',
+              c: 'color', pc: { name:'color', afters: ['::-webkit-input-placeholder', '::-moz-placeholder', ':-ms-input-placeholder', ':-moz-placeholder'] },
+              color: 'color', placeholder: { name:'color', afters: ['::-webkit-input-placeholder', '::-moz-placeholder', ':-ms-input-placeholder', ':-moz-placeholder'] },
               bc:'background-color', background_color:'background-color',
               bo:'border-color', bo_t:'border-top-color', bo_b:'border-bottom-color', bo_l:'border-left-color', bo_r:'border-right-color',
               border_color:'border-color', border_top_color:'border-top-color', border_bottom_color:'border-bottom-color', border_left_color:'border-left-color', border_right_color:'border-right-color'

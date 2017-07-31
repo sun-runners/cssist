@@ -6,7 +6,15 @@ require("./convert.js");
     cssToStyleSheet : function(css){
       var style_element = cssist.get.styleElement();
       var css_class = cssist.convert.css2css_class(css);
-      var css_text = cssist.convert.css2css_text(css);
+      var css_text = '';
+      if(css.list&&css.list.length>=1){
+        for(var i=0; i<css.list.length; i++){
+          css_text += cssist.convert.css2css_text(css.list[i]);
+        }
+      } else{
+        css_text = cssist.convert.css2css_text(css);
+      }
+
       var css_style = "."+css_class+" { "+css_text+" }";
       if(css.max_width||css.min_width||css.max_height||css.min_height){
         var css_mediaqueries = [];

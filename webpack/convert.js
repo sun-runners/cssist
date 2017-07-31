@@ -55,27 +55,38 @@
       if(Array.isArray(css.value)){
         for(var i=0; i<css.value.length; i++){
           if(css.value[i].property&&css.value[i].value){
-            css_text += css.value[i].property+': '+css.value[i].value+'; ';
+            css_text += (css.value[i].property.name?css.value[i].property.name:css.value[i].property)+': '+css.value[i].value+'; ';
           }
           else{
-            css_text += css.property+': '+css.value[i]+'; '
+            css_text += (css.property.name?css.property.name:css.property)+': '+css.value[i]+'; '
           }
         }
         return css_text;
       }
       else{
         var broswers = ['webkit', 'moz', 'o', 'ms'];
-        if(css.property) css_text = css.property+': '+css.value+'; ';
-        else css_text = css.property+': '+css.value+'; ';
+        if(css.property) css_text = (css.property.name?css.property.name:css.property)+': '+css.value+'; ';
+        else css_text = (css.property.name?css.property.name:css.property)+': '+css.value+'; ';
         for(var i=0; i<broswers.length; i++){
-          css_text += '-'+broswers[i]+'-'+css.property+': '+css.value+'; '
+          css_text += '-'+broswers[i]+'-'+(css.property.name?css.property.name:css.property)+': '+css.value+'; '
         }
         return css_text;
       }
   	},
     css2css_class : function(css){
   		if(!(css.class)) return;
-      return css.class+(css.event?':'+css.event:'');
+      var class_event = css.class+(css.event?':'+css.event:'');
+      var result = class_event;
+      if(!angular.isString(css.property)){
+        if(css.property&&css.property.afters&&css.property.afters.length>=1){
+          result = '';
+          for(var i=0; i<css.property.afters.length; i++){
+            if(i>0) result += ','
+            result += class_event+css.property.afters[i];
+          }
+        }
+      }
+      return result;
   	}
     // ,
     // css2css_cors : function(css, css_content){
