@@ -26,7 +26,6 @@ require("./make.js");
           &&cssist.classes_success.indexOf(class_name)==-1
           &&cssist.classes_fail.indexOf(class_name)==-1
         ){
-          console.log(class_name);
           var result = cssist.make.classToStyleSheet(class_name);
           if(result){ cssist.classes_success.push(class_name); }
           else { cssist.classes_fail.push(class_name); }
