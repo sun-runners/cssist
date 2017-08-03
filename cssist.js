@@ -494,7 +494,7 @@ __webpack_require__(2);
   cssist.init = {
     settings : function(){
 
-      cssist.VERSION = '0.0.5';
+      cssist.VERSION = '0.0.6';
       if( localStorage
       && localStorage['cssist_VERSION']
       && localStorage['cssist_VERSION']==cssist.VERSION
@@ -870,8 +870,10 @@ __webpack_require__(2);
                 result += cssist.value_sets.calc.getValue(matches_each[1]);
               }
               if(!(matches_each[1]=='D'||matches_each[1]=='M')&&matches_each[2]){
+                if(result.length>=1){ result += ' '; }
                 result += cssist.value_sets.length.getValue(matches_each[2]);
               } else{
+                if(result.length>=1){ result += ' '; }
                 result += matches_each[2];
               }
             }
