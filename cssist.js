@@ -866,18 +866,20 @@ __webpack_require__(2);
               var regex_each = new RegExp('('+cssist.value_sets.calc.regex+')?('+cssist.value_sets.length.regex+')');
               var matches_each = matches[i].match(regex_each);
               if(matches_each[1]){
-                if(result.length>=1){ result += ' '; }
                 result += cssist.value_sets.calc.getValue(matches_each[1]);
               }
-              if(!(matches_each[1]=='D'||matches_each[1]=='M')&&matches_each[2]){
-                if(result.length>=1){ result += ' '; }
+              if(!(matches_each[1]=='D'||matches_each[1]=='M')){ // 부호나 나누기나 곱하기가 아닌 경우
+                if(i>=1){ result += ' '; }
                 result += cssist.value_sets.length.getValue(matches_each[2]);
-              } else{
-                if(result.length>=1){ result += ' '; }
+              } else{ // 부호나 나누기나 곱하기인 경우
+                if(i>=1){ result += ' '; }
                 result += matches_each[2];
               }
+              result += ' ';
             }
-            result = 'calc( ' + result + ' )';
+            result = 'calc( ' + result + ')';
+            console.log('result');
+            console.log(result);
             return result;
           }
         };
