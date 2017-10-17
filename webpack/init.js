@@ -748,6 +748,15 @@ require("./make.js");
             value_sets: [cssist.value_sets.box_sizing_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: {
+              bo:'border-width', bo_t:'border-top-width', bo_b:'border-bottom-width', bo_l:'border-left-width', bo_r:'border-right-width',
+              border_width:'border-width', border_top_width:'border-top-width', border_bottom_width:'border-bottom-width', border_left_width:'border-left-width', border_right_width:'border-right-width'
+            },
+            value_sets: [cssist.value_sets.length_calc, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit, cssist.value_sets.thick_kind]
+          },{
+            properties: { bp:'background-position', background_position:'background-position' },
+            value_sets: [cssist.value_sets.direction_2D_kind, cssist.value_sets.length_calc_2D, cssist.value_sets.initial, cssist.value_sets.inherit]
+          },{
+            properties: {
               c: 'color', pc: { name:'color', afters: ['::-webkit-input-placeholder', '::-moz-placeholder', ':-ms-input-placeholder', ':-moz-placeholder'] },
               color: 'color', placeholder: { name:'color', afters: ['::-webkit-input-placeholder', '::-moz-placeholder', ':-ms-input-placeholder', ':-moz-placeholder'] },
               bc:'background-color', background_color:'background-color',
@@ -755,15 +764,6 @@ require("./make.js");
               border_color:'border-color', border_top_color:'border-top-color', border_bottom_color:'border-bottom-color', border_left_color:'border-left-color', border_right_color:'border-right-color'
             },
             value_sets: [cssist.value_sets.rgba_color]
-          },{
-            properties: { bp:'background-position', background_position:'background-position' },
-            value_sets: [cssist.value_sets.direction_2D_kind, cssist.value_sets.length_calc_2D, cssist.value_sets.initial, cssist.value_sets.inherit]
-          },{
-            properties: {
-              bo:'border-width', bo_t:'border-top-width', bo_b:'border-bottom-width', bo_l:'border-left-width', bo_r:'border-right-width',
-              border_width:'border-width', border_top_width:'border-top-width', border_bottom_width:'border-bottom-width', border_left_width:'border-left-width', border_right_width:'border-right-width'
-            },
-            value_sets: [cssist.value_sets.length_calc, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit, cssist.value_sets.thick_kind]
           },{
             properties: { c:'clear', clear:'clear' },
             value_sets: [cssist.value_sets.clear_kind, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
