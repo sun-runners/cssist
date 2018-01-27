@@ -182,13 +182,10 @@ textarea {
   -webkit-appearance: button;
   font: inherit;
 }
-div, button, span, input, textarea, img {
-	display: block;
-	position: relative;
-	float: left;
-}
-i {
-	position: relative;
+div, button, span, input, textarea, img, i {
+	display: inherit;
+	position: inherit;
+	float: inherit;
 }
 th, td {
   vertical-align: middle;
