@@ -9,16 +9,15 @@
   "license": "MIT",
   "homepage": "https://github.com/KimSunWook/cssist",
   "ignore": [
-    "**",
-    "*.json",
-    "webpack.config.js",
-    "*.md",
-    "CNAME"
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "docs",
+    "webpack",
+    "CNAME",
+    "webpack.config.js"
   ],
   "dependencies": {
     "animate.css": "^3.5.2"
-  },
-  "devDependencies": {
-    "cssist": "*"
   }
 }
