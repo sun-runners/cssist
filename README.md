@@ -30,15 +30,7 @@ Copy-paste the stylesheet <script> into your <body>.
 ```
 or
 ```
-<script src=".bower_components/cssist/cssist.min.js"></script>
-```
-or
-```
 <script src="https://raw.githubusercontent.com/KimSunWook/cssist/master/cssist.js"></script>
-```
-or
-```
-<script src="https://raw.githubusercontent.com/KimSunWook/cssist/master/cssist.min.js"></script>
 ```
 
 <br/>
