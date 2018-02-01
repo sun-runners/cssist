@@ -7,7 +7,7 @@ Cssist is a JavaScript library that automatically generates classes so that you 
 
 DEMO
 -------
-https://kimsunwook.github.io/cssist/index.html#/
+https://kimsunwook.github.io/cssist/index.html
 <!-- https://kimsunwook.github.io/cssist -->
 
 <br/>
