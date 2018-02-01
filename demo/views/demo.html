@@ -1,0 +1,50 @@
+<div class="w-100 h-100 f-n">
+  <ng-gradient class="p-a w-100 h-100 t-0 l-0 z-1" ng-gradient-option="{
+    opacity: [1, 1],
+    direction: 'radial',
+    states: {
+      'default-state': {
+        gradients: [
+          ['#CFD8DC', '#B0BEC5'],
+          ['#90A4AE', '#78909C'],
+          ['#78909C', '#90A4AE'],
+          ['#B0BEC5', '#CFD8DC']
+        ]
+      }
+    }
+  }"></ng-gradient>
+  <div class="p-a w-100 h-100 t-0 l-0 z-2">
+    <div full-page class="section" options="{ scrollingSpeed: 500, controlArrows: false }">
+
+      <!-- Opacity -->
+      <div class="f-l w-100 h-100 slide z-1">
+        <div class="w-100 cen">
+          <div class="w-100 t-c f-45px" style="font-family: 'Oleo Script', cursive;">
+            Opacity
+          </div>
+          <div class="w-100 mt-45px">
+            <div class="w-100 t-c f-n">
+              <div class="d-ib w-100px h-100px b-we o-{{x}}" ng-repeat="x in [0, 10, 25, 50, 75, 100]">
+                <span class="cen">
+                  .o-{{x}}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <button class="p-a w-20 h-60px cen-y c-we l-0 z-2" ng-click="movePrev();">
+        <div class="p-r w-100 h-100">
+          <i class="ion-arrow-left-b f-30px cen"></i>
+        </div>
+      </button>
+      <button class="p-a w-20 h-60px cen-y c-we r-0 z-2" ng-click="moveNext();">
+        <div class="p-r w-100 h-100">
+          <i class="ion-arrow-right-b f-30px cen"></i>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>

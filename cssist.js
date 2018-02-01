@@ -61,7 +61,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -120,7 +120,7 @@
       return media_query;
     },
     css2css_text : function(css){
-  		if(!(css.property&&css.value)) return;
+  		if(!(css.property&&css.value!=null&&css.value!=undefined)) return;
       var css_text='';
       if(Array.isArray(css.value)){
         for(var i=0; i<css.value.length; i++){
@@ -244,9 +244,10 @@ __webpack_require__(0);
         property = css_sets.property_set.properties[class_pieces.property];
       }
       else return;
+      console.log(class_name);
 
       var value;
-      if(css_sets.value_set&&css_sets.value_set.getValue(class_pieces.value)){
+      if(css_sets.value_set){
         value = css_sets.value_set.getValue(class_pieces.value);
       }
       else return;
@@ -409,15 +410,16 @@ __webpack_require__(0);
         this.cssToStyleSheet(css);
         return true;
       }
-      else return false;
+      else{
+        return false;
+      }
   	}
   };
 })();
 
 
 /***/ },
-/* 3 */,
-/* 4 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 __webpack_require__(1);
@@ -436,10 +438,10 @@ __webpack_require__(1);
 
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-__webpack_require__(11);
+__webpack_require__(6);
 (function(){
   cssist.watch = {
     change : function(){
@@ -461,11 +463,7 @@ __webpack_require__(11);
 
 
 /***/ },
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 __webpack_require__(2);
@@ -800,7 +798,7 @@ __webpack_require__(2);
         cssist.value_sets.opacity = {
           regex: cssist.value_sets.float_0_100.regex,
           examples: ['0', '50o50', '100'],
-          getValue: function(value){ return cssist.value_sets.float_0_100.getValue(value)*0.01; }
+          getValue: function(value){return cssist.value_sets.float_0_100.getValue(value)*0.01; }
         };
 
         // LENGTH
@@ -836,7 +834,7 @@ __webpack_require__(2);
         };
         cssist.value_sets.length_calc = {
           regex: '(?:'+cssist.value_sets.calc.regex+'?'+cssist.value_sets.length.regex+')+',
-          examples: ['0', '50', '100_100px', '100M2_100vwD3__100cmD4_100pxD5_100M6_100vwD7__100cmD8_100pxD9'],
+          examples: ['0', '50', '50px', '100_100px', '100M2_100vwD3__100cmD4_100pxD5_100M6_100vwD7__100cmD8_100pxD9'],
           getValue: function(value){
             var regex = new RegExp('('+cssist.value_sets.calc.regex+'?'+cssist.value_sets.length.regex+')', 'g');
             var matches = value.match(regex);
@@ -857,8 +855,6 @@ __webpack_require__(2);
               result += ' ';
             }
             result = 'calc( ' + result + ')';
-            console.log('result');
-            console.log(result);
             return result;
           }
         };
@@ -1504,10 +1500,10 @@ __webpack_require__(2);
 
 
 /***/ },
-/* 11 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-__webpack_require__(10);
+__webpack_require__(5);
 __webpack_require__(2);
 (function(){
   if (typeof(MutationObserver) !== 'undefined') {
@@ -1563,12 +1559,12 @@ __webpack_require__(2);
 
 
 /***/ },
-/* 12 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 window.cssist={};
-__webpack_require__(5);
 __webpack_require__(4);
+__webpack_require__(3);
 // require('!style!css!./reset.css');
 cssist.watch.start();
 

@@ -1,0 +1,62 @@
+{
+  "name": "ng-gradient",
+  "version": "1.0.1",
+  "homepage": "https://github.com/KimSunWook/ngGradient",
+  "main": "ngGradient.js",
+  "authors": [
+    "Kim Sun Wook <sunus7@naver.com>"
+  ],
+  "description": "ngGradient is an angularjs library that creates gradient animations with granim.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:KimSunWook/ngGradient.git"
+  },
+  "keywords": [
+    "ngGradient",
+    "ng-gradient"
+  ],
+  "ignore": [
+    "**",
+    "*.json",
+    "webpack.config.js",
+    "*.md",
+    "CNAME"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "angular": ">=1.2.0",
+    "granim": "^1.1.0"
+  },
+  "devDependencies": {
+    "angular": "~1.5.8",
+    "angular-animate": "~1.5.8",
+    "angular-aria": "~1.5.8",
+    "angular-cookies": "~1.5.8",
+    "angular-messages": "~1.5.8",
+    "angular-resource": "~1.5.8",
+    "angular-route": "~1.5.8",
+    "angular-sanitize": "~1.5.8",
+    "angular-touch": "~1.5.8",
+    "angular-ui-router": "~0.3.1",
+    "angular-fullpage.js": "~0.2.1",
+    "angular-material": "^1.1.4",
+    "animate.css": "^3.5.2",
+    "ng-lodash": "^0.5.0",
+    "cssist": "*",
+    "animejs": "^2.2.0",
+    "reset.css": "^1.0.2"
+  },
+  "resolutions": {
+    "angular": "~1.5.8"
+  },
+  "_release": "1.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.1",
+    "commit": "53943a459fcf4379f03f39a2bde6e4e4a1a952e7"
+  },
+  "_source": "https://github.com/KimSunWook/ngGradient.git",
+  "_target": "^1.0.1",
+  "_originalSource": "ng-gradient",
+  "_direct": true
+}

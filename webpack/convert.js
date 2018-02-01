@@ -50,7 +50,7 @@
       return media_query;
     },
     css2css_text : function(css){
-  		if(!(css.property&&css.value)) return;
+  		if(!(css.property&&css.value!=null&&css.value!=undefined)) return;
       var css_text='';
       if(Array.isArray(css.value)){
         for(var i=0; i<css.value.length; i++){

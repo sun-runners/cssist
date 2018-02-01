@@ -1,0 +1,53 @@
+{
+  "name": "angular-fullpage.js",
+  "version": "0.2.1",
+  "homepage": "http://hellsan631.github.io/angular-fullpage.js/",
+  "authors": [
+    "Mathew Kleppin <mathew.kleppin@gmail.com>"
+  ],
+  "description": "A simple angular directive for fullpage.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hellsan631/angular-fullpage.js.git"
+  },
+  "main": [
+    "angular-fullpage.js",
+    "angular-fullpage.min.js"
+  ],
+  "ignore": [
+    ".jshintrc",
+    ".editorconfig",
+    ".sass-cache",
+    "npm-debug.log",
+    "sample",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "angular": "~1.4.4",
+    "fullpage.js": "~2.7.7"
+  },
+  "keywords": [
+    "fullpage",
+    "angular",
+    "directive",
+    "jquery",
+    "scrolling",
+    "single_page",
+    "one_page",
+    "sliding"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "angular-ui-router": "~0.2.15"
+  },
+  "_release": "0.2.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.2.1",
+    "commit": "aedf7f5f4adff15ea84a78d7477b49eff4fe2d30"
+  },
+  "_source": "https://github.com/hellsan631/angular-fullpage.js.git",
+  "_target": "~0.2.1",
+  "_originalSource": "angular-fullpage.js"
+}

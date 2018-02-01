@@ -51,7 +51,9 @@ require("./convert.js");
         this.cssToStyleSheet(css);
         return true;
       }
-      else return false;
+      else{
+        return false;
+      }
   	}
   };
 })();

@@ -330,7 +330,7 @@ require("./make.js");
         cssist.value_sets.opacity = {
           regex: cssist.value_sets.float_0_100.regex,
           examples: ['0', '50o50', '100'],
-          getValue: function(value){ return cssist.value_sets.float_0_100.getValue(value)*0.01; }
+          getValue: function(value){return cssist.value_sets.float_0_100.getValue(value)*0.01; }
         };
 
         // LENGTH
@@ -366,7 +366,7 @@ require("./make.js");
         };
         cssist.value_sets.length_calc = {
           regex: '(?:'+cssist.value_sets.calc.regex+'?'+cssist.value_sets.length.regex+')+',
-          examples: ['0', '50', '100_100px', '100M2_100vwD3__100cmD4_100pxD5_100M6_100vwD7__100cmD8_100pxD9'],
+          examples: ['0', '50', '50px', '100_100px', '100M2_100vwD3__100cmD4_100pxD5_100M6_100vwD7__100cmD8_100pxD9'],
           getValue: function(value){
             var regex = new RegExp('('+cssist.value_sets.calc.regex+'?'+cssist.value_sets.length.regex+')', 'g');
             var matches = value.match(regex);
@@ -387,8 +387,6 @@ require("./make.js");
               result += ' ';
             }
             result = 'calc( ' + result + ')';
-            console.log('result');
-            console.log(result);
             return result;
           }
         };

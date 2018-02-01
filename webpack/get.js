@@ -59,9 +59,10 @@ require("./convert.js");
         property = css_sets.property_set.properties[class_pieces.property];
       }
       else return;
+      console.log(class_name);
 
       var value;
-      if(css_sets.value_set&&css_sets.value_set.getValue(class_pieces.value)){
+      if(css_sets.value_set){
         value = css_sets.value_set.getValue(class_pieces.value);
       }
       else return;

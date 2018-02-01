@@ -1,0 +1,5 @@
+div, img, i, span, button {
+  position: relative;
+  display: block;
+  float: inherit;
+}
