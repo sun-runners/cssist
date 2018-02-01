@@ -59,7 +59,6 @@ require("./convert.js");
         property = css_sets.property_set.properties[class_pieces.property];
       }
       else return;
-      console.log(class_name);
 
       var value;
       if(css_sets.value_set){
