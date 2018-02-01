@@ -16,17 +16,83 @@
   <div class="p-a w-100 h-100 t-0 l-0 z-2">
     <div full-page class="section" options="{ scrollingSpeed: 500, controlArrows: false }">
 
+      <!-- Width -->
+      <div class="f-l w-100 h-100 slide z-1">
+        <div class="w-60 cen">
+          <div class="w-100 t-c f-45px" style="font-family: 'Oleo Script', cursive;">
+            Width
+          </div>
+          <div class="w-100 mt-45px t-c">
+            <div class="d-ib f-n">
+              <div class="f-l w-{{x}}px h-100px b-we m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
+              ng-repeat="x in [50, 75, 100, 125, 150]"
+              ng-mouseenter="hover_width[x] = true;" ng-mouseleave="hover_width[x] = false;"
+              ng-class="[{'jello animated':hover_width[x] }]">
+                <span class="cen">
+                  .w-{{x}}px
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Height -->
+      <div class="f-l w-100 h-100 slide z-1">
+        <div class="w-60 cen">
+          <div class="w-100 t-c f-45px" style="font-family: 'Oleo Script', cursive;">
+            Height
+          </div>
+          <div class="w-100 mt-45px t-c">
+            <div class="d-ib f-n">
+              <div class="f-l w-100px h-{{x}}px b-we m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
+              ng-repeat="x in [50, 75, 100, 125, 150]"
+              ng-mouseenter="hover_height[x] = true;" ng-mouseleave="hover_height[x] = false;"
+              ng-class="[{'jello animated':hover_height[x] }]">
+                <span class="cen">
+                  .h-{{x}}px
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Opacity -->
       <div class="f-l w-100 h-100 slide z-1">
-        <div class="w-100 cen">
+        <div class="w-60 cen">
           <div class="w-100 t-c f-45px" style="font-family: 'Oleo Script', cursive;">
             Opacity
           </div>
           <div class="w-100 mt-45px">
             <div class="w-100 t-c f-n">
-              <div class="d-ib w-100px h-100px b-we o-{{x}}" ng-repeat="x in [0, 10, 25, 50, 75, 100]">
+              <div class="d-ib w-100px h-100px b-we o-{{x}} m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
+              ng-repeat="x in [0, 25, 50, 75, 100]"
+              ng-mouseenter="hover_opacity[x] = true;" ng-mouseleave="hover_opacity[x] = false;"
+              ng-class="[{'jello animated':hover_opacity[x] }]">
                 <span class="cen">
                   .o-{{x}}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Background-Color -->
+      <div class="f-l w-100 h-100 slide z-1">
+        <div class="w-60 cen">
+          <div class="w-100 t-c f-45px" style="font-family: 'Oleo Script', cursive;">
+            Background-Color
+          </div>
+          <div class="w-100 mt-45px">
+            <div class="w-100 t-c f-n">
+              <div class="d-ib w-100px h-100px b-{{x}} m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
+              ng-repeat="x in ['rd','pk','pe','dp','io','be','lb','cn','tl','gn','lg','le','yw','ar','oe','de','bn','gy','by','bk','we']"
+              ng-mouseenter="hover_background_color[x] = true;" ng-mouseleave="hover_background_color[x] = false;"
+              ng-class="[{'jello animated':hover_background_color[x] }]">
+                <span class="cen c-333333">
+                  .b-{{x}}
                 </span>
               </div>
             </div>
