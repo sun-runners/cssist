@@ -43,6 +43,21 @@ or
 USAGE
 -----
 
+index.html
+```
+<!-- If you do not assign the CSSIST attribute to a specific element, it applies to the <body> element by default. -->
+<body></body>
+```
+or
+```
+<body>
+  ...
+  <!-- Give the cssist attribute to the parent of the region you want to apply cssist to. ( Default: <body> ) -->
+  <div cssist></div>
+  ...
+</body>
+```
+
 template.html (without css)
 ```
 <div class="w-100px h-100px"></div> // width: 100px, height: 100px box
