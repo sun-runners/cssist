@@ -35,7 +35,7 @@ cssist.js
 ```
 or
 ```
-<script src="https://raw.githubusercontent.com/KimSunWook/cssist/v1.1.13/cssist.js"></script>
+<script src="https://raw.githubusercontent.com/KimSunWook/cssist/v1.1.15/cssist.js"></script>
 ```
 
 <br/>

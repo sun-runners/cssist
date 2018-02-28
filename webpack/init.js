@@ -3,7 +3,7 @@ require("./make.js");
   cssist.init = {
     settings : function(){
 
-      cssist.VERSION = '1.1.14';
+      cssist.VERSION = '1.1.15';
       if( localStorage
       && localStorage['cssist_VERSION']
       && localStorage['cssist_VERSION']==cssist.VERSION
@@ -634,9 +634,9 @@ require("./make.js");
             if(matches[1]) gradient_kind = cssist.value_sets.gradient_kind.getValue(matches[1]);
             if(matches[2]) degree = cssist.value_sets.degree.getValue(matches[2]);
             if(matches[3]) {
-              var regex_rgba_color = new RegExp(cssist.value_sets.rgba_color.regex, 'g');
+              var regex_rgba_color = new RegExp('(?:_('+cssist.value_sets.rgba_color.regex+'))(?:_('+cssist.value_sets.rgba_color.regex+'))');
               var matches_rgba_color = matches[3].match(regex_rgba_color);
-              for(var i=0; i<matches_rgba_color.length; i++){
+              for(var i=1; i<matches_rgba_color.length; i++){
                 var rgba_color = cssist.value_sets.rgba_color.getValue(matches_rgba_color[i]);
                 if(rgba_color) rgba_colors.push(rgba_color);
               }
