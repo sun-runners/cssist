@@ -24,7 +24,11 @@ bower install cssist --save
 Quick start
 -------
 
-Copy-paste the stylesheet <script> into your <body>.
+Copy-paste the ```<script>``` into your ```<body>```.
+
+<br/>
+
+cssist.js
 
 ```
 <script src=".bower_components/cssist/cssist.js"></script>

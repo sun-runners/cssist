@@ -26,8 +26,8 @@
             <div class="d-ib f-n">
               <div class="f-l w-{{x}}px h-100px b-we m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
               ng-repeat="x in [50, 75, 100, 125, 150]"
-              ng-mouseenter="hover_width[x] = true;" ng-mouseleave="hover_width[x] = false;"
-              ng-class="[{'jello animated':hover_width[x] }]">
+              ng-action
+              ng-class="[{'jello animated':$hover||$click }]">
                 <span class="cen">
                   .w-{{x}}px
                 </span>
@@ -47,8 +47,8 @@
             <div class="d-ib f-n">
               <div class="f-l w-100px h-{{x}}px b-we m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
               ng-repeat="x in [50, 75, 100, 125, 150]"
-              ng-mouseenter="hover_height[x] = true;" ng-mouseleave="hover_height[x] = false;"
-              ng-class="[{'jello animated':hover_height[x] }]">
+              ng-action
+              ng-class="[{'jello animated':$hover||$click }]">
                 <span class="cen">
                   .h-{{x}}px
                 </span>
@@ -67,9 +67,9 @@
           <div class="w-100 mt-45px">
             <div class="w-100 t-c f-n">
               <div class="d-ib w-100px h-100px b-we o-{{x}} m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
-              ng-repeat="x in [0, 25, 50, 75, 100]"
-              ng-mouseenter="hover_opacity[x] = true;" ng-mouseleave="hover_opacity[x] = false;"
-              ng-class="[{'jello animated':hover_opacity[x] }]">
+              ng-repeat="x in [10, 25, 40, 55, 70, 85, 100]"
+              ng-action
+              ng-class="[{'jello animated':$hover||$click }]">
                 <span class="cen">
                   .o-{{x}}
                 </span>
@@ -90,7 +90,8 @@
               <div class="d-ib w-100px h-100px b-{{x}} m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
               ng-repeat="x in ['rd','pk','pe','dp','io','be','lb','cn','tl','gn','lg','le','yw','ar','oe','de','bn','gy','by','bk','we']"
               ng-mouseenter="hover_background_color[x] = true;" ng-mouseleave="hover_background_color[x] = false;"
-              ng-class="[{'jello animated':hover_background_color[x] }]">
+              ng-action
+              ng-class="[{'jello animated':$hover||$click }]">
                 <span class="cen c-333333">
                   .b-{{x}}
                 </span>

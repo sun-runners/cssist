@@ -16,9 +16,6 @@ require("./make.js");
 			var class_names = cssist.get.classesOfElement(element);
       for(var i=0; i<class_names.length; i++){
         var class_name = class_names[i];
-        if(i == class_names.length-1){
-          element.setAttribute('cssist','');
-        }
         if(!cssist.classes_success) cssist.classes_success = [];
         if(!cssist.classes_fail) cssist.classes_fail = [];
         if(cssist.get.styleElement().innerHTML.indexOf('.'+class_name+' {')==-1
@@ -35,7 +32,7 @@ require("./make.js");
     rootElement : function(element){
       var self = this;
       if( element && typeof element === 'object' && element.nodeType && element.nodeType !== 8 && element.tagName ){
-  			var element_childen = element.querySelectorAll(':not([cssist])');
+  			var element_childen = element.querySelectorAll('*');
   			self.element(element);
         if(mutationObserver){
           mutationObserver.observe(element, { attributes: true,  attributeFilter: ['class'] });

@@ -1,0 +1,36 @@
+1. 에러
+
+// Css
+cssSetsOfClassPieces: function(class_pieces){
+  for(var i=0; i<cssist.property_sets.length; i++){
+    var property_set = cssist.property_sets[i];
+    if(property_set.properties[class_pieces.property]){
+      for(var j=0; j<property_set.value_sets.length; j++){
+        var value_set = property_set.value_sets[j];
+
+        // value_set < = undefined!
+        var regex = new RegExp('^'+value_set.regex+'$');
+
+        if(class_pieces.value.match(regex)){
+          return {
+            property_set : property_set,
+            value_set : value_set
+          };
+        }
+      }
+    }
+  }
+},
+
+Uncaught TypeError: Cannot read property 'regex' of undefined
+    at Object.cssSetsOfClassPieces (cssist.js:228)
+    at Object.cssOfClass (cssist.js:316)
+    at Object.classToStyleSheet (cssist.js:407)
+    at Object.element (cssist.js:1533)
+    at Object.rootElement (cssist.js:1549)
+    at cssist.js:456
+
+
+2. 개선사항
+
+CSSIST: html element에 씨스트 안생기는 방법!

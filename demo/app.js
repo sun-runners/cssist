@@ -5,7 +5,8 @@ angular.module('app', [
     'ngAria',
     'ngResource',
     'fullPage.js',
-    'ngGradient'
+    'ngGradient',
+    'ngAction'
   ]).run(function($rootScope, $timeout, $state){
 
   $rootScope.window = window;
