@@ -13,9 +13,9 @@ require("./paint.js");
         if( document.querySelectorAll('[cssist]').length>=1 ){
           elements = document.querySelectorAll('[cssist]');
         }
-        // else {
-        //   elements = document.querySelectorAll('body');
-        // }
+        else {
+          elements = document.querySelectorAll('body');
+        }
         if(elements.length>=1){
           clearInterval(interval);
           for(var i=0; i<elements.length; i++){
