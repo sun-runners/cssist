@@ -3,7 +3,7 @@ require("./make.js");
   cssist.init = {
     settings : function(){
 
-      cssist.VERSION = '1.1.16';
+      cssist.VERSION = '1.1.17';
       if( localStorage
       && localStorage['cssist_VERSION']
       && localStorage['cssist_VERSION']==cssist.VERSION
@@ -734,7 +734,7 @@ require("./make.js");
             value_sets: [cssist.value_sets.rgba_color, cssist.value_sets.gradient, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { bi:'background-image', background_image:'background-image' },
-            value_sets: [cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
+            value_sets: [cssist.value_sets.image_url, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { bs:'background-size', background_size:'background-size' },
             value_sets: [cssist.value_sets.auto, cssist.value_sets.length_calc_2D, cssist.value_sets.background_size_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
