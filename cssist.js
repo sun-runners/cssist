@@ -147,7 +147,7 @@
   		if(!(css.class)) return;
       var class_event = css.class+(css.event?':'+css.event:'');
       var result = class_event;
-      if(!angular.isString(css.property)){
+      if(typeof css.property != 'string'){
         if(css.property&&css.property.afters&&css.property.afters.length>=1){
           result = '';
           for(var i=0; i<css.property.afters.length; i++){
@@ -482,7 +482,7 @@ __webpack_require__(2);
   cssist.init = {
     settings : function(){
 
-      cssist.VERSION = '1.1.16';
+      cssist.VERSION = '1.1.17';
       if( localStorage
       && localStorage['cssist_VERSION']
       && localStorage['cssist_VERSION']==cssist.VERSION
@@ -1213,7 +1213,7 @@ __webpack_require__(2);
             value_sets: [cssist.value_sets.rgba_color, cssist.value_sets.gradient, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { bi:'background-image', background_image:'background-image' },
-            value_sets: [cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
+            value_sets: [cssist.value_sets.image_url, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: { bs:'background-size', background_size:'background-size' },
             value_sets: [cssist.value_sets.auto, cssist.value_sets.length_calc_2D, cssist.value_sets.background_size_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
