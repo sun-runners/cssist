@@ -3,7 +3,7 @@ require("./make.js");
   cssist.init = {
     settings : function(){
 
-      cssist.VERSION = '1.1.21';
+      cssist.VERSION = '1.1.22';
       if( localStorage
       && localStorage['cssist_VERSION']
       && localStorage['cssist_VERSION']==cssist.VERSION
@@ -755,8 +755,8 @@ require("./make.js");
             value_sets: [cssist.value_sets.direction_2D_kind, cssist.value_sets.length_calc_2D, cssist.value_sets.initial, cssist.value_sets.inherit]
           },{
             properties: {
-              c: 'color', pc: { name:'color', afters: ['::-webkit-input-placeholder', '::-moz-placeholder', ':-ms-input-placeholder', ':-moz-placeholder'] },
-              color: 'color', placeholder: { name:'color', afters: ['::-webkit-input-placeholder', '::-moz-placeholder', ':-ms-input-placeholder', ':-moz-placeholder'] },
+              c: 'color', pc: { name:'color', afters: ['::placeholder'] },
+              color: 'color', placeholder: { name:'color', afters: ['::placeholder'] },
               bc:'background-color', background_color:'background-color',
               bo:'border-color', bo_t:'border-top-color', bo_b:'border-bottom-color', bo_l:'border-left-color', bo_r:'border-right-color',
               border_color:'border-color', border_top_color:'border-top-color', border_bottom_color:'border-bottom-color', border_left_color:'border-left-color', border_right_color:'border-right-color'
