@@ -102,7 +102,7 @@
       var media_queries = {};
       if(!media_query_codes) return media_queries;
       var media_query_codes_matches = media_query_codes.match(/(^(?:XH|NH|XW|NW|X|N)[0-9]+)?((?:XH|NH|XW|NW|X|N)[0-9]+)?$/);
-      for(i=1; i<=media_query_codes_matches.length-1; i++){
+      for(var i=1; i<=media_query_codes_matches.length-1; i++){
         var media_query = self.mediaQueryCode2mediaQuery(media_query_codes_matches[i]);
         if(media_query) media_queries[media_query.key] = media_query.value;
       }
@@ -288,7 +288,7 @@ __webpack_require__(0);
         media_queries = cssist.convert.mediaQueryCodes2mediaQueries(class_pieces.media_query);
       }
 
-      css = {
+      var css = {
         class:class_name,
         list:[],
         event:event,
@@ -299,11 +299,11 @@ __webpack_require__(0);
       };
 
       for(var i=0; i<classes.length; i++){
-        class_pieces_ith = this.classPiecesOfClass(classes[i]);
+        var class_pieces_ith = this.classPiecesOfClass(classes[i]);
         if(!class_pieces_ith) continue;
-        css_sets_ith = this.cssSetsOfClassPieces(class_pieces_ith);
+        var css_sets_ith = this.cssSetsOfClassPieces(class_pieces_ith);
         if(!css_sets_ith) continue;
-        css_ith = this.cssOfCssSetsAndClassPieces(class_pieces_ith, css_sets_ith);
+        var css_ith = this.cssOfCssSetsAndClassPieces(class_pieces_ith, css_sets_ith);
         if(!css_ith) continue;
         css.list.push(css_ith);
       }
@@ -482,7 +482,7 @@ __webpack_require__(2);
   cssist.init = {
     settings : function(){
 
-      cssist.VERSION = '1.1.22';
+      cssist.VERSION = '1.1.23';
       if( localStorage
       && localStorage['cssist_VERSION']
       && localStorage['cssist_VERSION']==cssist.VERSION
@@ -1228,7 +1228,7 @@ __webpack_require__(2);
               bo:'border-width', bo_t:'border-top-width', bo_b:'border-bottom-width', bo_l:'border-left-width', bo_r:'border-right-width',
               border_width:'border-width', border_top_width:'border-top-width', border_bottom_width:'border-bottom-width', border_left_width:'border-left-width', border_right_width:'border-right-width'
             },
-            value_sets: [cssist.value_sets.length_calc, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit, cssist.value_sets.thick_kind]
+            value_sets: [cssist.value_sets.length, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit, cssist.value_sets.thick_kind]
           },{
             properties: { bp:'background-position', background_position:'background-position' },
             value_sets: [cssist.value_sets.direction_2D_kind, cssist.value_sets.length_calc_2D, cssist.value_sets.initial, cssist.value_sets.inherit]

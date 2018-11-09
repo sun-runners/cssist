@@ -32,7 +32,7 @@
       var media_queries = {};
       if(!media_query_codes) return media_queries;
       var media_query_codes_matches = media_query_codes.match(/(^(?:XH|NH|XW|NW|X|N)[0-9]+)?((?:XH|NH|XW|NW|X|N)[0-9]+)?$/);
-      for(i=1; i<=media_query_codes_matches.length-1; i++){
+      for(var i=1; i<=media_query_codes_matches.length-1; i++){
         var media_query = self.mediaQueryCode2mediaQuery(media_query_codes_matches[i]);
         if(media_query) media_queries[media_query.key] = media_query.value;
       }

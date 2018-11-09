@@ -3,7 +3,7 @@ require("./make.js");
   cssist.init = {
     settings : function(){
 
-      cssist.VERSION = '1.1.22';
+      cssist.VERSION = '1.1.23';
       if( localStorage
       && localStorage['cssist_VERSION']
       && localStorage['cssist_VERSION']==cssist.VERSION
@@ -749,7 +749,7 @@ require("./make.js");
               bo:'border-width', bo_t:'border-top-width', bo_b:'border-bottom-width', bo_l:'border-left-width', bo_r:'border-right-width',
               border_width:'border-width', border_top_width:'border-top-width', border_bottom_width:'border-bottom-width', border_left_width:'border-left-width', border_right_width:'border-right-width'
             },
-            value_sets: [cssist.value_sets.length_calc, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit, cssist.value_sets.thick_kind]
+            value_sets: [cssist.value_sets.length, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit, cssist.value_sets.thick_kind]
           },{
             properties: { bp:'background-position', background_position:'background-position' },
             value_sets: [cssist.value_sets.direction_2D_kind, cssist.value_sets.length_calc_2D, cssist.value_sets.initial, cssist.value_sets.inherit]

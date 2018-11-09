@@ -103,7 +103,7 @@ require("./convert.js");
         media_queries = cssist.convert.mediaQueryCodes2mediaQueries(class_pieces.media_query);
       }
 
-      css = {
+      var css = {
         class:class_name,
         list:[],
         event:event,
@@ -114,11 +114,11 @@ require("./convert.js");
       };
 
       for(var i=0; i<classes.length; i++){
-        class_pieces_ith = this.classPiecesOfClass(classes[i]);
+        var class_pieces_ith = this.classPiecesOfClass(classes[i]);
         if(!class_pieces_ith) continue;
-        css_sets_ith = this.cssSetsOfClassPieces(class_pieces_ith);
+        var css_sets_ith = this.cssSetsOfClassPieces(class_pieces_ith);
         if(!css_sets_ith) continue;
-        css_ith = this.cssOfCssSetsAndClassPieces(class_pieces_ith, css_sets_ith);
+        var css_ith = this.cssOfCssSetsAndClassPieces(class_pieces_ith, css_sets_ith);
         if(!css_ith) continue;
         css.list.push(css_ith);
       }
