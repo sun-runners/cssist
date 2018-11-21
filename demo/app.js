@@ -6,9 +6,11 @@ angular.module('app', [
     'ngResource',
     'fullPage.js',
     'ngGradient',
-    'ngAction'
-  ]).run(function($rootScope, $timeout, $state){
+    'ngAction',
+    'ngLodash'
+  ]).run(function($rootScope, $timeout, $state, lodash){
 
   $rootScope.window = window;
   $rootScope.$state = $state;
+  $rootScope._ = lodash;
 });

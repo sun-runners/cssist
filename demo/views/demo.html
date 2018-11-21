@@ -17,91 +17,249 @@
     <div full-page class="section" options="{ scrollingSpeed: 500, controlArrows: false }">
 
       <!-- Width -->
-      <div class="f-l w-100 h-100 slide z-1">
-        <div class="w-60 cen">
-          <div class="w-100 t-c f-30px" style="font-family: 'Oleo Script', cursive;">
-            Width
-          </div>
-          <div class="w-100 mt-45px t-c">
-            <div class="d-ib f-n">
-              <div class="f-l w-{{x}}px h-100px b-we m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
-              ng-repeat="x in [50, 75, 100, 125, 150]"
-              ng-action
-              ng-class="[{'jello animated':$hover||$click }]">
-                <span class="cen">
-                  .w-{{x}}px
-                </span>
-              </div>
+      <content-dir title="'Width(px)'" description="'Description will be here soon.'">
+        <div class="f-l w-{{x}}px h-100px b-we m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
+        ng-repeat="x in [50, 75, 100, 125, 150]"
+        ng-action
+        ng-class="[{'jello animated':$hover||$click }]">
+          <span class="cen">
+            .w-{{x}}px
+          </span>
+        </div>
+      </content-dir>
+
+      <content-dir title="'Width(%)'" description="'Description will be here soon.'">
+        <div class="w-100vwD3">
+          <div class="d-b f-l w-100" ng-repeat="x in [20, 40, 60, 80, 100]">
+            <div class="d-b f-l w-{{x}} h-75px b-we m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
+            ng-action
+            ng-class="[{'jello animated':$hover||$click }]">
+              <span class="cen">
+                .w-{{x}}
+              </span>
             </div>
           </div>
         </div>
-      </div>
+      </content-dir>
+
+      <content-dir title="'Width(/)'" description="'Description will be here soon.'">
+        <div class="w-100vwD3">
+          <div class="d-b f-l w-100" ng-repeat="x in [1,2,3,4,5]">
+            <div class="d-b f-l w-100D{{x}} h-75px b-we mt-3px mb-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
+            ng-action ng-repeat="y in _.range(x)"
+            ng-class="[{'jello animated':$hover||$click }]">
+              <span class="cen">
+                .w-100D{{x}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </content-dir>
 
       <!-- Height -->
-      <div class="f-l w-100 h-100 slide z-1">
-        <div class="w-60 cen">
-          <div class="w-100 t-c f-30px" style="font-family: 'Oleo Script', cursive;">
-            Height
-          </div>
-          <div class="w-100 mt-45px t-c">
-            <div class="d-ib f-n">
-              <div class="f-l w-100px h-{{x}}px b-we m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
-              ng-repeat="x in [50, 75, 100, 125, 150]"
-              ng-action
-              ng-class="[{'jello animated':$hover||$click }]">
-                <span class="cen">
-                  .h-{{x}}px
-                </span>
-              </div>
-            </div>
+      <content-dir title="'Height(px)'" description="'Description will be here soon.'">
+        <div class="f-l w-100px h-{{x}}px b-we m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
+        ng-repeat="x in [50, 75, 100, 125, 150]"
+        ng-action
+        ng-class="[{'jello animated':$hover||$click }]">
+          <span class="cen">
+            .h-{{x}}px
+          </span>
+        </div>
+      </content-dir>
+
+      <content-dir title="'Height(*)'" description="'Description will be here soon.'">
+        <div class="f-l w-100px h-50pxM{{x}} b-we m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
+        ng-repeat="x in [1, 2, 3, 4, 5]"
+        ng-action
+        ng-class="[{'jello animated':$hover||$click }]">
+          <span class="cen">
+            .h-50pxM{{x}}
+          </span>
+        </div>
+      </content-dir>
+
+      <!-- Width & Height -->
+      <content-dir title="'Width & Height Calculation'" description="'Description will be here soon.'">
+        <div class="w-100vwD3 h-100vhD3">
+          <div class="f-l w-{{x.w}} h-{{x.h}} b-we bor-3px bs-2_4_12_bk_50 tn-500ms"
+          ng-repeat="x in [
+          {w:'100', h:'50px'},
+          {w:'100px', h:'100_100px'}, {w:'100_200px', h:'100_100px'}, {w:'100px', h:'100_100px'},
+          {w:'100', h:'50px'}]"
+          ng-action
+          ng-class="[{'jello animated':$hover||$click }]">
+            <span class="cen">
+              .w-{{x.w}} .h-{{x.h}}
+            </span>
           </div>
         </div>
-      </div>
+      </content-dir>
 
       <!-- Opacity -->
-      <div class="f-l w-100 h-100 slide z-1">
-        <div class="w-60 cen">
-          <div class="w-100 t-c f-30px" style="font-family: 'Oleo Script', cursive;">
-            Opacity
-          </div>
-          <div class="w-100 mt-45px">
-            <div class="w-100 t-c f-n">
-              <div class="d-ib w-100px h-100px b-we o-{{x}} m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
-              ng-repeat="x in [10, 25, 40, 55, 70, 85, 100]"
-              ng-action
-              ng-class="[{'jello animated':$hover||$click }]">
-                <span class="cen">
-                  .o-{{x}}
-                </span>
-              </div>
-            </div>
-          </div>
+      <content-dir title="'Opacity'" description="'Description will be here soon.'">
+        <div class="d-ib w-100px h-100px b-we o-{{x}} m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
+        ng-repeat="x in [10, 20, 40, 60, 80, 100]"
+        ng-action
+        ng-class="[{'jello animated':$hover||$click }]">
+          <span class="cen">
+            .o-{{x}}
+          </span>
         </div>
-      </div>
+      </content-dir>
 
       <!-- Background-Color -->
-      <div class="f-l w-100 h-100 slide z-1">
-        <div class="w-60 cen">
-          <div class="w-100 t-c f-30px" style="font-family: 'Oleo Script', cursive;">
-            Background-Color
-          </div>
-          <div class="w-100 mt-45px">
-            <div class="w-100 t-c f-n">
-              <div class="d-ib w-100px h-100px b-{{x}} m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
-              ng-repeat="x in ['rd','pk','pe','dp','io','be','lb','cn','tl','gn','lg','le','yw','ar','oe','de','bn','gy','by','bk','we']"
-              ng-mouseenter="hover_background_color[x] = true;" ng-mouseleave="hover_background_color[x] = false;"
-              ng-action
-              ng-class="[{'jello animated':$hover||$click }]">
-                <span class="cen c-333333">
-                  .b-{{x}}
-                </span>
-              </div>
-            </div>
+      <content-dir title="'Background Color(code)'" description="'Description will be here soon.'">
+        <div class="d-ib f-l w-100px h-100px b-{{x}} m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
+        ng-repeat="x in ['rd','pk','pe','dp','io','be','lb','cn','tl','gn','lg','le','yw','ar','oe','de','bn','gy','by','bk','we']"
+        ng-mouseenter="hover_background_color[x] = true;" ng-mouseleave="hover_background_color[x] = false;"
+        ng-action
+        ng-class="[{'jello animated':$hover||$click }]">
+          <span class="cen c-333333">
+            .b-{{x}}
+          </span>
+        </div>
+      </content-dir>
+
+      <content-dir title="'Background Color(hex)'" description="'Description will be here soon.'">
+        <div class="d-ib f-l w-150px h-150px b-we b-{{x}} m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
+        ng-repeat="x in ['CDDC39', 'FFEB3B', 'FFC107', 'FF9800', 'FF5722']"
+        ng-action
+        ng-class="[{'jello animated':$hover||$click }]">
+          <span class="cen">
+            .b-{{x}}
+          </span>
+        </div>
+      </content-dir>
+
+      <content-dir title="'Background Color(hex&opacity)'" description="'Description will be here soon.'">
+        <div class="d-ib f-l w-150px h-150px b-we b-we_{{x}} m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
+        ng-repeat="x in [20, 40, 60, 80, 100]"
+        ng-action
+        ng-class="[{'jello animated':$hover||$click }]">
+          <span class="cen">
+            .b-we_{{x}}
+          </span>
+        </div>
+      </content-dir>
+
+      <content-dir title="'Background Color(rgb)'" description="'Description will be here soon.'">
+        <div class="d-ib f-l w-150px h-150px b-{{x}} m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
+        ng-repeat="x in ['205_220_57', '255_235_59', '255_193_7', '255_152_0', '255_87_34']"
+        ng-action
+        ng-class="[{'jello animated':$hover||$click }]">
+          <span class="cen">
+            .b-{{x}}
+          </span>
+        </div>
+      </content-dir>
+
+      <content-dir title="'Background Color(rgba)'" description="'Description will be here soon.'">
+        <div class="d-ib f-l w-150px h-150px b-255_255_255_{{x}} m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
+        ng-repeat="x in [20, 40, 60, 80, 100]"
+        ng-action
+        ng-class="[{'jello animated':$hover||$click }]">
+          <span class="cen">
+            .b-255_255_255_{{x}}
+          </span>
+        </div>
+      </content-dir>
+
+      <!-- Border -->
+      <content-dir title="'Border Width(px)'" description="'Description will be here soon.'">
+        <div class="d-ib f-l w-150px h-150px m-3px bo-{{x}}px bor-3px bs-2_4_12_bk_50 tn-500ms"
+        ng-repeat="x in [1,2,3,4,5]"
+        ng-action
+        ng-class="[{'jello animated':$hover||$click }]">
+          <span class="cen">
+            .bo-{{x}}px
+          </span>
+        </div>
+      </content-dir>
+
+      <!-- Border -->
+      <content-dir title="'Border Radius(px)'" description="'Description will be here soon.'">
+        <div class="d-ib f-l w-150px h-150px m-3px bo-1px bor-{{x}}px bs-2_4_12_bk_50 tn-500ms"
+        ng-repeat="x in [2,4,6,8,10]"
+        ng-action
+        ng-class="[{'jello animated':$hover||$click }]">
+          <span class="cen">
+            .bor-{{x}}px
+          </span>
+        </div>
+      </content-dir>
+
+      <content-dir title="'Border Radius(%)'" description="'Description will be here soon.'">
+        <div class="d-ib f-l w-150px h-150px m-3px bo-1px bor-{{x}} bs-2_4_12_bk_50 tn-500ms"
+        ng-repeat="x in [20, 40, 60, 80, 100]"
+        ng-action
+        ng-class="[{'jello animated':$hover||$click }]">
+          <span class="cen">
+            .bor-{{x}}
+          </span>
+        </div>
+      </content-dir>
+
+      <content-dir title="'Border Color'" description="'Description will be here soon.'">
+        <div class="d-ib f-l w-150px h-150px m-3px bo-5px bo-{{x}} bs-2_4_12_bk_50 tn-500ms"
+        ng-repeat="x in ['CDDC39', 'FFEB3B', 'FFC107', 'FF9800', 'FF5722']"
+        ng-action
+        ng-class="[{'jello animated':$hover||$click }]">
+          <span class="cen">
+            .bo-{{x}}
+          </span>
+        </div>
+      </content-dir>
+
+      <!-- Top Bottom Left Right -->
+      <content-dir title="'Top Bottom Left Right Cen'" description="'Description will be here soon.'">
+        <div class="w-100vwD3 h-100vhD2 b-bk_10">
+          <div class="p-a d-ib {{x}} w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms"
+          ng-repeat="x in ['t-0 l-0', 't-0 r-0', 'b-0 l-0', 'b-0 r-0', 't-0 cen-x', 'l-0 cen-y', 'b-0 cen-x', 'r-0 cen-y', 'cen']"
+          ng-action
+          ng-class="[{'jello animated':$hover||$click }]">
+            <span class="cen">
+              {{x}}
+            </span>
           </div>
         </div>
-      </div>
+      </content-dir>
 
-      <!-- Text -->
+      <!-- Font -->
+      <content-dir title="'Font Size'" description="'Description will be here soon.'">
+        <div class="d-ib f-l f-{{x}}px w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms"
+        ng-repeat="x in [12, 15, 18, 21, 24]"
+        ng-action
+        ng-class="[{'jello animated':$hover||$click }]">
+          <span class="cen">
+            .f-{{x}}px
+          </span>
+        </div>
+      </content-dir>
+
+      <content-dir title="'Font Color'" description="'Description will be here soon.'">
+        <div class="d-ib f-l c-{{x}} fw-700 w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms"
+        ng-repeat="x in ['CDDC39', 'FFEB3B', 'FFC107', 'FF9800', 'FF5722']"
+        ng-action
+        ng-class="[{'jello animated':$hover||$click }]">
+          <span class="cen">
+            .c-{{x}}
+          </span>
+        </div>
+      </content-dir>
+
+      <content-dir title="'Font Weight'" description="'Description will be here soon.'">
+        <div class="d-ib f-l c-{{x}} fw-{{x}} w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms"
+        ng-repeat="x in ['100', '200', '300', '400', '500', '600', '700', '800', '900']"
+        ng-action
+        ng-class="[{'jello animated':$hover||$click }]">
+          <span class="cen">
+            .fw-{{x}}
+          </span>
+        </div>
+      </content-dir>
+
+      <!-- Button -->
       <button class="p-a w-20 h-60px cen-y c-we l-0 z-2" ng-click="movePrev();">
         <div class="p-r w-100 h-100">
           <i class="ion-arrow-left-b f-30px cen"></i>
