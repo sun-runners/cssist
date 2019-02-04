@@ -265,7 +265,7 @@ require("./make.js");
           examples: ['c', 's'],
           getValue: getValueFromValues
         };
-        cssist.value_sets.text_align_kind = {
+        cssist.value_sets.align_kind = {
           regex: '(?:l|r|c|j|left|right|center|justify)',
           values: {
             l: 'left', r: 'right', c: 'center', j: 'justify',
@@ -786,6 +786,9 @@ require("./make.js");
           }, {
             properties: { ai: 'align-items', align_items: 'align-items' },
             value_sets: [cssist.value_sets.align_items_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
+          }, {
+            properties: { as: 'align-self', align_self: 'align-self' },
+            value_sets: [cssist.value_sets.align_kind, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit]
           },
           {
             properties: { an: 'animation-iteration-count', animation_iteration_count: 'animation-iteration-count' },
@@ -833,7 +836,7 @@ require("./make.js");
             properties: { fxf: 'flex-flow', flex_flow: 'flex-flow' },
             value_sets: [cssist.value_sets.flex_flow_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           }, {
-            properties: { fxg: 'flex-grow', flex_grow: 'flex-grow' },
+            properties: { fxg: 'flex-grow', flex_grow: 'flex-grow' },  
             value_sets: [cssist.value_sets.integer_0, cssist.value_sets.initial, cssist.value_sets.inherit]
           }, {
             properties: { fxs: 'flex-shrink', flex_shrink: 'flex-shrink' },
@@ -844,6 +847,9 @@ require("./make.js");
           }, {
             properties: { f: 'font-size', font_size: 'font-size' },
             value_sets: [cssist.value_sets.font_size_kind, cssist.value_sets.length_calc, cssist.value_sets.initial, cssist.value_sets.inherit]
+          }, {
+            properties: { fxb: 'flex-basis', flex_basis: 'flex-basis' },
+            value_sets: [cssist.value_sets.length_calc, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit]
           }, {
             properties: { fxd: 'flex-direction', flex_direction: 'flex-direction' },
             value_sets: [cssist.value_sets.flex_direction_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
@@ -858,7 +864,7 @@ require("./make.js");
             value_sets: [cssist.value_sets.justify_content_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           }, {
             properties: { t: 'text-align', text_align: 'text-align' },
-            value_sets: [cssist.value_sets.text_align_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
+            value_sets: [cssist.value_sets.align_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           }, {
             properties: { tt: 'text-transform', text_transform: 'text-transform' },
             value_sets: [cssist.value_sets.text_trasform_kind, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
