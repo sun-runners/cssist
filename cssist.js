@@ -487,7 +487,7 @@ __webpack_require__(2);
   cssist.init = {
     settings: function () {
 
-      cssist.VERSION = '1.1.25';
+      cssist.VERSION = '1.1.27';
       if (localStorage
         && localStorage['cssist_VERSION']
         && localStorage['cssist_VERSION'] == cssist.VERSION
@@ -1553,6 +1553,8 @@ window.cssist={};
 __webpack_require__(4);
 __webpack_require__(3);
 // require('!style!css!./reset.css');
+
+// cssist.watch.start(); is calling the start function inside watch object from the watch.js
 cssist.watch.start();
 
 
