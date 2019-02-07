@@ -508,6 +508,7 @@ __webpack_require__(2);
         examples: ['_999', '999'],
         getValue: function (value) { return Math.floor(cssist.value_sets.integer.getValue(value)) % 1000; }
       };
+
       cssist.special_classes = {
         cen: {
           property: 'cen',
@@ -750,10 +751,10 @@ __webpack_require__(2);
           getValue: getValueFromValues
         };
         cssist.value_sets.align_kind = {
-          regex: '(?:l|r|c|j|left|right|center|justify)',
+          regex: '(?:l|r|c|j|s|left|right|center|justify|stretch)',
           values: {
-            l: 'left', r: 'right', c: 'center', j: 'justify',
-            left: 'left', right: 'right', center: 'center', justify: 'justify'
+            l: 'left', r: 'right', c: 'center', j: 'justify', s: 'stretch',
+            left: 'left', right: 'right', center: 'center', justify: 'justify', strech: 'strech'
           },
           examples: ['l', 'j'],
           getValue: getValueFromValues
@@ -948,6 +949,35 @@ __webpack_require__(2);
             } else {
               result += 0;
             }
+            return result;
+          }
+        };
+
+        // FLEX
+        cssist.value_sets.flexbox_flex = {
+          regex: '(?:(?:' + cssist.value_sets.integer.regex + ')' + '(?:' + cssist.value_sets.integer.regex + ')?' + '(?:' + cssist.value_sets.length.regex + ')?)',
+          examples: ['1', '1_1_100px', '1_1_100'],
+          getValue: function (value) {
+            console.log('flexbox_flex getValue');
+            var result = '';
+            var regex = new RegExp('^(' + cssist.value_sets.integer.regex + ')' + '(?:_(' + cssist.value_sets.integer.regex + '))?' + '(?:_(' + cssist.value_sets.length.regex + '))?$');
+            var matches = value.match(regex);
+            console.log('matches', matches);
+            if (!(matches)) return null;
+            var flexes = [];
+            for (var i = 1; i <= 3; i++) {
+              // console.log(i);
+              // console.log(matches[i]);
+              if (!matches[i]) continue;
+              if (i == 3){
+                flexes.push(cssist.value_sets.length.getValue(matches[i]));
+              }
+              else{
+                flexes.push(cssist.value_sets.integer.getValue(matches[i]));
+              }
+            }
+            // console.log(flexes);
+            result = flexes.join(' ');
             return result;
           }
         };
@@ -1273,8 +1303,7 @@ __webpack_require__(2);
           }, {
             properties: { as: 'align-self', align_self: 'align-self' },
             value_sets: [cssist.value_sets.align_kind, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit]
-          },
-          {
+          }, {
             properties: { an: 'animation-iteration-count', animation_iteration_count: 'animation-iteration-count' },
             value_sets: [cssist.value_sets.integer_0, cssist.value_sets.infinite, cssist.value_sets.initial, cssist.value_sets.inherit]
           }, {
@@ -1316,6 +1345,10 @@ __webpack_require__(2);
           }, {
             properties: { d: 'display', display: 'display' },
             value_sets: [cssist.value_sets.display_kind, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
+          }, {
+            properties: { fx: 'flex', flex: 'flex' },
+            // CONTINUE HERE...
+            value_sets: [cssist.value_sets.flexbox_flex, cssist.value_sets.initial, cssist.value_sets.inherit]
           }, {
             properties: { fxf: 'flex-flow', flex_flow: 'flex-flow' },
             value_sets: [cssist.value_sets.flex_flow_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
