@@ -1302,7 +1302,7 @@ __webpack_require__(2);
             value_sets: [cssist.value_sets.align_items_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
           }, {
             properties: { as: 'align-self', align_self: 'align-self' },
-            value_sets: [cssist.value_sets.align_kind, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit]
+            value_sets: [cssist.value_sets.align_items_kind, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit]
           }, {
             properties: { an: 'animation-iteration-count', animation_iteration_count: 'animation-iteration-count' },
             value_sets: [cssist.value_sets.integer_0, cssist.value_sets.infinite, cssist.value_sets.initial, cssist.value_sets.inherit]

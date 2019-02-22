@@ -388,17 +388,6 @@
         </div>
       </content-dir>
 
-      <content-dir title="'Justify Content: space-between'" description="'\'d-fx\' for display: flex | \'jc-sb\' or Justify-content: space-between'">
-        <div class="d-fx jc-sb w-100vh b-we pt-5px pb-5px">
-          <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1,2]" ng-action
-            ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
-              flex item
-            </span>
-          </div>
-        </div>
-      </content-dir>
-
       <content-dir title="'Justify Content: space-around'" description="'\'d-fx\' for display: flex | \'jc-sa\' or Justify-content: space-around'">
         <div class="d-fx jc-sa w-100vh b-we pt-5px pb-5px">
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1,2]" ng-action
@@ -515,6 +504,81 @@
             ng-class="[{'jello animated':$hover||$click }]">
             <span class="cen">
               flex item
+            </span>
+          </div>
+        </div>
+      </content-dir>
+
+      <content-dir title="'Order'" description="'\'d-fx\' for display: flex | \'or-[place number here]\' or order: 0 [Default]'">
+        <div class="d-fx w-100vh b-we pt-5px pb-5px">
+          <div class="w-100px h-100px m-3px or-{{x.or}} b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [
+          {or: 4},{or: 1},{or: 2},{or: 5},{or: 3}
+          ]" ng-action
+            ng-class="[{'jello animated':$hover||$click }]">
+            <span class="cen">
+              .or-{{x.or}}
+            </span>
+          </div>
+        </div>
+      </content-dir>
+
+      <content-dir title="'Flex grow'" description="'\'d-fx\' for display: flex | \'fxg-[place number here]\' or flex-grow: 0 [Default]'">
+        <div class="d-fx w-100vh b-we pt-5px pb-5px">
+          <div class="w-100px h-100px fxg-{{x.fxg}} m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [
+                {fxg: 10},{fxg: 5},{fxg: 2}
+                ]" ng-action ng-class="[{'jello animated':$hover||$click }]">
+            <span class="cen">
+              .fxg-{{x.fxg}}
+            </span>
+          </div>
+        </div>
+      </content-dir>
+
+      <content-dir title="'Flex Shrink'" description="'\'d-fx\' for display: flex | \'fxs-[place number here]\' or flex-shrink: 1 [Default]'">
+        <div class="d-fx w-100vh b-we pt-5px pb-5px">
+          <div class="w-{{x.w}} h-100px fxs-{{x.fxs}} m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [
+                {fxs: 2, w: '500px'},{fxs: 3, w: '500px'},{fxs: 4, w: '500px'}
+                ]" ng-action ng-class="[{'jello animated':$hover||$click }]">
+            <span class="cen">
+              .fxs-{{x.fxs}} .w-{{x.w}}
+            </span>
+          </div>
+        </div>
+      </content-dir>
+
+      <content-dir title="'Flex basis'" description="'\'d-fx\' for display: flex | \'fxb-[place number here]\' or flex-basis: auto [Default]'">
+        <div class="d-fx w-100vh b-we pt-5px pb-5px">
+          <div class="w-100px h-100px fxb-{{x.fxb}} m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [
+              {fxb: 40},{fxb: 'auto'},{fxb: '50px'}
+              ]" ng-action ng-class="[{'jello animated':$hover||$click }]">
+            <span class="cen">
+              .fxb-{{x.fxb}}
+            </span>
+          </div>
+        </div>
+      </content-dir>
+
+      <content-dir title="'Flex'" description="'\'d-fx\' for display: flex | \'fxb-[place number here]\' or flex: flex-grow | flex-shrink | flex-basis'">
+        <div class="d-fx w-100vh b-we pt-5px pb-5px">
+          <div class="w-100px h-100px fx-{{x.fxg}}_{{x.fxs}}_{{x.fxb}} m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [
+              {fxg: 1, fxs: 1, fxb:'100px'}, {fxg: 2, fxs: 1, fxb:'60px'}, {fxg: 5, fxs: 2, fxb:'70px'},
+              ]" ng-action ng-class="[{'jello animated':$hover||$click }]">
+            <span class="cen">
+              .fx-{{x.fxg}}_{{x.fxs}}_{{x.fxb}}
+            </span>
+          </div>
+        </div>
+      </content-dir>
+
+      <content-dir title="'Align Self'" description="'\'d-fx\' for display: flex | \'as-[place number here]\' or align-self: flex-start | flex-end | center | baseline | stretch'">
+        <div class="d-fx h-50vh pt-5px pb-5px">
+          <div class="w-100px as-{{x.as}} m-3px b-we bs-2_4_12_bk_50 tn-500ms" 
+              ng-class="x.as === 'stretch' || x.as === 'baseline' ? 'h-auto ' : 'h-100px'"
+              ng-repeat="x in [
+              {as: 'fxs'}, {as: 'fxe'}, {as: 'c'}, {as: 'bl'}, {as: 'stretch'}
+              ]" ng-action ng-class="[{'jello animated':$hover||$click }]">
+            <span class="cen">
+              .as-{{x.as}}
             </span>
           </div>
         </div>
