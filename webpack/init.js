@@ -441,7 +441,7 @@ require("./make.js");
               }
               result += ' ';
             }
-            result = 'calc( ' + result + ')';
+            // result = 'calc( ' + result + ')';
             return result;
           }
         };
@@ -537,6 +537,7 @@ require("./make.js");
             var matches_X = value.match(regex_X);
             if (matches_X) {
               result += cssist.value_sets.length_calc.getValue(matches_X[0]);
+              // console.log(result)
             } else {
               result += 0;
             }
@@ -549,6 +550,7 @@ require("./make.js");
               result += 0;
             }
             result += ' )';
+            // console.log(result)
             return result;
           }
         };

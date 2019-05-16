@@ -925,7 +925,7 @@ __webpack_require__(2);
               }
               result += ' ';
             }
-            result = 'calc( ' + result + ')';
+            // result = 'calc( ' + result + ')';
             return result;
           }
         };
@@ -1021,6 +1021,7 @@ __webpack_require__(2);
             var matches_X = value.match(regex_X);
             if (matches_X) {
               result += cssist.value_sets.length_calc.getValue(matches_X[0]);
+              // console.log(result)
             } else {
               result += 0;
             }
@@ -1033,6 +1034,7 @@ __webpack_require__(2);
               result += 0;
             }
             result += ' )';
+            // console.log(result)
             return result;
           }
         };
