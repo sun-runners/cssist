@@ -1,16 +1,28 @@
+const webpack = require("webpack");
+
 module.exports = {
-  entry: "./webpack/app.js",
-  output: {
-      path: __dirname,
-      filename: "cssist.js"
+  mode: "development",
+  // mode: "production",
+  entry: {
+    cssist: './src/entry.js',
   },
-  loaders: [
-    {
-      test: /.*\.(gif|png|jpe?g|svg)$/i,
-      loaders: [
-        'file?hash=sha512&digest=hex&name=[hash].[ext]',
-        'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
-      ]
-    }
+  output: {
+    path: __dirname,
+    filename: "./[name].js"
+  },
+  module:  {
+    rules: [
+      {test: /\.css$/i, use: ['style-loader', 'css-loader'] },
+      {test: /\.(woff|svg|ttf|eot)([\?]?.*)$/, use: [ { loader: 'file-loader', options: { name:'./dist/fonts/[name].[ext]' } } ] },
+      {test: /\.(png|jpe?g|gif)$/i, use: [ { loader: 'file-loader', options: { name:'./dist/images/[name].[ext]' } } ] },
+      {test: /jquery\.js$/, loader : 'expose-loader?$' },
+      {test: /jquery\.js$/, loader : 'expose-loader?jQuery' },
+      {test: /\.js$/, loader: 'babel-loader', options: { presets: ['@babel/preset-env'] } }
+    ]
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      externals: { jquery: 'jQuery' }
+    })
   ]
 };

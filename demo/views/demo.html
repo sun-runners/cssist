@@ -263,7 +263,7 @@
 
       <content-dir title="'Flex Direction: row'" description="'\'d-fx\' for display: flex | \'fxd-r\' or Flex-direction: row [Default]'">
         <div class="d-fx fxd-r w-100vh b-we pt-5px pb-5px">
-          <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" 
+          <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms"
             ng-repeat="x in [1,2,3,4]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
             <span class="cen">
@@ -287,7 +287,7 @@
 
       <content-dir title="'Flex Direction: column'" description="'\'d-fx\' for display: flex | \'fxd-c\' or Flex-direction: column'">
         <div class="d-fx fxd-c b-we pr-5px pl-5px">
-          <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" 
+          <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms"
             ng-repeat="x in [1,2,3,4]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
             <span class="cen">
@@ -311,7 +311,7 @@
 
       <content-dir title="'Flex Wrap: no-wrap'" description="'\'d-fx\' for display: flex | \'fxw-nw\' or Flex-wrap: no-wrap [Default]'">
         <div class="d-fx fxw-nw w-100vh b-we pt-5px pb-5px">
-          <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" 
+          <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms"
             ng-repeat="x in [1,2,3,4,5,6,7,8]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
             <span class="cen">
@@ -323,7 +323,7 @@
 
       <content-dir title="'Flex Wrap: wrap'" description="'\'d-fx\' for display: flex | \'fxw-w\' or Flex-wrap: wrap'">
         <div class="d-fx fxw-w w-100vh b-we pt-5px pb-5px">
-          <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" 
+          <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms"
             ng-repeat="x in [1,2,3,4,5,6,7,8]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
             <span class="cen">
@@ -572,7 +572,7 @@
 
       <content-dir title="'Align Self'" description="'\'d-fx\' for display: flex | \'as-[place number here]\' or align-self: flex-start | flex-end | center | baseline | stretch'">
         <div class="d-fx h-50vh pt-5px pb-5px">
-          <div class="w-100px as-{{x.as}} m-3px b-we bs-2_4_12_bk_50 tn-500ms" 
+          <div class="w-100px as-{{x.as}} m-3px b-we bs-2_4_12_bk_50 tn-500ms"
               ng-class="x.as === 'stretch' || x.as === 'baseline' ? 'h-auto ' : 'h-100px'"
               ng-repeat="x in [
               {as: 'fxs'}, {as: 'fxe'}, {as: 'c'}, {as: 'bl'}, {as: 'stretch'}
@@ -598,11 +598,13 @@
       <button class="p-a w-20 h-60px cen-y c-we l-0 z-2" ng-click="movePrev();">
         <div class="p-r w-100 h-100">
           <i class="ion-arrow-left-b f-30px cen"></i>
+          LEFT
         </div>
       </button>
       <button class="p-a w-20 h-60px cen-y c-we r-0 z-2" ng-click="moveNext();">
         <div class="p-r w-100 h-100">
           <i class="ion-arrow-right-b f-30px cen"></i>
+          RIGHT
         </div>
       </button>
     </div>

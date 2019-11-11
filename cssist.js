@@ -6,9 +6,9 @@
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -33,16 +33,35 @@
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 /******/
-/******/ 	// identity function for calling harmory imports with the correct context
-/******/ 	__webpack_require__.i = function(value) { return value; };
-/******/
-/******/ 	// define getter function for harmory exports
+/******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		Object.defineProperty(exports, name, {
-/******/ 			configurable: false,
-/******/ 			enumerable: true,
-/******/ 			get: getter
-/******/ 		});
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -60,1505 +79,142 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/entry.js");
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
-/***/ function(module, exports) {
-
-(function(){
-  cssist.convert = {
-    eventCode2event : function(event_code){
-      if(!(event_code && event_code.toLowerCase().match(/^ct|cy|p|kp|ku|h|f|a|me|mo|mm|md|mu|ml|mo|c|dc|w$/))) return;
-      var events = { // CSS Pseudo-classes
-        'a':'active',
-        'c':'checked',
-        'd':'disabled',
-        'ey':'empty',
-        'e':'enabled',
-        'f':'focus',
-        'h':'hover',
-        'ir':'in-range',
-        'i':'invalid',
-        'l':'link',
-        'oot':'only-of-type',
-        'oc':'only-child',
-        'o':'optional',
-        'oor':'out-of-range',
-        'ro':'read-only',
-        'rw':'read-write',
-        'r':'required',
-        'r':'root',
-        't':'target',
-        'v':'valid',
-        'vd':'visited'
-      };
-      return events[event_code.toLowerCase()];
-    },
-    mediaQueryCodes2mediaQueries : function(media_query_codes){
-      var self = this;
-      var media_queries = {};
-      if(!media_query_codes) return media_queries;
-      var media_query_codes_matches = media_query_codes.match(/(^(?:XH|NH|XW|NW|X|N)[0-9]+)?((?:XH|NH|XW|NW|X|N)[0-9]+)?$/);
-      for(var i=1; i<=media_query_codes_matches.length-1; i++){
-        var media_query = self.mediaQueryCode2mediaQuery(media_query_codes_matches[i]);
-        if(media_query) media_queries[media_query.key] = media_query.value;
-      }
-      return media_queries;
-    },
-    mediaQueryCode2mediaQuery : function(media_query_code){
-      if(!media_query_code) return null;
-      var media_query = {};
-      if(media_query_code.match(/^XW[0-9]+/)||media_query_code.match(/^X[0-9]+/)) media_query.key = 'max_width';
-      else if(media_query_code.match(/^NW[0-9]+/)||media_query_code.match(/^N[0-9]+/)) media_query.key = 'min_width';
-      else if(media_query_code.match(/^XH[0-9]+/)) media_query.key = 'max_height';
-      else if(media_query_code.match(/^NH[0-9]+/)) media_query.key = 'min_height';
-      else return null;
-      media_query.value = media_query_code.match(/[0-9]+$/)[0]+'px';
-      return media_query;
-    },
-    css2css_text : function(css){
-  		if(!(css.property&&css.value!=null&&css.value!=undefined)) return;
-      var css_text='';
-      if(Array.isArray(css.value)){
-        for(var i=0; i<css.value.length; i++){
-          if(css.value[i].property&&css.value[i].value){
-            css_text += (css.value[i].property.name?css.value[i].property.name:css.value[i].property)+': '+css.value[i].value+'; ';
-          }
-          else{
-            css_text += (css.property.name?css.property.name:css.property)+': '+css.value[i]+'; '
-          }
-        }
-        return css_text;
-      }
-      else{
-        var broswers = ['webkit', 'moz', 'o', 'ms'];
-        if(css.property) css_text = (css.property.name?css.property.name:css.property)+': '+css.value+'; ';
-        else css_text = (css.property.name?css.property.name:css.property)+': '+css.value+'; ';
-        for(var i=0; i<broswers.length; i++){
-          css_text += '-'+broswers[i]+'-'+(css.property.name?css.property.name:css.property)+': '+css.value+'; '
-        }
-        return css_text;
-      }
-  	},
-    css2css_class : function(css){
-  		if(!(css.class)) return;
-      var class_event = css.class+(css.event?':'+css.event:'');
-      var result = class_event;
-      if(typeof css.property != 'string'){
-        if(css.property&&css.property.afters&&css.property.afters.length>=1){
-          result = '';
-          for(var i=0; i<css.property.afters.length; i++){
-            if(i>0) result += ','
-            result += class_event+css.property.afters[i];
-          }
-        }
-      }
-      return result;
-  	}
-    // ,
-    // css2css_cors : function(css, css_content){
-    //   // if(!css.property.cors) return '.'+css.class+(css.event?':'+css.event:'')+css_content;
-    //   // var css_cors = '';
-    //   // if(css.property&&css.property.cors&&css.property.cors.type&&css.property.cors.type == 'class'){
-    //   //   for(var i=0; i<css.property.cors.list.length; i++){
-    //   //     css_cors+='.'+css.class+(css.event?':'+css.event:'')+css.property.cors.list[i]+css_content;
-    //   //     if(i!=css.property.cors.list.length-1){ css_cors+='\n\n'; }
-    //   //   }
-    //   // }
-    //   // return css_cors;
-  	// },
-    // css2css_text : function(css){
-    //   var css_content = ' {'+this.property2property_cors(css.property, css.value)+'}';
-    //   // var css_text = this.css2css_cors(css, css_content);
-    //   return css_text;
-    // }
-  };
-})();
-
-
-/***/ },
-/* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
-__webpack_require__(0);
-(function(){
-  cssist.get = {
-
-    // Classes
-    classesOfElement : function(element){
-      var classNames = [];
-      if(element && element.className && element.className.length>=1) classNames = element.className.split(/\s|↵/);
-      return classNames;
-    },
-    classPiecesOfClass: function(class_name){
-      if(!class_name){ return; }
-      var class_pieces = class_name.match(/^([a-zA-Z\_]+)-((?:[a-zA-Z0-9]|(?:\_)|(?:\-\-))+)(?:-([a-zA-Z]{1,2}))?(?:-((?:(?:XH|NH|XW|NW|X|N)[0-9]+)+))?$/);
-      var special_class_pieces = class_name.match(/^(cen)(?:-((?:[a-zA-Z0-9]|(?:\_)|(?:\-\-))+))?(?:-([a-zA-Z]{1,2}))?(?:-((?:(?:XH|NH|XW|NW|X|N)[0-9]+)+))?$/);
-      if(!(class_pieces&&class_pieces[1]&&class_pieces[2])&&!(special_class_pieces&&special_class_pieces[0])){ return; }
-      if(class_pieces&&class_pieces[1]&&class_pieces[2]){
-        return {
-          class_name: class_name,
-          property: class_pieces[1],
-          value: class_pieces[2],
-          event: class_pieces[3]?class_pieces[3]:null,
-          media_query: class_pieces[4]?class_pieces[4]:null
-        };
-      }
-      else{
-        return {
-          class_name: class_name,
-          property: special_class_pieces[1],
-          value: special_class_pieces[2],
-          event: special_class_pieces[3]?special_class_pieces[3]:null,
-          media_query: special_class_pieces[4]?special_class_pieces[4]:null
-        };
-      }
-    },
-
-    // Css
-    cssSetsOfClassPieces: function(class_pieces){
-      for(var i=0; i<cssist.property_sets.length; i++){
-        var property_set = cssist.property_sets[i];
-        if(property_set.properties[class_pieces.property]){
-          for(var j=0; j<property_set.value_sets.length; j++){
-            var value_set = property_set.value_sets[j];
-            var regex = new RegExp('^'+value_set.regex+'$');
-            if(class_pieces.value.match(regex)){
-              return {
-                property_set : property_set,
-                value_set : value_set
-              };
-            }
-          }
-        }
-      }
-    },
-    cssOfCssSetsAndClassPieces: function(class_pieces, css_sets){
-      var class_name = class_pieces.class_name;
-
-      var property;
-      if(css_sets.property_set&&css_sets.property_set.properties&&css_sets.property_set.properties[class_pieces.property]){
-        property = css_sets.property_set.properties[class_pieces.property];
-      }
-      else return;
-
-      var value;
-      if(css_sets.value_set){
-        value = css_sets.value_set.getValue(class_pieces.value);
-      }
-      else return;
-
-      var event;
-      if(cssist.convert.eventCode2event(class_pieces.event)){
-        event = cssist.convert.eventCode2event(class_pieces.event);
-      }
-
-      var media_queries;
-      if(cssist.convert.mediaQueryCodes2mediaQueries(class_pieces.media_query)){
-        media_queries = cssist.convert.mediaQueryCodes2mediaQueries(class_pieces.media_query);
-      }
-
-      if((value === undefined || value === null)) return;
-
-      return {
-        class:class_name,
-        property:property,
-        value:value,
-        event:event,
-        max_height:media_queries.max_height?media_queries.max_height:null,
-        min_height:media_queries.min_height?media_queries.min_height:null,
-        max_width:media_queries.max_width?media_queries.max_width:null,
-        min_width:media_queries.min_width?media_queries.min_width:null
-      };
-    },
-    cssesOfCssSetsAndClassPieces: function(class_pieces, classes){
-      if(!(class_pieces&&classes&&classes.length>=1)) return;
-      var class_name = class_pieces.class_name;
-
-      var event;
-      if(cssist.convert.eventCode2event(class_pieces.event)){
-        event = cssist.convert.eventCode2event(class_pieces.event);
-      }
-
-      var media_queries;
-      if(cssist.convert.mediaQueryCodes2mediaQueries(class_pieces.media_query)){
-        media_queries = cssist.convert.mediaQueryCodes2mediaQueries(class_pieces.media_query);
-      }
-
-      var css = {
-        class:class_name,
-        list:[],
-        event:event,
-        max_height:media_queries.max_height?media_queries.max_height:null,
-        min_height:media_queries.min_height?media_queries.min_height:null,
-        max_width:media_queries.max_width?media_queries.max_width:null,
-        min_width:media_queries.min_width?media_queries.min_width:null
-      };
-
-      for(var i=0; i<classes.length; i++){
-        var class_pieces_ith = this.classPiecesOfClass(classes[i]);
-        if(!class_pieces_ith) continue;
-        var css_sets_ith = this.cssSetsOfClassPieces(class_pieces_ith);
-        if(!css_sets_ith) continue;
-        var css_ith = this.cssOfCssSetsAndClassPieces(class_pieces_ith, css_sets_ith);
-        if(!css_ith) continue;
-        css.list.push(css_ith);
-      }
-      return css;
-    },
-    cssOfClass : function(class_name){
-      var class_pieces, css_sets, css;
-      class_pieces = this.classPiecesOfClass(class_name);
-      if(!class_pieces) return;
-      css_sets = this.cssSetsOfClassPieces(class_pieces);
-      var css;
-      if(!css_sets){
-        var special_class = cssist.special_classes[class_pieces.property];
-        if(!special_class){ return; }
-        var classes = special_class.getClasses(class_pieces.value);
-        css = this.cssesOfCssSetsAndClassPieces(class_pieces, classes);
-      } else {
-        css = this.cssOfCssSetsAndClassPieces(class_pieces, css_sets);
-      }
-      if(!css) return;
-      return css;
-    },
-
-    // Style
-    styleElement: function(){
-      var style_element;
-      if(document.querySelectorAll('style#cssist')&&document.querySelectorAll('style#cssist')[0]){
-        return document.querySelectorAll('style#cssist')[0];
-      }
-      var style = document.createElement("STYLE");
-
-      // WebKit hack :(
-      style.appendChild(document.createTextNode(''));
-
-      style.setAttribute("type", 'text/css');
-      style.setAttribute("id", "cssist");
-      document.head.appendChild(style);
-      return style;
-    },
-    styleSheet: function(){
-      var style_element = this.styleElement();
-      return style_element.styleSheet || style_element.sheet;
-    }
-
-  };
-})();
-
-
-/***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-__webpack_require__(1);
-__webpack_require__(0);
-(function(){
-  var timeout;
-  cssist.make = {
-    cssToStyleSheet : function(css){
-      var style_element = cssist.get.styleElement();
-      var css_class = cssist.convert.css2css_class(css);
-      var css_text = '';
-      if(css.list&&css.list.length>=1){
-        for(var i=0; i<css.list.length; i++){
-          css_text += cssist.convert.css2css_text(css.list[i]);
-        }
-      } else{
-        css_text = cssist.convert.css2css_text(css);
-      }
-
-      var css_style = "."+css_class+" { "+css_text+" }";
-      if(css.max_width||css.min_width||css.max_height||css.min_height){
-        var css_mediaqueries = [];
-        if(css.max_width) css_mediaqueries.push('max-width:'+css.max_width);
-        if(css.min_width) css_mediaqueries.push('min-width:'+css.min_width);
-        if(css.max_height) css_mediaqueries.push('max-height:'+css.max_height);
-        if(css.min_height) css_mediaqueries.push('min-height:'+css.min_height);
-        css_style = '@media all and ('+css_mediaqueries.join(') and (')+') {'+css_style+' }';
-      }
-
-      if(style_element.innerHTML.indexOf(css_style)==-1){
-        style_element.innerHTML += css_style+'\n';
-      }
-      clearTimeout(timeout);
-      timeout = setTimeout(function(){
-        localStorage['cssist_style'] = JSON.stringify(style_element.innerHTML);
-        console.log('%c'+style_element.innerHTML, "color:#616161; font-size:9px; line-height:18px;");
-        var console_text = '%c****************************************** CSSIST NOTICE *******************************************\n'
-        +'                                                                                                    \n'
-        +'Hi! I am Cssist. Your cssist css is updated!                                                        \n'
-        +'If you want to open the webpage faster at the first time, there are two ways.                       \n'
-        +'1. Paste the above "css" codes into your css file.                                                  \n'
-        +'2. You can download your "cssist.css" file by typing "cssist.download();" command into this console.\n'
-        +'Cssist Version: '+cssist.VERSION+'                                                                               \n'
-        +'                                                                                                    \n'
-        +'****************************************************************************************************\n';
-        var console_style = "width:100%; color:#FFC107; background:#000000; font-size:12px; padding-top:12px; padding-bottom:12px; line-height:36px;";
-        console.log(console_text, console_style);
-      });
-    },
-    classToStyleSheet: function(class_name) {
-  		var css = cssist.get.cssOfClass(class_name);
-  		if(css){
-        this.cssToStyleSheet(css);
-        return true;
-      }
-      else{
-        return false;
-      }
-  	}
-  };
-})();
-
-
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-__webpack_require__(1);
-(function(){
-  cssist.download = function(){
-    var style_element = cssist.get.styleElement();
-    var element = document.createElement('a');
-    element.setAttribute('href', 'data:text/css;charset=utf-8,' + encodeURIComponent(style_element.innerHTML));
-    element.setAttribute('download', 'cssist.css');
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-  };
-})();
-
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-__webpack_require__(6);
-// this will automatic run function
-// because function is inside the parentheses. ex. "( fn )"
-(function(){
-  // watch all classes
-  cssist.watch = {
-    change : function(element){
-      element.addEventListener('DOMNodeInserted', function(event){
-        cssist.paint.rootElement(event.target);
-      }, false);
-    },
-
-    start : function(){
-      var self = this;
-      var elements;
-      var interval = setInterval(function () {
-        // count all classes
-        if( document.querySelectorAll('[cssist]').length>=1 ){
-          elements = document.querySelectorAll('[cssist]');
-        }
-        else {
-          elements = document.querySelectorAll('body');
-        }
-        if(elements.length>=1){
-          clearInterval(interval);
-          for(var i=0; i<elements.length; i++){
-            cssist.paint.rootElement(elements[i]);
-            self.change(elements[i]);
-          }
-        }
-
-      }, 1000);
-
-    }
-  };
-})();
-
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-__webpack_require__(2);
-(function () {
-  cssist.init = {
-    settings: function () {
-
-      cssist.VERSION = '1.1.28';
-      if (localStorage
-        && localStorage['cssist_VERSION']
-        && localStorage['cssist_VERSION'] == cssist.VERSION
-        && localStorage['cssist_style']) {
-        var style_element = cssist.get.styleElement();
-        style_element.innerHTML = JSON.parse(localStorage['cssist_style']);
-      }
-      else {
-        if (localStorage) {
-          localStorage['cssist_VERSION'] = cssist.VERSION;
-          localStorage.removeItem('cssist_style');
-        }
-      }
-
-      cssist.value_sets = {}, cssist.property_sets = {};
-      cssist.value_sets.integer_3digits = {
-        regex: '(?:_?[0-9]{1,3})',
-        examples: ['_999', '999'],
-        getValue: function (value) { return Math.floor(cssist.value_sets.integer.getValue(value)) % 1000; }
-      };
-
-      cssist.special_classes = {
-        cen: {
-          property: 'cen',
-          value_set: ['xy', 'x', 'y'],
-          getClasses: function (value) {
-            var result;
-            if (value == 'x') result = ['l-50', 'tn-X_50'];
-            else if (value == 'y') result = ['t-50', 'tn-Y_50'];
-            else result = ['t-50', 'l-50', 'tn-X_50Y_50'];
-            return result;
-          }
-        },
-        b: {
-          property: 'b',
-          value_set: ['img'],
-          getClasses: function (value) {
-            var result = ['background_size-cover', 'background_repeat-centerCenter', 'background_position-cc', 'object_fit-cover'];
-            return result;
-          }
-        }
-      }
-
-
-      function initializeValueSets() {
-
-        var getValueFromValues = function (value) { return this.values[value]; }
-        var getValueFromOriginalValue = function (value) { return value; }
-
-        // CONSTANT
-        cssist.value_sets.auto = {
-          regex: '(?:a|auto)',
-          values: { a: 'auto', auto: 'auto' },
-          examples: ['a', 'auto'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.all = {
-          regex: '(?:a|all)',
-          values: { a: 'all', all: 'all' },
-          examples: ['a', 'all'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.initial = {
-          regex: '(?:il|initial)',
-          values: { il: 'initial', initial: 'initial' },
-          examples: ['il', 'initial'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.inherit = {
-          regex: '(?:it|inherit)',
-          values: { it: 'inherit', inherit: 'inherit' },
-          examples: ['it', 'inherit'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.infinite = {
-          regex: '(?:i|infinite)',
-          values: { i: 'infinite', infinite: 'infinite' },
-          examples: ['i', 'infinite'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.none = {
-          regex: '(?:n|none)',
-          values: { n: 'none', none: 'none' },
-          examples: ['n', 'none'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.normal = {
-          regex: '(?:n|normal)',
-          values: { n: 'normal', normal: 'normal' },
-          examples: ['n', 'normal'],
-          getValue: getValueFromValues
-        };
-
-        // KIND
-        cssist.value_sets.align_content_kind = {
-          regex: '(?:fxs|fxe|c|sb|sa|s|flex_start|flex_end|center|space_between|space_around|stretch)',
-          values: {
-            fxs: 'flex-start', fxe: 'flex-end', c: 'center', sb: 'space-between', sa: 'space-around', s: 'stretch',
-            flex_start: 'flex-start', flex_end: 'flex-end', center: 'center', space_between: 'space-between', space_around: 'space-around', strech: 'stretch'
-          },
-          examples: ['fxs', 'flex_start'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.align_items_kind = {
-          regex: '(?:fxs|fxe|c|bl|s|flex_start|flex_end|center|baseline|stretch)',
-          values: {
-            fxs: 'flex-strech', fxe: 'flex-end', c: 'center', bl: 'baseline', s: 'stretch',
-            flex_start: 'flex-start', flex_end: 'flex-end', center: 'center', baseline: 'baseline', strech: 'stretch'
-          },
-          examples: ['fxs', 'flex_start'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.animation_direction = {
-          regex: '(?:n|r|a|ar|normal|reverse|alternate|alternate_reverse)',
-          values: { n: 'normal', r: 'reverse', a: 'alternate', ar: 'alternate-reverse', normal: 'normal', reverse: 'reverse', alternate: 'alternate', alternate_reverse: 'alternate-reverse' },
-          examples: ['n', 'alternate_reverse'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.box_sizing_kind = {
-          regex: '(?:c|b|content_box|border_box)',
-          values: { c: 'content-box', b: 'border-box', content_box: 'content-box', border_box: 'border-box' },
-          examples: ['c', 'b'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.background_size_kind = {
-          regex: '(?:l|r|b|left|right|both)',
-          values: { l: 'left', r: 'right', b: 'both', left: 'left', right: 'right', both: 'both' },
-          examples: ['l', 'both'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.clear_kind = {
-          regex: '(?:cr|cn|cover|contain)',
-          values: { cr: 'cover', cn: 'contain', cover: 'cover', contain: 'contain' },
-          examples: ['cr', 'contain'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.display_kind = {
-          regex: '(?:i|b|fx|ib|inline|block|flex|inline_block|inline_flex|inline_table|list_item|run_in|table|table_caption|table_column_group|table_header_group|table_footer_group|table_row_group|table_cell|table_column|table_row)',
-          values: {
-            i: 'inline', b: 'block', fx: 'flex', ib: 'inline-block',
-            inline: 'inline', block: 'block', flex: 'flex', inline_block: 'inline-block', inline_flex: 'inline-flex',
-            inline_table: 'inline-table', list_item: 'list-item', run_in: 'run-in',
-            table: 'table', table_caption: 'table-caption', table_column_group: 'table-column-group', table_header_group: 'table-header-group',
-            table_footer_group: 'table-footer-group', table_row_group: 'table-row-group', table_cell: 'table-cell', table_column: 'table-column', table_row: 'table-row'
-          },
-          examples: ['i', 'table_row'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.direction_kind = {
-          regex: '(?:l|r|t|b|c|left|right|top|bottom|center)',
-          values: { l: 'left', r: 'right', t: 'top', b: 'bottom', c: 'center', left: 'left', right: 'right', top: 'top', bottom: 'bottom', center: 'center' },
-          examples: ['l', 'center'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.direction_2D_kind = {
-          regex: '(?:lt|lc|lb|rt|rc|rb|ct|cc|cb|left_top|left_center|left_bottom|right_top|right_center|right_bottom|center_top|center_center|center_bottom)',
-          values: {
-            lt: 'left top', lc: 'left center', lb: 'left bottom', rt: 'right top', rc: 'right center', rb: 'right bottom', ct: 'center top', cc: 'center center', cb: 'center bottom',
-            left_top: 'left top', left_center: 'left center', left_bottom: 'left bottom', right_top: 'right top', right_center: 'right center', right_bottom: 'right bottom', center_top: 'center top', center_center: 'center center', center_bottom: 'center bottom'
-          },
-          examples: ['lt', 'cc'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.flex_flow_kind = {
-          regex: '(?:fxd|fxw|flex_direction|flex_wrap)',
-          values: {
-            fxd: 'flex-direction', fxw: 'flex-wrap',
-            flex_direction: 'flex-direction', flex_wrap: 'flex-wrap'
-          },
-          examples: ['fxd', 'flex_direction'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.float_kind = {
-          regex: '(?:l|r|left|right)',
-          values: { l: 'left', r: 'right', left: 'left', right: 'right' },
-          examples: ['l', 'right'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.flex_direction_kind = {
-          regex: '(?:r|rr|c|cr|row|row_reverse|column|column_reverse)',
-          values: {
-            r: 'row', rr: 'row-reverse', c: 'column', cr: 'column-reverse',
-            row: 'row', row_reverse: 'row-reverse', column: 'column', column_reverse: 'column-reverse'
-          },
-          examples: ['r', 'row'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.flex_wrap_kind = {
-          regex: '(?:nw|w|wr|nowrap|wrap|wrap_reverse)',
-          values: {
-            nw: 'nowrap', w: 'wrap', wr: 'wrap-reverse',
-            nowrap: 'nowrap', wrap: 'wrap', wrap_reverse: 'wrap-reverse'
-          },
-          examples: ['nw', 'nowrap'],
-          getValue: getValueFromValues
-        }
-        cssist.value_sets.font_size_kind = {
-          regex: '(?:m|xxs|xs|s|l|xl|xxl|sr|lr|medium|xx_small|x_small|small|large|x_large|xx_large|smaller|larger)',
-          values: {
-            m: 'medium', xxs: 'xx-small', xs: 'x-small', s: 'small', l: 'large', xl: 'x-large', xxl: 'xx-large', sr: 'smaller', lr: 'larger',
-            medium: 'medium', xx_small: 'xx-small', x_small: 'x-small', s: 'small', l: 'large', x_large: 'x-large', xx_large: 'xx-large', smaller: 'smaller', larger: 'larger'
-          },
-          examples: ['m', 'larger'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.font_weight_kind = {
-          regex: '(?:n|m|b|br|lr|normal|medium|bold|bolder|lighter)',
-          values: {
-            n: 'normal', m: 'medium', b: 'bold', br: 'bolder', lr: 'lighter',
-            normal: 'normal', medium: 'medium', bold: 'bold', bolder: 'bolder', lighter: 'lighter',
-          },
-          examples: ['n', 'lighter'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.justify_content_kind = {
-          regex: '(?:fxs|fxe|c|sb|sa|se|flex_start|flex_end|center|space_between|space_around|space_evenly)',
-          values: {
-            fxs: 'flex-start', fxe: 'flex-end', c: 'center', sb: 'space-between', sa: 'space-around', se: 'space-evenly',
-            flex_start: 'flex-start', flex_end: 'flex-end', center: 'center', space_between: 'space-between', space_around: 'space-around', space_evenly: 'space-evenly'
-          },
-          examples: ['fxs', 'flex_start'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.gradient_kind = {
-          regex: '(?:rl|rr|l|r)',
-          values: { l: 'linear-gradient', r: 'radial-gradient', rl: 'repeating-linear-gradient', rr: 'repeating-radial-gradient' },
-          examples: ['l', 'rr'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.length_unit_kind = {
-          regex: '(?:em|ex|ch|rem|vw|vh|vmax|vmin|cm|mm|in|px|pt|pc|p|n)',
-          values: { em: 'em', ex: 'ex', ch: 'ch', rem: 'rem', vw: 'vw', vh: 'vh', vmax: 'vmax', vmin: 'vmin', cm: 'cm', mm: 'mm', in: 'in', px: 'px', pt: 'pt', pc: 'pc', p: '%', n: '' },
-          examples: ['em', 'n'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.overflow_kind = {
-          regex: '(?:h|o|s|v|hidden|overlay|scroll|visible)',
-          values: {
-            h: 'hidden', o: 'overlay', s: 'scroll', v: 'visible',
-            hidden: 'hidden', overlay: 'overlay', scroll: 'scroll', visible: 'visible'
-          },
-          examples: ['h', 'visible'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.position_kind = {
-          regex: '(?:s|a|f|r|static|absolute|fixed|relative)',
-          values: {
-            s: 'static', a: 'absolute', f: 'fixed', r: 'relative',
-            static: 'static', absolute: 'absolute', fixed: 'fixed', relative: 'relative'
-          },
-          examples: ['s', 'relative'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.text_overflow_kind = {
-          regex: '(?:c|e|s|clip|ellipsis|string)',
-          values: {
-            c: 'clip', e: 'ellipsis', s: 'string',
-            clip: 'clip', ellipsis: 'ellipsis', string: 'string'
-          },
-          examples: ['c', 's'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.align_kind = {
-          regex: '(?:l|r|c|j|s|left|right|center|justify|stretch)',
-          values: {
-            l: 'left', r: 'right', c: 'center', j: 'justify', s: 'stretch',
-            left: 'left', right: 'right', center: 'center', justify: 'justify', strech: 'strech'
-          },
-          examples: ['l', 'j'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.thick_kind = {
-          regex: '(?:m|tn|tk|medium|thin|thick)',
-          values: { m: 'medium', tn: 'thin', tk: 'thick' },
-          examples: ['m', 'tk'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.transition_timing_function_kind = {
-          regex: '(?:l|e|ei|eo|eio|ss|se|linear|ease|ease_in|ease_out|ease_in_out|step_start|step_end)',
-          values: { l: 'linear', e: 'ease', ei: 'ease-in', eo: 'ease-out', eio: 'ease-in-out', ss: 'step-start', se: 'step-end' },
-          examples: ['l', 'se'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.text_trasform_kind = {
-          regex: '(?:c|u|l|capitalize|uppercase|lowercase)',
-          values: { c: 'capitalize', u: 'uppercase', l: 'lowercase', capitalize: 'capitalize', uppercase: 'uppercase', lowercase: 'lowercase' },
-          examples: ['c', 'lowercase'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.vertical_align_kind = {
-          regex: '(?:be|sb|sr|t|tt|m|b|tb|baseline|sub|super|top|text_top|middle|bottom|text_bottom)',
-          values: {
-            be: 'baseline', sb: 'sub', sr: 'super', t: 'top', tt: 'text-top	', m: 'middle', b: 'bottom', tb: 'text-bottom',
-            baseline: 'baseline', sub: 'sub', super: 'super', top: 'top', text_top: 'text-top	', middle: 'middle', bottom: 'bottom', text_bottom: 'text-bottom'
-          },
-          examples: ['be', 'text_bottom'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.visibility_kind = {
-          regex: '(?:v|h|c|visible|hidden|collapse)',
-          values: {
-            v: 'visible', h: 'hidden', c: 'collapse',
-            visible: 'visible', hidden: 'hidden', collapse: 'collapse'
-          },
-          examples: ['v', 'c'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.white_space_kind = {
-          regex: '(?:rl|rr|l|r|normal|nowrap|pre|pre_line|pre_wrap)',
-          values: {
-            n: 'normal', nw: 'nowrap', p: 'pre', pl: 'pre-line', pw: 'pre-wrap',
-            normal: 'normal', nowrap: 'nowrap', pre: 'pre', pre_line: 'pre-line', pre_wrap: 'pre-wrap'
-          },
-          examples: ['l', 'rr'],
-          getValue: getValueFromValues
-        };
-        cssist.value_sets.word_wrap_kind = {
-          regex: '(?:b|break_word)',
-          values: {
-            b: 'break-word',
-            break_word: 'break-word'
-          },
-          examples: ['b', 'break_word'],
-          getValue: getValueFromValues
-        };
-
-        // NUMBER
-        cssist.value_sets.integer = {
-          regex: '(?:_?[0-9]+)',
-          examples: ['_100', '100'],
-          getValue: function (value) { return value.replace(/_/g, '-'); }
-        };
-        cssist.value_sets.integer_0 = {
-          regex: '(?:[0-9]+)',
-          examples: ['100'],
-          getValue: function (value) {
-            var result = Math.abs(value);
-            if (isNaN(result)) return null;
-            else return result;
-          }
-        };
-        cssist.value_sets.integer_0_12 = {
-          regex: '(?:10|11|12|[0-9])',
-          examples: ['0', '12'],
-          getValue: function (value) { return Math.floor(value) % 13; }
-        };
-        cssist.value_sets.integer_0_255 = {
-          regex: '(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:[01]?[0-9]?[0-9]))',
-          examples: ['0', '255'],
-          getValue: function (value) { return Math.floor(value) % 256; }
-        };
-        cssist.value_sets.integer_hundred = {
-          regex: '(?:[1-9]00)',
-          examples: ['100', '900'],
-          getValue: getValueFromOriginalValue
-        };
-        cssist.value_sets.integer_3digits = {
-          regex: '(?:_?[0-9]{1,3})',
-          examples: ['_999', '999'],
-          getValue: function (value) { return Math.floor(cssist.value_sets.integer.getValue(value)) % 1000; }
-        };
-        cssist.value_sets.float = {
-          regex: cssist.value_sets.integer.regex + '(?:o' + cssist.value_sets.integer_0.regex + ')?',
-          examples: ['0', '7o777', '_7o777'],
-          getValue: function (value) { return value.replace(/o/g, '.'); }
-        };
-        cssist.value_sets.float_0_100 = {
-          regex: '(?:100|[0-9]?[0-9])(?:o[0-9]+)?',
-          examples: ['0', '10', '100', '7o777'],
-          getValue: function (value) { return cssist.value_sets.float.getValue(value.replace(/_/g, '-')) % 101; }
-        };
-        cssist.value_sets.float_0 = {
-          regex: cssist.value_sets.integer.regex + '(?:o' + cssist.value_sets.integer_0.regex + ')?',
-          examples: ['0', '7o777'],
-          getValue: function (value) { return cssist.value_sets.float.getValue(value.replace(/_/g, '-')); }
-        };
-
-        // OPACITY
-        cssist.value_sets.opacity = {
-          regex: cssist.value_sets.float_0_100.regex,
-          examples: ['0', '50o50', '100'],
-          getValue: function (value) { return cssist.value_sets.float_0_100.getValue(value) * 0.01; }
-        };
-
-        // LENGTH
-        cssist.value_sets.length = {
-          regex: cssist.value_sets.float_0.regex + '(?:' + cssist.value_sets.length_unit_kind.regex + ')?',
-          examples: ['0px', '50p', '50', '100vw', '3n'],
-          getValue: function (value) {
-            var regex = new RegExp('(' + cssist.value_sets.float_0.regex + ')(' + cssist.value_sets.length_unit_kind.regex + ')?');
-            var matches = value.match(regex);
-            var result = '';
-            if (cssist.value_sets.float_0.getValue(matches[1])) { // 길이 값
-              result = cssist.value_sets.float_0.getValue(matches[1]);
-            }
-            if (matches[2]) { // 길이 단위
-              result += cssist.value_sets.length_unit_kind.getValue(matches[2]);
-            } else {
-              result += '%';
-            }
-            return result;
-          }
-        };
-        cssist.value_sets.calc = {
-          regex: '(?:__|_|M|D)',
-          examples: ['__', '_', 'D', 'M'],
-          getValue: function (value) {
-            var result = null;
-            if (value == '__') { result = '+'; }
-            else if (value == '_') { result = '-'; }
-            else if (value == 'M') { result = '*'; }
-            else if (value == 'D') { result = '/'; }
-            return result;
-          }
-        };
-        cssist.value_sets.length_calc = {
-          regex: '(?:' + cssist.value_sets.calc.regex + '?' + cssist.value_sets.length.regex + ')+',
-          examples: ['0', '50', '50px', '100_100px', '100M2_100vwD3__100cmD4_100pxD5_100M6_100vwD7__100cmD8_100pxD9'],
-          getValue: function (value) {
-            var regex = new RegExp('(' + cssist.value_sets.calc.regex + '?' + cssist.value_sets.length.regex + ')', 'g');
-            var matches = value.match(regex);
-            var result = '';
-            for (var i = 0; i < matches.length; i++) {
-              var regex_each = new RegExp('(' + cssist.value_sets.calc.regex + ')?(' + cssist.value_sets.length.regex + ')');
-              var matches_each = matches[i].match(regex_each);
-              if (matches_each[1]) {
-                result += cssist.value_sets.calc.getValue(matches_each[1]);
-              }
-              if (!(matches_each[1] == 'D' || matches_each[1] == 'M')) { // 부호나 나누기나 곱하기가 아닌 경우
-                if (i >= 1) { result += ' '; }
-                result += cssist.value_sets.length.getValue(matches_each[2]);
-              } else { // 부호나 나누기나 곱하기인 경우
-                if (i >= 1) { result += ' '; }
-                result += matches_each[2];
-              }
-              result += ' ';
-            }
-            // result = 'calc( ' + result + ')';
-            return result;
-          }
-        };
-        cssist.value_sets.length_calc_2D = {
-          regex: '(?:[X|Y]' + cssist.value_sets.length_calc.regex + ')+',
-          examples: ['X100pxY50px', 'X100_10pxY50pxM10', 'X100M2_100vwD3__100cmD4_100pxD5_100M6_100vwD7__100cmD8_100pxD9'],
-          getValue: function (value) {
-            var result = '';
-            var regex_X = new RegExp('X(' + cssist.value_sets.length_calc.regex + ')');
-            var matches_X = value.match(regex_X);
-            if (matches_X) {
-              result += cssist.value_sets.length_calc.getValue(matches_X[0]);
-            } else {
-              result += 0;
-            }
-            result += ' ';
-            var regex_Y = new RegExp('Y(' + cssist.value_sets.length_calc.regex + ')');
-            var matches_Y = value.match(regex_Y);
-            if (matches_Y) {
-              result += cssist.value_sets.length_calc.getValue(matches_Y[0]);
-            } else {
-              result += 0;
-            }
-            return result;
-          }
-        };
-
-        // FLEX
-        cssist.value_sets.flexbox_flex = {
-          regex: '(?:(?:' + cssist.value_sets.integer.regex + ')' + '(?:' + cssist.value_sets.integer.regex + ')?' + '(?:' + cssist.value_sets.length.regex + ')?)',
-          examples: ['1', '1_1_100px', '1_1_100'],
-          getValue: function (value) {
-            console.log('flexbox_flex getValue');
-            var result = '';
-            var regex = new RegExp('^(' + cssist.value_sets.integer.regex + ')' + '(?:_(' + cssist.value_sets.integer.regex + '))?' + '(?:_(' + cssist.value_sets.length.regex + '))?$');
-            var matches = value.match(regex);
-            console.log('matches', matches);
-            if (!(matches)) return null;
-            var flexes = [];
-            for (var i = 1; i <= 3; i++) {
-              // console.log(i);
-              // console.log(matches[i]);
-              if (!matches[i]) continue;
-              if (i == 3){
-                flexes.push(cssist.value_sets.length.getValue(matches[i]));
-              }
-              else{
-                flexes.push(cssist.value_sets.integer.getValue(matches[i]));
-              }
-            }
-            // console.log(flexes);
-            result = flexes.join(' ');
-            return result;
-          }
-        };
-
-        // DEGREE
-        cssist.value_sets.degree = {
-          regex: '(?:_?[0-9]+)(?:d)',
-          examples: ['180d', '_90d'],
-          getValue: function (value) { return value.replace(/d/g, 'deg'); }
-        };
-
-        // TIME
-        cssist.value_sets.hour = {
-          regex: cssist.value_sets.integer_0.regex + 'h',
-          examples: ['0h', '100h'],
-          getValue: getValueFromOriginalValue
-        };
-        cssist.value_sets.hour_0_12 = {
-          regex: cssist.value_sets.integer_0_12.regex + 'h',
-          examples: ['0h', '12h'],
-          getValue: getValueFromOriginalValue
-        };
-        cssist.value_sets.second = {
-          regex: cssist.value_sets.float_0.regex + 's',
-          examples: ['0s', '100s'],
-          getValue: getValueFromOriginalValue
-        };
-        cssist.value_sets.millisecond = {
-          regex: cssist.value_sets.float_0.regex + 'ms',
-          examples: ['0ms', '100ms'],
-          getValue: getValueFromOriginalValue
-        };
-
-        // TRANSFORM
-        cssist.value_sets.translate_length_calc_2D = {
-          regex: '(?:[X|Y]' + cssist.value_sets.length_calc.regex + ')+',
-          examples: ['X100pxY50px', 'X100_10pxY50pxM10', 'X100M2_100vwD3__100cmD4_100pxD5_100M6_100vwD7__100cmD8_100pxD9'],
-          getValue: function (value) {
-            var result = 'translate( ';
-            var regex_X = new RegExp('X(' + cssist.value_sets.length_calc.regex + ')');
-            var matches_X = value.match(regex_X);
-            if (matches_X) {
-              result += cssist.value_sets.length_calc.getValue(matches_X[0]);
-              // console.log(result)
-            } else {
-              result += 0;
-            }
-            result += ', ';
-            var regex_Y = new RegExp('Y(' + cssist.value_sets.length_calc.regex + ')');
-            var matches_Y = value.match(regex_Y);
-            if (matches_Y) {
-              result += cssist.value_sets.length_calc.getValue(matches_Y[0]);
-            } else {
-              result += 0;
-            }
-            result += ' )';
-            // console.log(result)
-            return result;
-          }
-        };
-
-        // COLOR
-        cssist.value_sets.hex_color = {
-          regex: '(?:[0-9A-F]{6})',
-          examples: ['000000', 'FFFFFF'],
-          getValue: function (value) {
-            var result = 'rgba(';
-            result += parseInt(value.substring(0, 2), 16) + ', ';
-            result += parseInt(value.substring(2, 4), 16) + ', ';
-            result += parseInt(value.substring(4, 6), 16);
-            result += ', 100)';
-            return result;
-          },
-          getObject: function (value) {
-            var result = {
-              red: parseInt(value.substring(0, 2), 16),
-              green: parseInt(value.substring(2, 4), 16),
-              blue: parseInt(value.substring(4, 6), 16)
-            };
-            return result;
-          }
-        };
-        cssist.value_sets.google_color = {
-          regex: '(?:red|pink|purple|deeppurple|indigo|blue|lightblue|cyan|teal|green|lightgreen|lime|yellow|amber|orange|deeporange|brown|grey|bluegrey|black|white|rd|pk|pe|dp|io|be|lb|cn|tl|gn|lg|le|yw|ar|oe|de|bn|gy|by|bk|we)(?:[1-9]00|50)?',
-          values: {
-            rd: 'F44336', rd50: 'FFEBEE', rd100: 'FFCDD2', rd200: 'EF9A9A', rd300: 'E57373', rd400: 'EF5350', rd500: 'F44336', rd600: 'E53935', rd700: 'D32F2F', rd800: 'C62828', rd900: 'B71C1C', //Red
-            red: 'F44336', red50: 'FFEBEE', red100: 'FFCDD2', red200: 'EF9A9A', red300: 'E57373', red400: 'EF5350', red500: 'F44336', red600: 'E53935', red700: 'D32F2F', red800: 'C62828', red900: 'B71C1C', //Red
-
-            pk: 'E91E63', pk50: 'FCE4EC', pk100: 'F8BBD0', pk200: 'F48FB1', pk300: 'F06292', pk400: 'EC407A', pk500: 'E91E63', pk600: 'D81B60', pk700: 'C2185B', pk800: 'AD1457', pk900: '880E4F', //Pink
-            pink: 'E91E63', pink50: 'FCE4EC', pink100: 'F8BBD0', pink200: 'F48FB1', pink300: 'F06292', pink400: 'EC407A', pink500: 'E91E63', pink600: 'D81B60', pink700: 'C2185B', pink800: 'AD1457', pink900: '880E4F', //Pink
-
-            pe: '9C27B0', pe50: 'F3E5F5', pe100: 'E1BEE7', pe200: 'CE93D8', pe300: 'BA68C8', pe400: 'AB47BC', pe500: '9C27B0', pe600: '8E24AA', pe700: '7B1FA2', pe800: '6A1B9A', pe900: '4A148C', //Purple
-            purple: '9C27B0', purple50: 'F3E5F5', purple100: 'E1BEE7', purple200: 'CE93D8', purple300: 'BA68C8', purple400: 'AB47BC', purple500: '9C27B0', purple600: '8E24AA', purple700: '7B1FA2', purple800: '6A1B9A', purple900: '4A148C', //Purple
-
-            dp: '673AB7', dp50: 'EDE7F6', dp100: 'D1C4E9', dp200: 'B39DDB', dp300: '9575CD', dp400: '7E57C2', dp500: '673AB7', dp600: '5E35B1', dp700: '512DA8', dp800: '4527A0', dp900: '311B92', //Deep Purple
-            deeppurple: '673AB7', deeppurple50: 'EDE7F6', deeppurple100: 'D1C4E9', deeppurple200: 'B39DDB', deeppurple300: '9575CD', deeppurple400: '7E57C2', deeppurple500: '673AB7', deeppurple600: '5E35B1', deeppurple700: '512DA8', deeppurple800: '4527A0', deeppurple900: '311B92', //Deep Purple
-
-            io: '3F51B5', io50: 'E8EAF6', io100: 'C5CAE9', io200: '9FA8DA', io300: '7986CB', io400: '5C6BC0', io500: '3F51B5', io600: '3949AB', io700: '303F9F', io800: '283593', io900: '1A237E', //Indigo
-            indigo: '3F51B5', indigo50: 'E8EAF6', indigo100: 'C5CAE9', indigo200: '9FA8DA', indigo300: '7986CB', indigo400: '5C6BC0', indigo500: '3F51B5', indigo600: '3949AB', indigo700: '303F9F', indigo800: '283593', indigo900: '1A237E', //Indigo
-
-            be: '2196F3', be50: 'E3F2FD', be100: 'BBDEFB', be200: '90CAF9', be300: '64B5F6', be400: '42A5F5', be500: '2196F3', be600: '1E88E5', be700: '1976D2', be800: '1565C0', be900: '0D47A1', //Blue
-            blue: '2196F3', blue50: 'E3F2FD', blue100: 'BBDEFB', blue200: '90CAF9', blue300: '64B5F6', blue400: '42A5F5', blue500: '2196F3', blue600: '1E88E5', blue700: '1976D2', blue800: '1565C0', blue900: '0D47A1', //Blue
-
-            lb: '03A9F4', lb50: 'E1F5FE', lb100: 'B3E5FC', lb200: '81D4FA', lb300: '4FC3F7', lb400: '29B6F6', lb500: '03A9F4', lb600: '039BE5', lb700: '0288D1', lb800: '0277BD', lb900: '01579B', //Light Blue
-            lightblue: '03A9F4', lightblue50: 'E1F5FE', lightblue100: 'B3E5FC', lightblue200: '81D4FA', lightblue300: '4FC3F7', lightblue400: '29B6F6', lightblue500: '03A9F4', lightblue600: '039BE5', lightblue700: '0288D1', lightblue800: '0277BD', lightblue900: '01579B', //Light Blue
-
-            cn: '00BCD4', cn50: 'E0F7FA', cn100: 'B2EBF2', cn200: '80DEEA', cn300: '4DD0E1', cn400: '26C6DA', cn500: '00BCD4', cn600: '00ACC1', cn700: '0097A7', cn800: '00838F', cn900: '006064', //Cyan
-            cyan: '00BCD4', cyan50: 'E0F7FA', cyan100: 'B2EBF2', cyan200: '80DEEA', cyan300: '4DD0E1', cyan400: '26C6DA', cyan500: '00BCD4', cyan600: '00ACC1', cyan700: '0097A7', cyan800: '00838F', cyan900: '006064', //Cyan
-
-            tl: '009688', tl50: 'E0F2F1', tl100: 'B2DFDB', tl200: '80CBC4', tl300: '4DB6AC', tl400: '26A69A', tl500: '009688', tl600: '00897B', tl700: '00796B', tl800: '00695C', tl900: '004D40', //Teal
-            teal: '009688', teal50: 'E0F2F1', teal100: 'B2DFDB', teal200: '80CBC4', teal300: '4DB6AC', teal400: '26A69A', teal500: '009688', teal600: '00897B', teal700: '00796B', teal800: '00695C', teal900: '004D40', //Teal
-
-            gn: '4CAF50', gn50: 'E8F5E9', gn100: 'C8E6C9', gn200: 'A5D6A7', gn300: '81C784', gn400: '66BB6A', gn500: '4CAF50', gn600: '43A047', gn700: '388E3C', gn800: '2E7D32', gn900: '1B5E20', //Green
-            green: '4CAF50', green50: 'E8F5E9', green100: 'C8E6C9', green200: 'A5D6A7', green300: '81C784', green400: '66BB6A', green500: '4CAF50', green600: '43A047', green700: '388E3C', green800: '2E7D32', green900: '1B5E20', //Green
-
-            lg: '8BC34A', lg50: 'F1F8E9', lg100: 'DCEDC8', lg200: 'C5E1A5', lg300: 'AED581', lg400: '9CCC65', lg500: '8BC34A', lg600: '7CB342', lg700: '689F38', lg800: '558B2F', lg900: '33691E', //Light Green
-            lightgreen: '8BC34A', lightgreen50: 'F1F8E9', lightgreen100: 'DCEDC8', lightgreen200: 'C5E1A5', lightgreen300: 'AED581', lightgreen400: '9CCC65', lightgreen500: '8BC34A', lightgreen600: '7CB342', lightgreen700: '689F38', lightgreen800: '558B2F', lightgreen900: '33691E', //Light Green
-
-            le: 'CDDC39', le50: 'F9FBE7', le100: 'F0F4C3', le200: 'E6EE9C', le300: 'DCE775', le400: 'D4E157', le500: 'CDDC39', le600: 'C0CA33', le700: 'AFB42B', le800: '9E9D24', le900: '827717', //Lime
-            lime: 'CDDC39', lime50: 'F9FBE7', lime100: 'F0F4C3', lime200: 'E6EE9C', lime300: 'DCE775', lime400: 'D4E157', lime500: 'CDDC39', lime600: 'C0CA33', lime700: 'AFB42B', lime800: '9E9D24', lime900: '827717', //Lime
-
-            yw: 'FFEB3B', yw50: 'FFFDE7', yw100: 'FFF9C4', yw200: 'FFF59D', yw300: 'FFF176', yw400: 'FFEE58', yw500: 'FFEB3B', yw600: 'FDD835', yw700: 'FBC02D', yw800: 'F9A825', yw900: 'F57F17', //Yellow
-            yellow: 'FFEB3B', yellow50: 'FFFDE7', yellow100: 'FFF9C4', yellow200: 'FFF59D', yellow300: 'FFF176', yellow400: 'FFEE58', yellow500: 'FFEB3B', yellow600: 'FDD835', yellow700: 'FBC02D', yellow800: 'F9A825', yellow900: 'F57F17', //Yellow
-
-            ar: 'FFC107', ar50: 'FFF8E1', ar100: 'FFECB3', ar200: 'FFE082', ar300: 'FFD54F', ar400: 'FFCA28', ar500: 'FFC107', ar600: 'FFB300', ar700: 'FFA000', ar800: 'FF8F00', ar900: 'FF6F00', //Amber
-            amber: 'FFC107', amber50: 'FFF8E1', amber100: 'FFECB3', amber200: 'FFE082', amber300: 'FFD54F', amber400: 'FFCA28', amber500: 'FFC107', amber600: 'FFB300', amber700: 'FFA000', amber800: 'FF8F00', amber900: 'FF6F00', //Amber
-
-            oe: 'FF9800', oe50: 'FFF3E0', oe100: 'FFE0B2', oe200: 'FFCC80', oe300: 'FFB74D', oe400: 'FFA726', oe500: 'FF9800', oe600: 'FB8C00', oe700: 'F57C00', oe800: 'EF6C00', oe900: 'E65100', //Orange
-            orange: 'FF9800', orange50: 'FFF3E0', orange100: 'FFE0B2', orange200: 'FFCC80', orange300: 'FFB74D', orange400: 'FFA726', orange500: 'FF9800', orange600: 'FB8C00', orange700: 'F57C00', orange800: 'EF6C00', orange900: 'E65100', //Orange
-
-            de: 'FF5722', de50: 'FBE9E7', de100: 'FFCCBC', de200: 'FFAB91', de300: 'FF8A65', de400: 'FF7043', de500: 'FF5722', de600: 'F4511E', de700: 'E64A19', de800: 'D84315', de900: 'BF360C', //Deep Orange
-            deeporange: 'FF5722', deeporange50: 'FBE9E7', deeporange100: 'FFCCBC', deeporange200: 'FFAB91', deeporange300: 'FF8A65', deeporange400: 'FF7043', deeporange500: 'FF5722', deeporange600: 'F4511E', deeporange700: 'E64A19', deeporange800: 'D84315', deeporange900: 'BF360C', //Deep Orange
-
-            bn: '795548', bn50: 'EFEBE9', bn100: 'D7CCC8', bn200: 'BCAAA4', bn300: 'A1887F', bn400: '8D6E63', bn500: '795548', bn600: '6D4C41', bn700: '5D4037', bn800: '4E342E', bn900: '3E2723', //Brown
-            brown: '795548', brown50: 'EFEBE9', brown100: 'D7CCC8', brown200: 'BCAAA4', brown300: 'A1887F', brown400: '8D6E63', brown500: '795548', brown600: '6D4C41', brown700: '5D4037', brown800: '4E342E', brown900: '3E2723', //Brown
-
-            gy: '9E9E9E', gy50: 'FAFAFA', gy100: 'F5F5F5', gy200: 'EEEEEE', gy300: 'E0E0E0', gy400: 'BDBDBD', gy500: '9E9E9E', gy600: '757575', gy700: '616161', gy800: '424242', gy900: '212121', //Grey
-            grey: '9E9E9E', grey50: 'FAFAFA', grey100: 'F5F5F5', grey200: 'EEEEEE', grey300: 'E0E0E0', grey400: 'BDBDBD', grey500: '9E9E9E', grey600: '757575', grey700: '616161', grey800: '424242', grey900: '212121', //Grey
-
-            by: '607D8B', by50: 'ECEFF1', by100: 'CFD8DC', by200: 'B0BEC5', by300: '90A4AE', by400: '78909C', by500: '607D8B', by600: '546E7A', by700: '455A64', by800: '37474F', by900: '263238', //Blue Grey
-            bluegrey: '607D8B', bluegrey50: 'ECEFF1', bluegrey100: 'CFD8DC', bluegrey200: 'B0BEC5', bluegrey300: '90A4AE', bluegrey400: '78909C', bluegrey500: '607D8B', bluegrey600: '546E7A', bluegrey700: '455A64', bluegrey800: '37474F', bluegrey900: '263238', //Blue Grey
-
-            bk: '000000', //Black
-            black: '000000', //Black
-
-            we: 'FFFFFF', //White
-            white: 'FFFFFF' //White
-          },
-          examples: ['yw', 'rd500'],
-          getValue: function (value) {
-            return cssist.value_sets.hex_color.getValue(this.values[value]);
-          },
-          getObject: function (value) {
-            return cssist.value_sets.hex_color.getObject(this.values[value]);
-          }
-        };
-        cssist.value_sets.rgb_color = {
-          regex: cssist.value_sets.integer_0_255.regex + '(?:_' + cssist.value_sets.integer_0_255.regex + '){2}',
-          examples: ['0_0_0', '10_10_10', '100_100_100', '255_255_255'],
-          getValue: function (value) {
-            splits = value.split('_');
-            if (!(splits.length == 3)) return null;
-            var result = 'rgba(';
-            result += splits[0] + ', ';
-            result += splits[1] + ', ';
-            result += splits[2];
-            result += ', 100)';
-            return result;
-          },
-          getObject: function (value) {
-            splits = value.split('_');
-            if (!(splits.length == 3)) return null;
-            var result = {
-              red: splits[0],
-              green: splits[1],
-              blue: splits[2]
-            };
-            return result;
-          }
-        };
-        cssist.value_sets.rgba_color = {
-          regex: '(?:' + cssist.value_sets.google_color.regex + '|' + cssist.value_sets.hex_color.regex + '|' + cssist.value_sets.rgb_color.regex + ')' + '(?:_' + cssist.value_sets.opacity.regex + ')?',
-          examples: ['rd_0', 'yw500_25', '123456_50', '255_255_255_100', '255_255_255'],
-          getValue: function (value) {
-            var regex = new RegExp('(?:(' + cssist.value_sets.google_color.regex + ')|(' + cssist.value_sets.hex_color.regex + ')|(' + cssist.value_sets.rgb_color.regex + '))' + '(?:_(' + cssist.value_sets.opacity.regex + '))?');
-            var matches = value.match(regex);
-            var object_rgb, opacity, matches_each;
-            if (matches[1]) {
-              var regex_each = new RegExp('(' + cssist.value_sets.google_color.regex + ')(?:_(' + cssist.value_sets.opacity.regex + '))?');
-              matches_each = value.match(regex_each);
-              object_rgb = cssist.value_sets.google_color.getObject(matches_each[1]);
-              if (matches_each[2]) opacity = cssist.value_sets.opacity.getValue(matches_each[2]);
-            }
-            else if (matches[2]) {
-              var regex_each = new RegExp('(' + cssist.value_sets.hex_color.regex + ')(?:_(' + cssist.value_sets.opacity.regex + '))?');
-              matches_each = value.match(regex_each);
-              object_rgb = cssist.value_sets.hex_color.getObject(matches_each[1]);
-              if (matches_each[2]) opacity = cssist.value_sets.opacity.getValue(matches_each[2]);
-            }
-            else if (matches[3]) {
-              var regex_each = new RegExp('(' + cssist.value_sets.rgb_color.regex + ')(?:_(' + cssist.value_sets.opacity.regex + '))?');
-              matches_each = value.match(regex_each);
-              object_rgb = cssist.value_sets.rgb_color.getObject(matches_each[1]);
-              if (matches_each[2]) opacity = cssist.value_sets.opacity.getValue(matches_each[2]);
-            }
-            if (!object_rgb) return null;
-            if (matches_each[2]) {
-              return 'rgba(' + object_rgb.red + ',' + object_rgb.green + ',' + object_rgb.blue + ',' + opacity + ')';
-            } else {
-              return 'rgb(' + object_rgb.red + ',' + object_rgb.green + ',' + object_rgb.blue + ')';
-            }
-          }
-        };
-
-        // GRADIENT
-        cssist.value_sets.gradient = {
-          regex: '(?:' + cssist.value_sets.gradient_kind.regex + '_)?' + '(?:' + cssist.value_sets.degree.regex + ')((?:_' + cssist.value_sets.rgba_color.regex + '){2,})',
-          examples: ['l_30d_rd_oe_yw_gn_be_io_pe'],
-          getValue: function (value) {
-            var result = '';
-            var regex = new RegExp('(?:(' + cssist.value_sets.gradient_kind.regex + ')_)?(' + cssist.value_sets.degree.regex + ')((?:_' + cssist.value_sets.rgba_color.regex + '){2,})');
-            var matches = value.match(regex);
-            var gradient_kind = null, degree = null, hour = null, rgba_colors = [];
-            if (matches[1]) gradient_kind = cssist.value_sets.gradient_kind.getValue(matches[1]);
-            if (matches[2]) degree = cssist.value_sets.degree.getValue(matches[2]);
-            if (matches[3]) {
-              var regex_rgba_color = new RegExp('(?:_(' + cssist.value_sets.rgba_color.regex + '))(?:_(' + cssist.value_sets.rgba_color.regex + '))');
-              var matches_rgba_color = matches[3].match(regex_rgba_color);
-              for (var i = 1; i < matches_rgba_color.length; i++) {
-                var rgba_color = cssist.value_sets.rgba_color.getValue(matches_rgba_color[i]);
-                if (rgba_color) rgba_colors.push(rgba_color);
-              }
-            }
-            if (gradient_kind && degree && rgba_colors.length >= 1) {
-              return gradient_kind + '(' + degree + ',' + rgba_colors.join(', ') + ')';
-            }
-          }
-        };
-
-        // SHADOW
-        cssist.value_sets.shadow = {
-          regex: cssist.value_sets.integer_3digits.regex + '(?:_' + cssist.value_sets.integer_3digits.regex + '){0,3}(?:_' + cssist.value_sets.rgba_color.regex + ')',
-          examples: ['2_2_bk_30', '2_2_2_000000_50'],
-          getValue: function (value) {
-            var result = '';
-            var regex = new RegExp('(' + cssist.value_sets.integer_3digits.regex + ')(?:_(' + cssist.value_sets.integer_3digits.regex + '))?(?:_(' + cssist.value_sets.integer_3digits.regex + '))?(?:_(' + cssist.value_sets.integer_3digits.regex + '))?(?:_(' + cssist.value_sets.rgba_color.regex + '))');
-            var matches = value.match(regex);
-            if (!(matches)) return null;
-            var shadows = [];
-            for (var i = 1; i <= 4; i++) { shadows.push(matches[i]); }
-            result = shadows.join('px ') + cssist.value_sets.rgba_color.getValue(matches[5]);
-            return result;
-          }
-        };
-
-        // URL
-        cssist.value_sets.file_name = {
-          regex: '[a-zA-Z0-9_-]+',
-          examples: ['aA0_zZ9'],
-          getValue: function (value) { return value; }
-        };
-        cssist.value_sets.image_extension = {
-          regex: '(?:png|jpg|gif|PNG|JPG|GIF)',
-          examples: ['png', 'GIF'],
-          getValue: function (value) { return value; }
-        };
-        cssist.value_sets.image_url = {
-          regex: cssist.value_sets.file_name.regex + '([__]' + cssist.value_sets.file_name.regex + ')*' + '_' + cssist.value_sets.image_extension.regex,
-          examples: ['images__image_png'],
-          getValue: function (value) { return value; }
-        };
-
-        // VARIABLE
-        cssist.value_sets.variable = {
-          regex: '(?:[a-z]+)(?:[A-Z][a-z]+)*',
-          examples: ['linear', 'ease', 'easeIn', 'easeOut', 'easeInOut'],
-          getValue: function (value) {
-            var result = value.replace(/[A-Z]/g, function (letter, index) {
-              return index == 0 ? letter.toLowerCase() : '-' + letter.toLowerCase();
-            }).replace(/\s+/g, '');
-            return result;
-          }
-        };
-        cssist.value_sets.variables = {
-          regex: cssist.value_sets.variable.regex + '(?:_' + cssist.value_sets.variable.regex + ')*',
-          examples: ['width_backgroundColor'],
-          getValue: function (value) {
-            var splits = value.split('_');
-            var result = '';
-            for (var i = 0; i < splits.length; i++) {
-              if (result.length >= 1) { result += ' ' }
-              result += cssist.value_sets.variable.getValue(splits[i]);
-            }
-            return result;
-          }
-        };
-
-      };
-      function testValueSets() {
-        for (var prop in cssist.value_sets) {
-          var regex = new RegExp('^' + cssist.value_sets[prop].regex + '$');
-          if (cssist.value_sets[prop].examples) {
-            for (var i = 0; i < cssist.value_sets[prop].examples.length; i++) {
-              var matches = cssist.value_sets[prop].examples[i].match(regex);
-              if (!(matches && matches.input == matches[0]) || cssist.value_sets[prop].test) {
-                console.log('\n');
-                console.log(prop, regex, cssist.value_sets[prop].examples[i], matches);
-                if (matches) console.log(cssist.value_sets[prop].getValue(matches[0]));
-              }
-            }
-          }
-        }
-      };
-      initializeValueSets();
-      testValueSets();
-
-      function initializePropertySets() {
-        cssist.property_sets = [
-          {
-            properties: { ac: 'align-content', align_content: 'align-content' },
-            value_sets: [cssist.value_sets.align_content_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { ai: 'align-items', align_items: 'align-items' },
-            value_sets: [cssist.value_sets.align_items_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { as: 'align-self', align_self: 'align-self' },
-            value_sets: [cssist.value_sets.align_items_kind, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { an: 'animation-iteration-count', animation_iteration_count: 'animation-iteration-count' },
-            value_sets: [cssist.value_sets.integer_0, cssist.value_sets.infinite, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { b: 'background', background: 'background' },
-            value_sets: [cssist.value_sets.rgba_color, cssist.value_sets.gradient, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { bi: 'background-image', background_image: 'background-image' },
-            value_sets: [cssist.value_sets.image_url, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { bs: 'background-size', background_size: 'background-size' },
-            value_sets: [cssist.value_sets.auto, cssist.value_sets.length_calc_2D, cssist.value_sets.background_size_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { bs: 'box-shadow', ts: 'text-shadow', box_shadow: 'box-shadow', text_shadow: 'text-shadow' },
-            value_sets: [cssist.value_sets.shadow]
-          }, {
-            properties: { bs: 'box-sizing', box_sizing: 'box-sizing' },
-            value_sets: [cssist.value_sets.box_sizing_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: {
-              bo: 'border-width', bo_t: 'border-top-width', bo_b: 'border-bottom-width', bo_l: 'border-left-width', bo_r: 'border-right-width',
-              border_width: 'border-width', border_top_width: 'border-top-width', border_bottom_width: 'border-bottom-width', border_left_width: 'border-left-width', border_right_width: 'border-right-width'
-            },
-            value_sets: [cssist.value_sets.length, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit, cssist.value_sets.thick_kind]
-          }, {
-            properties: { bp: 'background-position', background_position: 'background-position' },
-            value_sets: [cssist.value_sets.direction_2D_kind, cssist.value_sets.length_calc_2D, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: {
-              c: 'color', pc: { name: 'color', afters: ['::placeholder'] },
-              color: 'color', placeholder: { name: 'color', afters: ['::placeholder'] },
-              bc: 'background-color', background_color: 'background-color',
-              bo: 'border-color', bo_t: 'border-top-color', bo_b: 'border-bottom-color', bo_l: 'border-left-color', bo_r: 'border-right-color',
-              border_color: 'border-color', border_top_color: 'border-top-color', border_bottom_color: 'border-bottom-color', border_left_color: 'border-left-color', border_right_color: 'border-right-color'
-            },
-            value_sets: [cssist.value_sets.rgba_color]
-          }, {
-            properties: { c: 'clear', clear: 'clear' },
-            value_sets: [cssist.value_sets.clear_kind, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { d: 'display', display: 'display' },
-            value_sets: [cssist.value_sets.display_kind, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { fx: 'flex', flex: 'flex' },
-            // CONTINUE HERE...
-            value_sets: [cssist.value_sets.flexbox_flex, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { fxf: 'flex-flow', flex_flow: 'flex-flow' },
-            value_sets: [cssist.value_sets.flex_flow_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { fxg: 'flex-grow', flex_grow: 'flex-grow' },  
-            value_sets: [cssist.value_sets.integer_0, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { fxs: 'flex-shrink', flex_shrink: 'flex-shrink' },
-            value_sets: [cssist.value_sets.integer_0, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { f: 'float', float: 'float' },
-            value_sets: [cssist.value_sets.none, cssist.value_sets.float_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { f: 'font-size', font_size: 'font-size' },
-            value_sets: [cssist.value_sets.font_size_kind, cssist.value_sets.length_calc, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { fxb: 'flex-basis', flex_basis: 'flex-basis' },
-            value_sets: [cssist.value_sets.length_calc, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { fxd: 'flex-direction', flex_direction: 'flex-direction' },
-            value_sets: [cssist.value_sets.flex_direction_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { fxw: 'flex-wrap', flex_direction: 'flex-wrap' },
-            value_sets: [cssist.value_sets.flex_wrap_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { fw: 'font-weight', font_weight: 'font-weight' },
-            value_sets: [cssist.value_sets.font_weight_kind, cssist.value_sets.integer_hundred, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { jc: 'justify-content', justify_content: 'justify-content' },
-            value_sets: [cssist.value_sets.justify_content_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { t: 'text-align', text_align: 'text-align' },
-            value_sets: [cssist.value_sets.align_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { tt: 'text-transform', text_transform: 'text-transform' },
-            value_sets: [cssist.value_sets.text_trasform_kind, cssist.value_sets.none, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { lh: 'line-height', line_height: 'line-height' },
-            value_sets: [cssist.value_sets.normal, cssist.value_sets.length_calc, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { ls: 'letter-spacing', letter_spacing: 'letter-spacing' },
-            value_sets: [cssist.value_sets.normal, cssist.value_sets.length_calc, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { o: 'opacity', opacity: 'opacity' },
-            value_sets: [cssist.value_sets.opacity]
-          }, {
-            properties: { or: 'order', order: 'order' },
-            value_sets: [cssist.value_sets.integer_0]
-          }, {
-            properties: { o: 'overflow', ox: 'overflow-x', oy: 'overflow-y', overflow: 'overflow', overflow_x: 'overflow-x', overflow_y: 'overflow-y' },
-            value_sets: [cssist.value_sets.overflow_kind, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { p: 'position', position: 'position' },
-            value_sets: [cssist.value_sets.position_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: {
-              p: 'padding', pb: 'padding-bottom', pl: 'padding-left', pr: 'padding-right', pt: 'padding-top',
-              padding: 'padding', padding_bottom: 'padding-bottom', padding_left: 'padding-left', padding_right: 'padding-right', padding_top: 'padding-top',
-              bor: 'border-radius', bor_tl: 'border-top-left-radius', bor_tr: 'border-top-right-radius', bor_bl: 'border-bottom-left-radius', bor_br: 'border-bottom-right-radius',
-              border_radius: 'border-radius', border_top_left_radius: 'border-top-left-radius', border_top_right_radius: 'border-top-right-radius', border_bottom_left_radius: 'border-bottom-left-radius', border_bottom_right_radius: 'border-bottom-right-radius',
-            },
-            value_sets: [cssist.value_sets.length_calc, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { to: 'text-overflow', text_overflow: 'text-overflow' },
-            value_sets: [cssist.value_sets.text_overflow_kind]
-          }, {
-            properties: { tn: 'transform', transform: 'transform' },
-            value_sets: [cssist.value_sets.translate_length_calc_2D]
-          }, {
-            properties: { tn: 'transition-property', transition_property: 'transition-property' },
-            value_sets: [cssist.value_sets.none, cssist.value_sets.all, cssist.value_sets.variables, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { tn: 'transition-duration', tnd: 'transition-delay', an: 'animation-duration', and: 'animation-delay', transition_duration: 'transition-duration', transition_delay: 'transition-delay', animation_duration: 'animation-duration', animation_delay: 'animation-delay' },
-            value_sets: [cssist.value_sets.second, cssist.value_sets.millisecond, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { tn: 'transition-timing-function', an: 'animation-timing-function', transition_timing_function: 'transition-timing-function', animation_timing_function: 'animation-timing-function' },
-            value_sets: [cssist.value_sets.transition_timing_function_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { v: 'visibility', visibility: 'visibility' },
-            value_sets: [cssist.value_sets.visibility_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { v: 'vertical-align', vertical_align: 'vertical-align' },
-            value_sets: [cssist.value_sets.vertical_align_kind, cssist.value_sets.length_calc, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { ws: 'white-space', white_space: 'white-space' },
-            value_sets: [cssist.value_sets.white_space_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { wb: 'word-break', word_break: 'word-break' },
-            value_sets: [cssist.value_sets.white_break_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { ww: 'word-wrap', word_wrap: 'word-wrap' },
-            value_sets: [cssist.value_sets.word_wrap_kind, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: {
-              w: 'width', xw: 'max-width', nw: 'min-width', h: 'height', xh: 'max-height', nh: 'min-height',
-              width: 'width', max_width: 'max-width', min_width: 'min-width', height: 'height', max_height: 'max-height', min_height: 'min-height',
-              b: 'bottom', r: 'right', t: 'top', l: 'left',
-              bottom: 'bottom', right: 'right', top: 'top', left: 'left',
-              m: 'margin', mb: 'margin-bottom', ml: 'margin-left', mr: 'margin-right', mt: 'margin-top',
-              margin: 'margin', margin_bottom: 'margin-bottom', margin_left: 'margin-left', margin_right: 'margin-right', margin_top: 'margin-top',
-              ws: 'word-spacing', word_spacing: 'word-spacing'
-            },
-            value_sets: [cssist.value_sets.length_calc, cssist.value_sets.auto, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: { z: 'z-index', z_index: 'z-index' },
-            value_sets: [cssist.value_sets.auto, cssist.value_sets.integer, cssist.value_sets.initial, cssist.value_sets.inherit]
-          }, {
-            properties: {
-              color: 'color', opacity: 'opacity',
-              background: 'background', background_attachment: 'background-attachment', background_blend_mode: 'background-blend-mode', background_color: 'background-color', background_image: 'background-image', background_position: 'background-position', background_repeat: 'background-repeat', background_clip: 'background-clip', background_origin: 'background-origin', background_size: 'background-size', border: 'border', border_bottom: 'border-bottom', border_bottom_color: 'border-bottom-color', border_bottom_left_radius: 'border-bottom-left-radius', border_bottom_right_radius: 'border-bottom-right-radius', border_bottom_style: 'border-bottom-style', border_bottom_width: 'border-bottom-width', border_color: 'border-color', border_image: 'border-image', border_image_outset: 'border-image-outset', border_image_repeat: 'border-image-repeat', border_image_slice: 'border-image-slice', border_image_source: 'border-image-source', border_image_width: 'border-image-width', border_ltransitioneft: 'border-left', border_left_color: 'border-left-color', border_left_style: 'border-left-style', border_left_width: 'border-left-width', border_radius: 'border-radius', border_right: 'border-right', border_right_color: 'border-right-color', border_right_style: 'border-right-style', border_right_width: 'border-right-width', border_style: 'border-style', border_top: 'border-top', border_top_color: 'border-top-color', border_top_left_radius: 'border-top-left-radius', border_top_right_radius: 'border-top-right-radius', border_top_style: 'border-top-style', border_top_width: 'border-top-width', border_width: 'border-width', box_decoration_break: 'box-decoration-break', box_shadow: 'box-shadow',
-              bottom: 'bottom', clear: 'clear', clip: 'clip', display: 'display', float: 'float', height: 'height', left: 'left', margin: 'margin', margin_bottom: 'margin-bottom', margin_left: 'margin-left', margin_right: 'margin-right', margin_top: 'margin-top', max_height: 'max-height', max_width: 'max-width', min_height: 'min-height', min_width: 'min-width', overflow: 'overflow', overflow_x: 'overflow-x', overflow_y: 'overflow-y', padding: 'padding', padding_bottom: 'padding-bottom', padding_left: 'padding-left', padding_right: 'padding-right', padding_top: 'padding-top', position: 'position', right: 'right', top: 'top', visibility: 'visibility', width: 'width', vertical_align: 'vertical-align', z_index: 'z-index',
-              align_content: 'align-content', align_items: 'align-items', align_self: 'align-self', flex: 'flex', flex_basis: 'flex-basis', flex_direction: 'flex-direction', flex_flow: 'flex-flow', flex_grow: 'flex-grow', flex_shrink: 'flex-shrink', flex_wrap: 'flex-wrap', justify_content: 'justify-content', order: 'order',
-              hanging_punctuation: 'hanging-punctuation', hyphens: 'hyphens', letter_spacing: 'letter-spacing', line_break: 'line-break', line_height: 'line-height', overflow_wrap: 'overflow-wrap', tab_size: 'tab-size', text_align: 'text-align', text_align_last: 'text-align-last', text_combine_upright: 'text-combine-upright', text_indent: 'text-indent', text_justify: 'text-justify', text_transform: 'text-transform', white_space: 'white-space', word_break: 'word-break', word_spacing: 'word-spacing', word_wrap: 'word-wrap',
-              text_decoration: 'text-decoration', text_decoration_color: 'text-decoration-color', text_decoration_line: 'text-decoration-line', text_decoration_style: 'text-decoration-style', text_shadow: 'text-shadow', text_underline_position: 'text-underline-position', text_fill_color: 'text-fill-color',
-              font: 'font', font_family: 'font-family', font_feature_settings: 'font-feature-settings', font_kerning: 'font-kerning', font_language_override: 'font-language-override', font_size: 'font-size', font_size_adjust: 'font-size-adjust', font_stretch: 'font-stretch', font_style: 'font-style', font_synthesis: 'font-synthesis', font_variant: 'font-variant', font_variant_alternates: 'font-variant-alternates', font_variant_caps: 'font-variant-caps', font_variant_east_asian: 'font-variant-east-asian', font_variant_ligatures: 'font-variant-ligatures', font_variant_numeric: 'font-variant-numeric', font_variant_position: 'font-variant-position', font_weight: 'font-weight', direction: 'direction', text_orientation: 'text-orientation', text_combine_upright: 'text-combine-upright', unicode_bidi: 'unicode-bidi', user_select: 'user-select', writing_mode: 'writing-mode', border_collapse: 'border-collapse', border_spacing: 'border-spacing', caption_side: 'caption-side', empty_cells: 'empty-cells', table_layout: 'table-layout', counter_increment: 'counter-increment', counter_reset: 'counter-reset', list_style: 'list-style', list_style_image: 'list-style-image', list_style_position: 'list-style-position', list_style_type: 'list-style-type',
-              animation: 'animation', animation_delay: 'animation-delay', animation_direction: 'animation-direction', animation_duration: 'animation-duration', animation_fill_mode: 'animation-fill-mode', animation_iteration_count: 'animation-iteration-count', animation_name: 'animation-name', animation_play_state: 'animation-play-state', animation_timing_function: 'animation-timing-function',
-              backface_visibility: 'backface-visibility', perspective: 'perspective', perspective_origin: 'perspective-origin', transform_origin: 'transform-origin', transform_style: 'transform-style',
-              transition_property: 'transition-property', transition_duration: 'transition-duration', transition_timing_function: 'transition-timing-function', transition_delay: 'transition-delay',
-              box_sizing: 'box-sizing', content: 'content', cursor: 'cursor', ime_mode: 'ime-mode', nav_down: 'nav-down', nav_index: 'nav-index', nav_left: 'nav-left', nav_right: 'nav-right', nav_up: 'nav-up', outline: 'outline', outline_color: 'outline-color', outline_offset: 'outline-offset', outline_style: 'outline-style', outline_width: 'outline-width', resize: 'resize', text_overflow: 'text-overflow',
-              break_after: 'break-after', break_before: 'break-before', break_inside: 'break-inside', column_count: 'column-count', column_fill: 'column-fill', column_gap: 'column-gap', column_rule: 'column-rule', column_rule_color: 'column-rule-color', column_rule_style: 'column-rule-style', column_rule_width: 'column-rule-width', column_span: 'column-span', column_width: 'column-width', columns: 'columns', widows: 'widows',
-              orphans: 'orphans', page_break_after: 'page-break-after', page_break_before: 'page-break-before', page_break_inside: 'page-break-inside',
-              marks: 'marks', quotes: 'quotes',
-              filter: 'filter',
-              image_orientation: 'image-orientation', image_rendering: 'image-rendering', image_resolution: 'image-resolution', object_fit: 'object-fit', object_position: 'object-position',
-              mask_type: 'mask-type',
-              mark: 'mark', mark_after: 'mark-after', mark_before: 'mark-before', phonemes: 'phonemes', rest: 'rest', rest_after: 'rest-after', rest_before: 'rest-before', voice_balance: 'voice-balance', voice_duration: 'voice-duration', voice_pitch: 'voice-pitch', voice_pitch_range: 'voice-pitch-range', voice_rate: 'voice-rate', voice_stress: 'voice-stress', voice_volume: 'voice-volume',
-              marquee_direction: 'marquee-direction', marquee_play_count: 'marquee-play-count', marquee_speed: 'marquee-speed', marquee_style: 'marquee-style',
-            },
-            value_sets: [cssist.value_sets.variable]
-          }
-        ];
-      };
-      initializePropertySets();
-
-    }
-  };
-  cssist.init.settings();
-})();
-
-
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-__webpack_require__(5);
-__webpack_require__(2);
-(function(){
-  if (typeof(MutationObserver) !== 'undefined') {
-    var mutationObserver = new MutationObserver(function(mutations, watcher) {
-      var self = this;
-      mutations.forEach(function(mutation) {
-        var element = mutation.target;
-        if(element && element.lastClassName !== element.className && typeof element.className=='string') cssist.paint.element(element);
-        element.lastClassName = element.className;
-      });
-    });
-  }
-  cssist.paint = {
-    element : function(element){
-			var class_names = cssist.get.classesOfElement(element);
-      for(var i=0; i<class_names.length; i++){
-        var class_name = class_names[i];
-        if(!cssist.classes_success) cssist.classes_success = [];
-        if(!cssist.classes_fail) cssist.classes_fail = [];
-        if(cssist.get.styleElement().innerHTML.indexOf('.'+class_name+' {')==-1
-          &&cssist.get.styleElement().innerHTML.indexOf('.'+class_name+':')==-1
-          &&cssist.classes_success.indexOf(class_name)==-1
-          &&cssist.classes_fail.indexOf(class_name)==-1
-        ){
-          var result = cssist.make.classToStyleSheet(class_name);
-          if(result){ cssist.classes_success.push(class_name); }
-          else { cssist.classes_fail.push(class_name); }
-        }
-      }
-    },
-    rootElement : function(element){
-      var self = this;
-      if( element && typeof element === 'object' && element.nodeType && element.nodeType !== 8 && element.tagName ){
-  			var element_childen = element.querySelectorAll('*');
-  			self.element(element);
-        if(mutationObserver){
-          mutationObserver.observe(element, { attributes: true,  attributeFilter: ['class'] });
-        }
-  			for(var i = 0; i < element_childen.length; i++) {
-          var element_child = element_childen[i];
-          self.element(element_child);
-          if(mutationObserver){
-            mutationObserver.observe(element_child, { attributes: true,  attributeFilter: ['class'] });
-          }
-      	}
-  		}
-    }
-  };
-})();
-
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-window.cssist={};
-__webpack_require__(4);
-__webpack_require__(3);
-// require('!style!css!./reset.css');
-
-// cssist.watch.start(); is calling the start function inside watch object from the watch.js
-cssist.watch.start();
-
-
-/***/ }
-/******/ ]);
+/******/ ({
+
+/***/ "./package.json":
+/*!**********************!*\
+  !*** ./package.json ***!
+  \**********************/
+/*! exports provided: name, version, description, main, dependencies, devDependencies, scripts, repository, author, license, bugs, homepage, default */
+/***/ (function(module) {
+
+eval("module.exports = JSON.parse(\"{\\\"name\\\":\\\"cssist\\\",\\\"version\\\":\\\"1.1.28\\\",\\\"description\\\":\\\"cssist =======\\\",\\\"main\\\":\\\"cssist.js\\\",\\\"dependencies\\\":{},\\\"devDependencies\\\":{\\\"@babel/core\\\":\\\"^7.7.2\\\",\\\"@babel/preset-env\\\":\\\"^7.7.1\\\",\\\"babel-loader\\\":\\\"^8.0.6\\\",\\\"css-loader\\\":\\\"3.2.0\\\",\\\"expose-loader\\\":\\\"^0.7.5\\\",\\\"file-loader\\\":\\\"4.2.0\\\",\\\"style-loader\\\":\\\"1.0.0\\\",\\\"webpack\\\":\\\"^4.39.3\\\",\\\"webpack-cli\\\":\\\"^3.3.9\\\"},\\\"scripts\\\":{\\\"test\\\":\\\"echo \\\\\\\"Error: no test specified\\\\\\\" && exit 1\\\",\\\"serve\\\":\\\"webpack --watch\\\"},\\\"repository\\\":{\\\"type\\\":\\\"git\\\",\\\"url\\\":\\\"git+https://github.com/KimSunWook/cssist.git\\\"},\\\"author\\\":\\\"\\\",\\\"license\\\":\\\"ISC\\\",\\\"bugs\\\":{\\\"url\\\":\\\"https://github.com/KimSunWook/cssist/issues\\\"},\\\"homepage\\\":\\\"https://github.com/KimSunWook/cssist#readme\\\"}\");\n\n//# sourceURL=webpack:///./package.json?");
+
+/***/ }),
+
+/***/ "./src/check.js":
+/*!**********************!*\
+  !*** ./src/check.js ***!
+  \**********************/
+/*! exports provided: checkSelector */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"checkSelector\", function() { return checkSelector; });\nvar checkSelector = function checkSelector(selector) {\n  if (cssist.selectors.success.indexOf(selector) >= 0) {\n    return false;\n  }\n\n  if (cssist.selectors.fail.indexOf(selector) >= 0) {\n    return false;\n  } // cssist.get.styleElement().innerHTML.indexOf('.'+selector+' {')==-1\n  // cssist.get.styleElement().innerHTML.indexOf('.'+selector+':')==-1\n\n\n  return true;\n};\n\n//# sourceURL=webpack:///./src/check.js?");
+
+/***/ }),
+
+/***/ "./src/create.js":
+/*!***********************!*\
+  !*** ./src/create.js ***!
+  \***********************/
+/*! exports provided: createCssFromSelector, createCodeFromCss */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"createCssFromSelector\", function() { return createCssFromSelector; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"createCodeFromCss\", function() { return createCodeFromCss; });\n/* harmony import */ var _get_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./get.js */ \"./src/get.js\");\n // Create Function Section\n\nvar createCssFromSelector = function createCssFromSelector(selector) {\n  // Set css\n  var css = Object(_get_js__WEBPACK_IMPORTED_MODULE_0__[\"getCssOfClass\"])(selector);\n\n  if (!css) {\n    return null;\n  } // Set property and value\n\n\n  var result = Object(_get_js__WEBPACK_IMPORTED_MODULE_0__[\"getPropertyValue\"])(css.property, css.value);\n\n  if (!result) {\n    css.valid = false;\n    return css;\n  }\n\n  css.property = result.property;\n  css.value = result.value; // Set event\n\n  css.event = Object(_get_js__WEBPACK_IMPORTED_MODULE_0__[\"getEvent\"])(css.event); // Set media_queries\n\n  var media_queries = Object(_get_js__WEBPACK_IMPORTED_MODULE_0__[\"getMediaQueries\"])(css.media_query);\n  css = Object.assign(css, media_queries);\n  css.valid = true;\n  return css;\n};\nvar createCodeFromCss = function createCodeFromCss(css) {\n  var codes; // Get Cors Codes\n\n  codes = Object(_get_js__WEBPACK_IMPORTED_MODULE_0__[\"getCodesCors\"])(css); // Get MediaQuery Codes\n\n  codes = Object(_get_js__WEBPACK_IMPORTED_MODULE_0__[\"getCodesMediaQuery\"])(codes, css);\n  return codes;\n};\n\n//# sourceURL=webpack:///./src/create.js?");
+
+/***/ }),
+
+/***/ "./src/entry.js":
+/*!**********************!*\
+  !*** ./src/entry.js ***!
+  \**********************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _initialize_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./initialize.js */ \"./src/initialize.js\");\n/* harmony import */ var _watch_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./watch.js */ \"./src/watch.js\");\n/* harmony import */ var _get_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./get.js */ \"./src/get.js\");\n// Initialize\n\nObject(_initialize_js__WEBPACK_IMPORTED_MODULE_0__[\"initialize\"])(); // Watch\n\n\nObject(_watch_js__WEBPACK_IMPORTED_MODULE_1__[\"watch\"])();\n\ncssist.get = _get_js__WEBPACK_IMPORTED_MODULE_2__;\n\n//# sourceURL=webpack:///./src/entry.js?");
+
+/***/ }),
+
+/***/ "./src/event_set.js":
+/*!**************************!*\
+  !*** ./src/event_set.js ***!
+  \**************************/
+/*! exports provided: event_set */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"event_set\", function() { return event_set; });\nvar _event_set;\n\nfunction _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }\n\nvar event_set = (_event_set = {\n  // CSS Pseudo-classes\n  'a': 'active',\n  'c': 'checked',\n  'd': 'disabled',\n  'ey': 'empty',\n  'e': 'enabled',\n  'f': 'focus',\n  'h': 'hover',\n  'ir': 'in-range',\n  'i': 'invalid',\n  'l': 'link',\n  'oot': 'only-of-type',\n  'oc': 'only-child',\n  'o': 'optional',\n  'oor': 'out-of-range',\n  'ro': 'read-only',\n  'rw': 'read-write',\n  'r': 'required'\n}, _defineProperty(_event_set, \"r\", 'root'), _defineProperty(_event_set, 't', 'target'), _defineProperty(_event_set, 'v', 'valid'), _defineProperty(_event_set, 'vd', 'visited'), _event_set);\n\n//# sourceURL=webpack:///./src/event_set.js?");
+
+/***/ }),
+
+/***/ "./src/get.js":
+/*!********************!*\
+  !*** ./src/get.js ***!
+  \********************/
+/*! exports provided: getCssOfClass, getPropertyValue, getEvent, getMediaQueries, getCodesCors, getCodesMediaQuery, getStyleElement, getStyleSheet */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getCssOfClass\", function() { return getCssOfClass; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getPropertyValue\", function() { return getPropertyValue; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getEvent\", function() { return getEvent; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getMediaQueries\", function() { return getMediaQueries; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getCodesCors\", function() { return getCodesCors; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getCodesMediaQuery\", function() { return getCodesMediaQuery; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getStyleElement\", function() { return getStyleElement; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getStyleSheet\", function() { return getStyleSheet; });\n/* harmony import */ var _property_sets_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./property_sets.js */ \"./src/property_sets.js\");\n/* harmony import */ var _event_set_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./event_set.js */ \"./src/event_set.js\");\n\n // Get Function Section\n// For Css\n\nvar getCssOfClass = function getCssOfClass(selector) {\n  if (!selector) {\n    return;\n  }\n\n  var regx_prop = '([a-zA-Z\\\\_]+)';\n  var regx_value = '([a-zA-Z0-9\\\\_]+)';\n  var regx_event = '(?:-([a-zA-Z]{1,3}))?';\n  var regx_media_query = '(?:-((?:(?:XH|NH|XW|NW|X|N)[0-9]+)+))?';\n  var regx = new RegExp('^' + regx_prop + '-' + regx_value + regx_event + regx_media_query + '$'); // Current: /^([a-zA-Z_]+)([a-zA-Z0-9_]+)(?:-([a-zA-Z]{1,3}))?(?:-((?:(?:XH|NH|XW|NW|X|N)[0-9]+)+))?$/\n  // Past: /^([a-zA-Z\\_]+)-((?:[a-zA-Z0-9]|(?:\\_)|(?:\\-\\-))+)(?:-([a-zA-Z]{1,2}))?(?:-((?:(?:XH|NH|XW|NW|X|N)[0-9]+)+))?$/\n  // Match\n\n  var matches = selector.match(regx); // Check\n\n  if (!(matches && matches[1] && matches[2])) {\n    return;\n  }\n\n  return {\n    selector: selector,\n    property: matches[1],\n    value: matches[2],\n    event: matches[3] ? matches[3] : null,\n    media_query: matches[4] ? matches[4] : null\n  };\n};\nvar getPropertyValue = function getPropertyValue(prop, val) {\n  // Loop property_sets\n  for (var i = 0; i < _property_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"property_sets\"].length; i++) {\n    // Set property_set\n    var property_set = _property_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"property_sets\"][i];\n    if (!(property_set && property_set.properties[prop])) continue; // Set value_sets\n\n    var value_sets = property_set.value_sets; // Loop value_sets\n\n    for (var j = 0; j < value_sets.length; j++) {\n      var value_set = value_sets[j];\n      var regex = new RegExp('^' + value_set.regex + '$');\n      if (val.match(regex)) return {\n        property: property_set.properties[prop],\n        property_set: property_set,\n        value_set: value_set,\n        value: value_set.getValue(val)\n      };\n    }\n  }\n};\nvar getEvent = function getEvent(evt) {\n  if (!evt) return;\n  if (!_event_set_js__WEBPACK_IMPORTED_MODULE_1__[\"event_set\"][evt.toLowerCase()]) return;\n  return _event_set_js__WEBPACK_IMPORTED_MODULE_1__[\"event_set\"][evt.toLowerCase()];\n};\n\nvar getMediaQuery = function getMediaQuery(mq) {\n  if (!mq) return null;\n  var media_query = {};\n  if (mq.match(/^XW[0-9]+/) || mq.match(/^X[0-9]+/)) media_query.key = 'max_width';else if (mq.match(/^NW[0-9]+/) || mq.match(/^N[0-9]+/)) media_query.key = 'min_width';else if (mq.match(/^XH[0-9]+/)) media_query.key = 'max_height';else if (mq.match(/^NH[0-9]+/)) media_query.key = 'min_height';else return null;\n  media_query.value = mq.match(/[0-9]+$/)[0] + 'px';\n  return media_query;\n};\n\nvar getMediaQueries = function getMediaQueries(mqs) {\n  var media_queries = {};\n  if (!mqs) return media_queries;\n  var regex_each = '((?:XH|NH|XW|NW|X|N)[0-9]+)';\n  var regex = new RegExp('^' + regex_each + '?' + regex_each + '$');\n  var matches = mqs.match(regex_each);\n\n  for (var i = 1; i <= matches.length - 1; i++) {\n    var media_query = getMediaQuery(matches[i]);\n    if (media_query) media_queries[media_query.key] = media_query.value;\n  }\n\n  return media_queries;\n}; // For Codes\n\nvar getCodesCors = function getCodesCors(css) {\n  var broswers = ['webkit', 'moz', 'o', 'ms'];\n  var codes = '\\n',\n      code = css.property + ' : ' + css.value + '; ';\n  codes += code;\n\n  for (var i = 0; i < broswers.length; i++) {\n    codes += '\\t-' + broswers[i] + '-' + code + ' \\n';\n  }\n\n  return \".\" + css.selector + \" { \" + codes + \" }\";\n};\nvar getCodesMediaQuery = function getCodesMediaQuery(codes, css) {\n  // Set css_codes\n  if (!(css.max_width || css.min_width || css.max_height || css.min_height)) return codes + '\\n\\n'; // Set media_query\n\n  var media_queries = [];\n  if (css.max_width) media_queries.push('max-width:' + css.max_width);\n  if (css.min_width) media_queries.push('min-width:' + css.min_width);\n  if (css.max_height) media_queries.push('max-height:' + css.max_height);\n  if (css.min_height) media_queries.push('min-height:' + css.min_height);\n  return '@media all and (' + media_queries.join(') and (') + ') { ' + codes + ' }' + '\\n\\n';\n}; // For StyleSheet\n\nvar getStyleElement = function getStyleElement(innerHTML) {\n  var style_element;\n\n  if (document.querySelectorAll('style#cssist') && document.querySelectorAll('style#cssist')[0]) {\n    return document.querySelectorAll('style#cssist')[0];\n  }\n\n  var element_style = document.createElement(\"STYLE\"); // WebKit hack :(\n\n  element_style.appendChild(document.createTextNode(''));\n  element_style.setAttribute(\"type\", 'text/css');\n  element_style.setAttribute(\"id\", \"cssist\");\n  if (innerHTML) element_style.innerHTML = innerHTML;\n  var element_head;\n  if (document.head) element_head = document.head;else element_head = document.getElementsByTagName(\"head\")[0];\n  if (element_head) element_head.appendChild(element_style);else document.appendChild(element_style);\n  return element_style;\n};\nvar getStyleSheet = function getStyleSheet(innerHTML) {\n  var style_element = getStyleElement(innerHTML);\n  return style_element.styleSheet || style_element.sheet;\n};\n\n//# sourceURL=webpack:///./src/get.js?");
+
+/***/ }),
+
+/***/ "./src/initialize.js":
+/*!***************************!*\
+  !*** ./src/initialize.js ***!
+  \***************************/
+/*! exports provided: initialize */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"initialize\", function() { return initialize; });\n/* harmony import */ var _get_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./get.js */ \"./src/get.js\");\n/* harmony import */ var _value_sets_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./value_sets.js */ \"./src/value_sets.js\");\n/* harmony import */ var _property_sets_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./property_sets.js */ \"./src/property_sets.js\");\nvar package_json = __webpack_require__(/*! ../package.json */ \"./package.json\");\n\n\n\n\nvar debug = true;\nvar greeting = \"// CSSIST\\n// The following codes are automatically generated on \" + new Date();\ngreeting += '\\n\\n\\n';\nvar cssist_default = {\n  version: package_json.version,\n  csses: {\n    success: [],\n    fail: []\n  },\n  selectors: {\n    success: [],\n    fail: []\n  },\n  stylesheet: greeting\n};\nvar initialize = function initialize() {\n  if (localStorage['cssist']) var cssist = JSON.parse(localStorage['cssist']);\n  if (cssist && package_json && cssist.version == package_json.version) window.cssist = cssist;else window.cssist = cssist_default;\n  Object(_get_js__WEBPACK_IMPORTED_MODULE_0__[\"getStyleElement\"])(window.cssist.stylesheet);\n\n  if (debug) {\n    window.value_sets = _value_sets_js__WEBPACK_IMPORTED_MODULE_1__[\"value_sets\"];\n    window.property_sets = _property_sets_js__WEBPACK_IMPORTED_MODULE_2__[\"property_sets\"];\n  }\n};\n\n//# sourceURL=webpack:///./src/initialize.js?");
+
+/***/ }),
+
+/***/ "./src/property_sets.js":
+/*!******************************!*\
+  !*** ./src/property_sets.js ***!
+  \******************************/
+/*! exports provided: property_sets */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"property_sets\", function() { return property_sets; });\n/* harmony import */ var _value_sets_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./value_sets.js */ \"./src/value_sets.js\");\nvar _properties;\n\nfunction _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }\n\n\nvar property_sets = [{\n  properties: {\n    ac: 'align-content',\n    align_content: 'align-content'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].align_content_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    ai: 'align-items',\n    align_items: 'align-items'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].align_items_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    as: 'align-self',\n    align_self: 'align-self'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].align_items_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].auto, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    an: 'animation-iteration-count',\n    animation_iteration_count: 'animation-iteration-count'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].integer_0, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].infinite, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    b: 'background',\n    background: 'background'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].rgba_color, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].gradient, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].none, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    bi: 'background-image',\n    background_image: 'background-image'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].image_url, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].none, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    bs: 'background-size',\n    background_size: 'background-size'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].auto, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].length_calc_2D, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].background_size_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    bs: 'box-shadow',\n    ts: 'text-shadow',\n    box_shadow: 'box-shadow',\n    text_shadow: 'text-shadow'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].shadow]\n}, {\n  properties: {\n    bs: 'box-sizing',\n    box_sizing: 'box-sizing'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].box_sizing_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    bo: 'border-width',\n    bo_t: 'border-top-width',\n    bo_b: 'border-bottom-width',\n    bo_l: 'border-left-width',\n    bo_r: 'border-right-width',\n    border_width: 'border-width',\n    border_top_width: 'border-top-width',\n    border_bottom_width: 'border-bottom-width',\n    border_left_width: 'border-left-width',\n    border_right_width: 'border-right-width'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].length, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].auto, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].thick_kind]\n}, {\n  properties: {\n    bp: 'background-position',\n    background_position: 'background-position'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].direction_2D_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].length_calc_2D, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    c: 'color',\n    pc: {\n      name: 'color',\n      afters: ['::placeholder']\n    },\n    color: 'color',\n    placeholder: {\n      name: 'color',\n      afters: ['::placeholder']\n    },\n    bc: 'background-color',\n    background_color: 'background-color',\n    bo: 'border-color',\n    bo_t: 'border-top-color',\n    bo_b: 'border-bottom-color',\n    bo_l: 'border-left-color',\n    bo_r: 'border-right-color',\n    border_color: 'border-color',\n    border_top_color: 'border-top-color',\n    border_bottom_color: 'border-bottom-color',\n    border_left_color: 'border-left-color',\n    border_right_color: 'border-right-color'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].rgba_color]\n}, {\n  properties: {\n    c: 'clear',\n    clear: 'clear'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].clear_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].none, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    d: 'display',\n    display: 'display'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].display_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].none, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    fx: 'flex',\n    flex: 'flex'\n  },\n  // CONTINUE HERE...\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].flexbox_flex, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    fxf: 'flex-flow',\n    flex_flow: 'flex-flow'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].flex_flow_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    fxg: 'flex-grow',\n    flex_grow: 'flex-grow'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].integer_0, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    fxs: 'flex-shrink',\n    flex_shrink: 'flex-shrink'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].integer_0, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    f: 'float',\n    \"float\": 'float'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].none, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].float_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    f: 'font-size',\n    font_size: 'font-size'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].font_size_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].length_calc, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    fxb: 'flex-basis',\n    flex_basis: 'flex-basis'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].length_calc, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].auto, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    fxd: 'flex-direction',\n    flex_direction: 'flex-direction'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].flex_direction_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    fxw: 'flex-wrap',\n    flex_direction: 'flex-wrap'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].flex_wrap_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    fw: 'font-weight',\n    font_weight: 'font-weight'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].font_weight_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].integer_hundred, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    jc: 'justify-content',\n    justify_content: 'justify-content'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].justify_content_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    t: 'text-align',\n    text_align: 'text-align'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].align_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    tt: 'text-transform',\n    text_transform: 'text-transform'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].text_trasform_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].none, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    lh: 'line-height',\n    line_height: 'line-height'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].normal, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].length_calc, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    ls: 'letter-spacing',\n    letter_spacing: 'letter-spacing'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].normal, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].length_calc, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    o: 'opacity',\n    opacity: 'opacity'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].opacity]\n}, {\n  properties: {\n    or: 'order',\n    order: 'order'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].integer_0]\n}, {\n  properties: {\n    o: 'overflow',\n    ox: 'overflow-x',\n    oy: 'overflow-y',\n    overflow: 'overflow',\n    overflow_x: 'overflow-x',\n    overflow_y: 'overflow-y'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].overflow_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].auto, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    p: 'position',\n    position: 'position'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].position_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    p: 'padding',\n    pb: 'padding-bottom',\n    pl: 'padding-left',\n    pr: 'padding-right',\n    pt: 'padding-top',\n    padding: 'padding',\n    padding_bottom: 'padding-bottom',\n    padding_left: 'padding-left',\n    padding_right: 'padding-right',\n    padding_top: 'padding-top',\n    bor: 'border-radius',\n    bor_tl: 'border-top-left-radius',\n    bor_tr: 'border-top-right-radius',\n    bor_bl: 'border-bottom-left-radius',\n    bor_br: 'border-bottom-right-radius',\n    border_radius: 'border-radius',\n    border_top_left_radius: 'border-top-left-radius',\n    border_top_right_radius: 'border-top-right-radius',\n    border_bottom_left_radius: 'border-bottom-left-radius',\n    border_bottom_right_radius: 'border-bottom-right-radius'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].length_calc, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    to: 'text-overflow',\n    text_overflow: 'text-overflow'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].text_overflow_kind]\n}, {\n  properties: {\n    tn: 'transform',\n    transform: 'transform'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].translate_length_calc_2D]\n}, {\n  properties: {\n    tn: 'transition-property',\n    transition_property: 'transition-property'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].none, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].all, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].variables, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    tn: 'transition-duration',\n    tnd: 'transition-delay',\n    an: 'animation-duration',\n    and: 'animation-delay',\n    transition_duration: 'transition-duration',\n    transition_delay: 'transition-delay',\n    animation_duration: 'animation-duration',\n    animation_delay: 'animation-delay'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].second, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].millisecond, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    tn: 'transition-timing-function',\n    an: 'animation-timing-function',\n    transition_timing_function: 'transition-timing-function',\n    animation_timing_function: 'animation-timing-function'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].transition_timing_function_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    v: 'visibility',\n    visibility: 'visibility'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].visibility_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    v: 'vertical-align',\n    vertical_align: 'vertical-align'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].vertical_align_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].length_calc, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    ws: 'white-space',\n    white_space: 'white-space'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].white_space_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    wb: 'word-break',\n    word_break: 'word-break'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].white_break_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    ww: 'word-wrap',\n    word_wrap: 'word-wrap'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].word_wrap_kind, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    w: 'width',\n    xw: 'max-width',\n    nw: 'min-width',\n    h: 'height',\n    xh: 'max-height',\n    nh: 'min-height',\n    width: 'width',\n    max_width: 'max-width',\n    min_width: 'min-width',\n    height: 'height',\n    max_height: 'max-height',\n    min_height: 'min-height',\n    b: 'bottom',\n    r: 'right',\n    t: 'top',\n    l: 'left',\n    bottom: 'bottom',\n    right: 'right',\n    top: 'top',\n    left: 'left',\n    m: 'margin',\n    mb: 'margin-bottom',\n    ml: 'margin-left',\n    mr: 'margin-right',\n    mt: 'margin-top',\n    margin: 'margin',\n    margin_bottom: 'margin-bottom',\n    margin_left: 'margin-left',\n    margin_right: 'margin-right',\n    margin_top: 'margin-top',\n    ws: 'word-spacing',\n    word_spacing: 'word-spacing'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].length_calc, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].auto, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: {\n    z: 'z-index',\n    z_index: 'z-index'\n  },\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].auto, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].integer, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].initial, _value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].inherit]\n}, {\n  properties: (_properties = {\n    color: 'color',\n    opacity: 'opacity',\n    background: 'background',\n    background_attachment: 'background-attachment',\n    background_blend_mode: 'background-blend-mode',\n    background_color: 'background-color',\n    background_image: 'background-image',\n    background_position: 'background-position',\n    background_repeat: 'background-repeat',\n    background_clip: 'background-clip',\n    background_origin: 'background-origin',\n    background_size: 'background-size',\n    border: 'border',\n    border_bottom: 'border-bottom',\n    border_bottom_color: 'border-bottom-color',\n    border_bottom_left_radius: 'border-bottom-left-radius',\n    border_bottom_right_radius: 'border-bottom-right-radius',\n    border_bottom_style: 'border-bottom-style',\n    border_bottom_width: 'border-bottom-width',\n    border_color: 'border-color',\n    border_image: 'border-image',\n    border_image_outset: 'border-image-outset',\n    border_image_repeat: 'border-image-repeat',\n    border_image_slice: 'border-image-slice',\n    border_image_source: 'border-image-source',\n    border_image_width: 'border-image-width',\n    border_ltransitioneft: 'border-left',\n    border_left_color: 'border-left-color',\n    border_left_style: 'border-left-style',\n    border_left_width: 'border-left-width',\n    border_radius: 'border-radius',\n    border_right: 'border-right',\n    border_right_color: 'border-right-color',\n    border_right_style: 'border-right-style',\n    border_right_width: 'border-right-width',\n    border_style: 'border-style',\n    border_top: 'border-top',\n    border_top_color: 'border-top-color',\n    border_top_left_radius: 'border-top-left-radius',\n    border_top_right_radius: 'border-top-right-radius',\n    border_top_style: 'border-top-style',\n    border_top_width: 'border-top-width',\n    border_width: 'border-width',\n    box_decoration_break: 'box-decoration-break',\n    box_shadow: 'box-shadow',\n    bottom: 'bottom',\n    clear: 'clear',\n    clip: 'clip',\n    display: 'display',\n    \"float\": 'float',\n    height: 'height',\n    left: 'left',\n    margin: 'margin',\n    margin_bottom: 'margin-bottom',\n    margin_left: 'margin-left',\n    margin_right: 'margin-right',\n    margin_top: 'margin-top',\n    max_height: 'max-height',\n    max_width: 'max-width',\n    min_height: 'min-height',\n    min_width: 'min-width',\n    overflow: 'overflow',\n    overflow_x: 'overflow-x',\n    overflow_y: 'overflow-y',\n    padding: 'padding',\n    padding_bottom: 'padding-bottom',\n    padding_left: 'padding-left',\n    padding_right: 'padding-right',\n    padding_top: 'padding-top',\n    position: 'position',\n    right: 'right',\n    top: 'top',\n    visibility: 'visibility',\n    width: 'width',\n    vertical_align: 'vertical-align',\n    z_index: 'z-index',\n    align_content: 'align-content',\n    align_items: 'align-items',\n    align_self: 'align-self',\n    flex: 'flex',\n    flex_basis: 'flex-basis',\n    flex_direction: 'flex-direction',\n    flex_flow: 'flex-flow',\n    flex_grow: 'flex-grow',\n    flex_shrink: 'flex-shrink',\n    flex_wrap: 'flex-wrap',\n    justify_content: 'justify-content',\n    order: 'order',\n    hanging_punctuation: 'hanging-punctuation',\n    hyphens: 'hyphens',\n    letter_spacing: 'letter-spacing',\n    line_break: 'line-break',\n    line_height: 'line-height',\n    overflow_wrap: 'overflow-wrap',\n    tab_size: 'tab-size',\n    text_align: 'text-align',\n    text_align_last: 'text-align-last',\n    text_combine_upright: 'text-combine-upright',\n    text_indent: 'text-indent',\n    text_justify: 'text-justify',\n    text_transform: 'text-transform',\n    white_space: 'white-space',\n    word_break: 'word-break',\n    word_spacing: 'word-spacing',\n    word_wrap: 'word-wrap',\n    text_decoration: 'text-decoration',\n    text_decoration_color: 'text-decoration-color',\n    text_decoration_line: 'text-decoration-line',\n    text_decoration_style: 'text-decoration-style',\n    text_shadow: 'text-shadow',\n    text_underline_position: 'text-underline-position',\n    text_fill_color: 'text-fill-color',\n    font: 'font',\n    font_family: 'font-family',\n    font_feature_settings: 'font-feature-settings',\n    font_kerning: 'font-kerning',\n    font_language_override: 'font-language-override',\n    font_size: 'font-size',\n    font_size_adjust: 'font-size-adjust',\n    font_stretch: 'font-stretch',\n    font_style: 'font-style',\n    font_synthesis: 'font-synthesis',\n    font_variant: 'font-variant',\n    font_variant_alternates: 'font-variant-alternates',\n    font_variant_caps: 'font-variant-caps',\n    font_variant_east_asian: 'font-variant-east-asian',\n    font_variant_ligatures: 'font-variant-ligatures',\n    font_variant_numeric: 'font-variant-numeric',\n    font_variant_position: 'font-variant-position',\n    font_weight: 'font-weight',\n    direction: 'direction',\n    text_orientation: 'text-orientation'\n  }, _defineProperty(_properties, \"text_combine_upright\", 'text-combine-upright'), _defineProperty(_properties, \"unicode_bidi\", 'unicode-bidi'), _defineProperty(_properties, \"user_select\", 'user-select'), _defineProperty(_properties, \"writing_mode\", 'writing-mode'), _defineProperty(_properties, \"border_collapse\", 'border-collapse'), _defineProperty(_properties, \"border_spacing\", 'border-spacing'), _defineProperty(_properties, \"caption_side\", 'caption-side'), _defineProperty(_properties, \"empty_cells\", 'empty-cells'), _defineProperty(_properties, \"table_layout\", 'table-layout'), _defineProperty(_properties, \"counter_increment\", 'counter-increment'), _defineProperty(_properties, \"counter_reset\", 'counter-reset'), _defineProperty(_properties, \"list_style\", 'list-style'), _defineProperty(_properties, \"list_style_image\", 'list-style-image'), _defineProperty(_properties, \"list_style_position\", 'list-style-position'), _defineProperty(_properties, \"list_style_type\", 'list-style-type'), _defineProperty(_properties, \"animation\", 'animation'), _defineProperty(_properties, \"animation_delay\", 'animation-delay'), _defineProperty(_properties, \"animation_direction\", 'animation-direction'), _defineProperty(_properties, \"animation_duration\", 'animation-duration'), _defineProperty(_properties, \"animation_fill_mode\", 'animation-fill-mode'), _defineProperty(_properties, \"animation_iteration_count\", 'animation-iteration-count'), _defineProperty(_properties, \"animation_name\", 'animation-name'), _defineProperty(_properties, \"animation_play_state\", 'animation-play-state'), _defineProperty(_properties, \"animation_timing_function\", 'animation-timing-function'), _defineProperty(_properties, \"backface_visibility\", 'backface-visibility'), _defineProperty(_properties, \"perspective\", 'perspective'), _defineProperty(_properties, \"perspective_origin\", 'perspective-origin'), _defineProperty(_properties, \"transform_origin\", 'transform-origin'), _defineProperty(_properties, \"transform_style\", 'transform-style'), _defineProperty(_properties, \"transition_property\", 'transition-property'), _defineProperty(_properties, \"transition_duration\", 'transition-duration'), _defineProperty(_properties, \"transition_timing_function\", 'transition-timing-function'), _defineProperty(_properties, \"transition_delay\", 'transition-delay'), _defineProperty(_properties, \"box_sizing\", 'box-sizing'), _defineProperty(_properties, \"content\", 'content'), _defineProperty(_properties, \"cursor\", 'cursor'), _defineProperty(_properties, \"ime_mode\", 'ime-mode'), _defineProperty(_properties, \"nav_down\", 'nav-down'), _defineProperty(_properties, \"nav_index\", 'nav-index'), _defineProperty(_properties, \"nav_left\", 'nav-left'), _defineProperty(_properties, \"nav_right\", 'nav-right'), _defineProperty(_properties, \"nav_up\", 'nav-up'), _defineProperty(_properties, \"outline\", 'outline'), _defineProperty(_properties, \"outline_color\", 'outline-color'), _defineProperty(_properties, \"outline_offset\", 'outline-offset'), _defineProperty(_properties, \"outline_style\", 'outline-style'), _defineProperty(_properties, \"outline_width\", 'outline-width'), _defineProperty(_properties, \"resize\", 'resize'), _defineProperty(_properties, \"text_overflow\", 'text-overflow'), _defineProperty(_properties, \"break_after\", 'break-after'), _defineProperty(_properties, \"break_before\", 'break-before'), _defineProperty(_properties, \"break_inside\", 'break-inside'), _defineProperty(_properties, \"column_count\", 'column-count'), _defineProperty(_properties, \"column_fill\", 'column-fill'), _defineProperty(_properties, \"column_gap\", 'column-gap'), _defineProperty(_properties, \"column_rule\", 'column-rule'), _defineProperty(_properties, \"column_rule_color\", 'column-rule-color'), _defineProperty(_properties, \"column_rule_style\", 'column-rule-style'), _defineProperty(_properties, \"column_rule_width\", 'column-rule-width'), _defineProperty(_properties, \"column_span\", 'column-span'), _defineProperty(_properties, \"column_width\", 'column-width'), _defineProperty(_properties, \"columns\", 'columns'), _defineProperty(_properties, \"widows\", 'widows'), _defineProperty(_properties, \"orphans\", 'orphans'), _defineProperty(_properties, \"page_break_after\", 'page-break-after'), _defineProperty(_properties, \"page_break_before\", 'page-break-before'), _defineProperty(_properties, \"page_break_inside\", 'page-break-inside'), _defineProperty(_properties, \"marks\", 'marks'), _defineProperty(_properties, \"quotes\", 'quotes'), _defineProperty(_properties, \"filter\", 'filter'), _defineProperty(_properties, \"image_orientation\", 'image-orientation'), _defineProperty(_properties, \"image_rendering\", 'image-rendering'), _defineProperty(_properties, \"image_resolution\", 'image-resolution'), _defineProperty(_properties, \"object_fit\", 'object-fit'), _defineProperty(_properties, \"object_position\", 'object-position'), _defineProperty(_properties, \"mask_type\", 'mask-type'), _defineProperty(_properties, \"mark\", 'mark'), _defineProperty(_properties, \"mark_after\", 'mark-after'), _defineProperty(_properties, \"mark_before\", 'mark-before'), _defineProperty(_properties, \"phonemes\", 'phonemes'), _defineProperty(_properties, \"rest\", 'rest'), _defineProperty(_properties, \"rest_after\", 'rest-after'), _defineProperty(_properties, \"rest_before\", 'rest-before'), _defineProperty(_properties, \"voice_balance\", 'voice-balance'), _defineProperty(_properties, \"voice_duration\", 'voice-duration'), _defineProperty(_properties, \"voice_pitch\", 'voice-pitch'), _defineProperty(_properties, \"voice_pitch_range\", 'voice-pitch-range'), _defineProperty(_properties, \"voice_rate\", 'voice-rate'), _defineProperty(_properties, \"voice_stress\", 'voice-stress'), _defineProperty(_properties, \"voice_volume\", 'voice-volume'), _defineProperty(_properties, \"marquee_direction\", 'marquee-direction'), _defineProperty(_properties, \"marquee_play_count\", 'marquee-play-count'), _defineProperty(_properties, \"marquee_speed\", 'marquee-speed'), _defineProperty(_properties, \"marquee_style\", 'marquee-style'), _properties),\n  value_sets: [_value_sets_js__WEBPACK_IMPORTED_MODULE_0__[\"value_sets\"].variable]\n}];\n\n//# sourceURL=webpack:///./src/property_sets.js?");
+
+/***/ }),
+
+/***/ "./src/start.js":
+/*!**********************!*\
+  !*** ./src/start.js ***!
+  \**********************/
+/*! exports provided: startSelector, startElement, startRootElement */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"startSelector\", function() { return startSelector; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"startElement\", function() { return startElement; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"startRootElement\", function() { return startRootElement; });\n/* harmony import */ var _check_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./check.js */ \"./src/check.js\");\n/* harmony import */ var _create_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./create.js */ \"./src/create.js\");\n/* harmony import */ var _get_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./get.js */ \"./src/get.js\");\nfunction _typeof(obj) { if (typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }; } return _typeof(obj); }\n\n\n\n\n\nif (typeof MutationObserver !== 'undefined') {\n  var watcher = new MutationObserver(function (mutations, watcher) {\n    mutations.forEach(function (mutation) {\n      var element = mutation.target;\n      if (element && element.lastClassName !== element.className && typeof element.className == 'string') startElement(element);\n      element.lastClassName = element.className;\n    });\n  });\n}\n\nvar startSelector = function startSelector(selector) {\n  // Check selector\n  if (!Object(_check_js__WEBPACK_IMPORTED_MODULE_0__[\"checkSelector\"])(selector)) return; // Create css\n\n  var css = Object(_create_js__WEBPACK_IMPORTED_MODULE_1__[\"createCssFromSelector\"])(selector); // Fail\n\n  if (!(css && css.valid)) {\n    cssist.selectors.fail.push(selector);\n    if (css) cssist.csses.fail.push(css);\n    return;\n  } // Success\n  // Create code\n\n\n  css.code = Object(_create_js__WEBPACK_IMPORTED_MODULE_1__[\"createCodeFromCss\"])(css);\n  cssist.selectors.success.push(selector);\n  cssist.csses.success.push(css);\n  cssist.stylesheet += css.code; // getStyleElement().innerHTML += css.code;\n\n  var sheet = Object(_get_js__WEBPACK_IMPORTED_MODULE_2__[\"getStyleSheet\"])();\n  sheet.insertRule(css.code);\n};\nvar startElement = function startElement(element) {\n  // Check element\n  if (!(element && element.classList && element.classList.length >= 1)) return; // Set classes\n\n  var selectors = element.classList; // Set mutation\n\n  if (watcher) watcher.observe(element, {\n    attributes: true,\n    attributeFilter: ['class']\n  });\n\n  for (var i = 0; i < selectors.length; i++) {\n    var selector = selectors[i];\n    startSelector(selector);\n  }\n};\nvar startRootElement = function startRootElement(element) {\n  // Check element\n  if (!(element && _typeof(element) === 'object' && element.nodeType && element.nodeType !== 8 && element.tagName)) return; // Start element\n\n  startElement(element); // Get element_childen\n\n  var element_childen = element.querySelectorAll('*'); // Check element_childen\n\n  if (!(element_childen && element_childen.length >= 1)) return; // Start element_childen\n\n  for (var i = 0; i < element_childen.length; i++) {\n    startElement(element_childen[i]);\n  }\n};\n\n//# sourceURL=webpack:///./src/start.js?");
+
+/***/ }),
+
+/***/ "./src/value_sets.js":
+/*!***************************!*\
+  !*** ./src/value_sets.js ***!
+  \***************************/
+/*! exports provided: value_sets */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"value_sets\", function() { return value_sets; });\nvar _values;\n\nfunction _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }\n\nvar value_sets = {};\nvar debug = false;\n\nvar getValueFromValues = function getValueFromValues(value) {\n  return this.values[value];\n};\n\nvar getValueFromOriginalValue = function getValueFromOriginalValue(value) {\n  return value;\n}; // CONSTANT\n\n\nvalue_sets.auto = {\n  regex: '(?:a|auto)',\n  values: {\n    a: 'auto',\n    auto: 'auto'\n  },\n  examples: ['a', 'auto'],\n  getValue: getValueFromValues\n};\nvalue_sets.all = {\n  regex: '(?:a|all)',\n  values: {\n    a: 'all',\n    all: 'all'\n  },\n  examples: ['a', 'all'],\n  getValue: getValueFromValues\n};\nvalue_sets.initial = {\n  regex: '(?:il|initial)',\n  values: {\n    il: 'initial',\n    initial: 'initial'\n  },\n  examples: ['il', 'initial'],\n  getValue: getValueFromValues\n};\nvalue_sets.inherit = {\n  regex: '(?:it|inherit)',\n  values: {\n    it: 'inherit',\n    inherit: 'inherit'\n  },\n  examples: ['it', 'inherit'],\n  getValue: getValueFromValues\n};\nvalue_sets.infinite = {\n  regex: '(?:i|infinite)',\n  values: {\n    i: 'infinite',\n    infinite: 'infinite'\n  },\n  examples: ['i', 'infinite'],\n  getValue: getValueFromValues\n};\nvalue_sets.none = {\n  regex: '(?:n|none)',\n  values: {\n    n: 'none',\n    none: 'none'\n  },\n  examples: ['n', 'none'],\n  getValue: getValueFromValues\n};\nvalue_sets.normal = {\n  regex: '(?:n|normal)',\n  values: {\n    n: 'normal',\n    normal: 'normal'\n  },\n  examples: ['n', 'normal'],\n  getValue: getValueFromValues\n}; // KIND\n\nvalue_sets.align_content_kind = {\n  regex: '(?:fxs|fxe|c|sb|sa|s|flex_start|flex_end|center|space_between|space_around|stretch)',\n  values: {\n    fxs: 'flex-start',\n    fxe: 'flex-end',\n    c: 'center',\n    sb: 'space-between',\n    sa: 'space-around',\n    s: 'stretch',\n    flex_start: 'flex-start',\n    flex_end: 'flex-end',\n    center: 'center',\n    space_between: 'space-between',\n    space_around: 'space-around',\n    strech: 'stretch'\n  },\n  examples: ['fxs', 'flex_start'],\n  getValue: getValueFromValues\n};\nvalue_sets.align_items_kind = {\n  regex: '(?:fxs|fxe|c|bl|s|flex_start|flex_end|center|baseline|stretch)',\n  values: {\n    fxs: 'flex-strech',\n    fxe: 'flex-end',\n    c: 'center',\n    bl: 'baseline',\n    s: 'stretch',\n    flex_start: 'flex-start',\n    flex_end: 'flex-end',\n    center: 'center',\n    baseline: 'baseline',\n    strech: 'stretch'\n  },\n  examples: ['fxs', 'flex_start'],\n  getValue: getValueFromValues\n};\nvalue_sets.animation_direction = {\n  regex: '(?:n|r|a|ar|normal|reverse|alternate|alternate_reverse)',\n  values: {\n    n: 'normal',\n    r: 'reverse',\n    a: 'alternate',\n    ar: 'alternate-reverse',\n    normal: 'normal',\n    reverse: 'reverse',\n    alternate: 'alternate',\n    alternate_reverse: 'alternate-reverse'\n  },\n  examples: ['n', 'alternate_reverse'],\n  getValue: getValueFromValues\n};\nvalue_sets.box_sizing_kind = {\n  regex: '(?:c|b|content_box|border_box)',\n  values: {\n    c: 'content-box',\n    b: 'border-box',\n    content_box: 'content-box',\n    border_box: 'border-box'\n  },\n  examples: ['c', 'b'],\n  getValue: getValueFromValues\n};\nvalue_sets.background_size_kind = {\n  regex: '(?:l|r|b|left|right|both)',\n  values: {\n    l: 'left',\n    r: 'right',\n    b: 'both',\n    left: 'left',\n    right: 'right',\n    both: 'both'\n  },\n  examples: ['l', 'both'],\n  getValue: getValueFromValues\n};\nvalue_sets.clear_kind = {\n  regex: '(?:cr|cn|cover|contain)',\n  values: {\n    cr: 'cover',\n    cn: 'contain',\n    cover: 'cover',\n    contain: 'contain'\n  },\n  examples: ['cr', 'contain'],\n  getValue: getValueFromValues\n};\nvalue_sets.display_kind = {\n  regex: '(?:i|b|fx|ib|inline|block|flex|inline_block|inline_flex|inline_table|list_item|run_in|table|table_caption|table_column_group|table_header_group|table_footer_group|table_row_group|table_cell|table_column|table_row)',\n  values: {\n    i: 'inline',\n    b: 'block',\n    fx: 'flex',\n    ib: 'inline-block',\n    inline: 'inline',\n    block: 'block',\n    flex: 'flex',\n    inline_block: 'inline-block',\n    inline_flex: 'inline-flex',\n    inline_table: 'inline-table',\n    list_item: 'list-item',\n    run_in: 'run-in',\n    table: 'table',\n    table_caption: 'table-caption',\n    table_column_group: 'table-column-group',\n    table_header_group: 'table-header-group',\n    table_footer_group: 'table-footer-group',\n    table_row_group: 'table-row-group',\n    table_cell: 'table-cell',\n    table_column: 'table-column',\n    table_row: 'table-row'\n  },\n  examples: ['i', 'table_row'],\n  getValue: getValueFromValues\n};\nvalue_sets.direction_kind = {\n  regex: '(?:l|r|t|b|c|left|right|top|bottom|center)',\n  values: {\n    l: 'left',\n    r: 'right',\n    t: 'top',\n    b: 'bottom',\n    c: 'center',\n    left: 'left',\n    right: 'right',\n    top: 'top',\n    bottom: 'bottom',\n    center: 'center'\n  },\n  examples: ['l', 'center'],\n  getValue: getValueFromValues\n};\nvalue_sets.direction_2D_kind = {\n  regex: '(?:lt|lc|lb|rt|rc|rb|ct|cc|cb|left_top|left_center|left_bottom|right_top|right_center|right_bottom|center_top|center_center|center_bottom)',\n  values: {\n    lt: 'left top',\n    lc: 'left center',\n    lb: 'left bottom',\n    rt: 'right top',\n    rc: 'right center',\n    rb: 'right bottom',\n    ct: 'center top',\n    cc: 'center center',\n    cb: 'center bottom',\n    left_top: 'left top',\n    left_center: 'left center',\n    left_bottom: 'left bottom',\n    right_top: 'right top',\n    right_center: 'right center',\n    right_bottom: 'right bottom',\n    center_top: 'center top',\n    center_center: 'center center',\n    center_bottom: 'center bottom'\n  },\n  examples: ['lt', 'cc'],\n  getValue: getValueFromValues\n};\nvalue_sets.flex_flow_kind = {\n  regex: '(?:fxd|fxw|flex_direction|flex_wrap)',\n  values: {\n    fxd: 'flex-direction',\n    fxw: 'flex-wrap',\n    flex_direction: 'flex-direction',\n    flex_wrap: 'flex-wrap'\n  },\n  examples: ['fxd', 'flex_direction'],\n  getValue: getValueFromValues\n};\nvalue_sets.float_kind = {\n  regex: '(?:l|r|left|right)',\n  values: {\n    l: 'left',\n    r: 'right',\n    left: 'left',\n    right: 'right'\n  },\n  examples: ['l', 'right'],\n  getValue: getValueFromValues\n};\nvalue_sets.flex_direction_kind = {\n  regex: '(?:r|rr|c|cr|row|row_reverse|column|column_reverse)',\n  values: {\n    r: 'row',\n    rr: 'row-reverse',\n    c: 'column',\n    cr: 'column-reverse',\n    row: 'row',\n    row_reverse: 'row-reverse',\n    column: 'column',\n    column_reverse: 'column-reverse'\n  },\n  examples: ['r', 'row'],\n  getValue: getValueFromValues\n};\nvalue_sets.flex_wrap_kind = {\n  regex: '(?:nw|w|wr|nowrap|wrap|wrap_reverse)',\n  values: {\n    nw: 'nowrap',\n    w: 'wrap',\n    wr: 'wrap-reverse',\n    nowrap: 'nowrap',\n    wrap: 'wrap',\n    wrap_reverse: 'wrap-reverse'\n  },\n  examples: ['nw', 'nowrap'],\n  getValue: getValueFromValues\n};\nvalue_sets.font_size_kind = {\n  regex: '(?:m|xxs|xs|s|l|xl|xxl|sr|lr|medium|xx_small|x_small|small|large|x_large|xx_large|smaller|larger)',\n  values: (_values = {\n    m: 'medium',\n    xxs: 'xx-small',\n    xs: 'x-small',\n    s: 'small',\n    l: 'large',\n    xl: 'x-large',\n    xxl: 'xx-large',\n    sr: 'smaller',\n    lr: 'larger',\n    medium: 'medium',\n    xx_small: 'xx-small',\n    x_small: 'x-small'\n  }, _defineProperty(_values, \"s\", 'small'), _defineProperty(_values, \"l\", 'large'), _defineProperty(_values, \"x_large\", 'x-large'), _defineProperty(_values, \"xx_large\", 'xx-large'), _defineProperty(_values, \"smaller\", 'smaller'), _defineProperty(_values, \"larger\", 'larger'), _values),\n  examples: ['m', 'larger'],\n  getValue: getValueFromValues\n};\nvalue_sets.font_weight_kind = {\n  regex: '(?:n|m|b|br|lr|normal|medium|bold|bolder|lighter)',\n  values: {\n    n: 'normal',\n    m: 'medium',\n    b: 'bold',\n    br: 'bolder',\n    lr: 'lighter',\n    normal: 'normal',\n    medium: 'medium',\n    bold: 'bold',\n    bolder: 'bolder',\n    lighter: 'lighter'\n  },\n  examples: ['n', 'lighter'],\n  getValue: getValueFromValues\n};\nvalue_sets.justify_content_kind = {\n  regex: '(?:fxs|fxe|c|sb|sa|se|flex_start|flex_end|center|space_between|space_around|space_evenly)',\n  values: {\n    fxs: 'flex-start',\n    fxe: 'flex-end',\n    c: 'center',\n    sb: 'space-between',\n    sa: 'space-around',\n    se: 'space-evenly',\n    flex_start: 'flex-start',\n    flex_end: 'flex-end',\n    center: 'center',\n    space_between: 'space-between',\n    space_around: 'space-around',\n    space_evenly: 'space-evenly'\n  },\n  examples: ['fxs', 'flex_start'],\n  getValue: getValueFromValues\n};\nvalue_sets.gradient_kind = {\n  regex: '(?:rl|rr|l|r)',\n  values: {\n    l: 'linear-gradient',\n    r: 'radial-gradient',\n    rl: 'repeating-linear-gradient',\n    rr: 'repeating-radial-gradient'\n  },\n  examples: ['l', 'rr'],\n  getValue: getValueFromValues\n};\nvalue_sets.length_unit_kind = {\n  regex: '(?:em|ex|ch|rem|vw|vh|vmax|vmin|cm|mm|in|px|pt|pc|p|n)',\n  values: {\n    em: 'em',\n    ex: 'ex',\n    ch: 'ch',\n    rem: 'rem',\n    vw: 'vw',\n    vh: 'vh',\n    vmax: 'vmax',\n    vmin: 'vmin',\n    cm: 'cm',\n    mm: 'mm',\n    \"in\": 'in',\n    px: 'px',\n    pt: 'pt',\n    pc: 'pc',\n    p: '%',\n    n: ''\n  },\n  examples: ['em', 'n'],\n  getValue: getValueFromValues\n};\nvalue_sets.overflow_kind = {\n  regex: '(?:h|o|s|v|hidden|overlay|scroll|visible)',\n  values: {\n    h: 'hidden',\n    o: 'overlay',\n    s: 'scroll',\n    v: 'visible',\n    hidden: 'hidden',\n    overlay: 'overlay',\n    scroll: 'scroll',\n    visible: 'visible'\n  },\n  examples: ['h', 'visible'],\n  getValue: getValueFromValues\n};\nvalue_sets.position_kind = {\n  regex: '(?:s|a|f|r|static|absolute|fixed|relative)',\n  values: {\n    s: 'static',\n    a: 'absolute',\n    f: 'fixed',\n    r: 'relative',\n    \"static\": 'static',\n    absolute: 'absolute',\n    fixed: 'fixed',\n    relative: 'relative'\n  },\n  examples: ['s', 'relative'],\n  getValue: getValueFromValues\n};\nvalue_sets.text_overflow_kind = {\n  regex: '(?:c|e|s|clip|ellipsis|string)',\n  values: {\n    c: 'clip',\n    e: 'ellipsis',\n    s: 'string',\n    clip: 'clip',\n    ellipsis: 'ellipsis',\n    string: 'string'\n  },\n  examples: ['c', 's'],\n  getValue: getValueFromValues\n};\nvalue_sets.align_kind = {\n  regex: '(?:l|r|c|j|s|left|right|center|justify|stretch)',\n  values: {\n    l: 'left',\n    r: 'right',\n    c: 'center',\n    j: 'justify',\n    s: 'stretch',\n    left: 'left',\n    right: 'right',\n    center: 'center',\n    justify: 'justify',\n    strech: 'strech'\n  },\n  examples: ['l', 'j'],\n  getValue: getValueFromValues\n};\nvalue_sets.thick_kind = {\n  regex: '(?:m|tn|tk|medium|thin|thick)',\n  values: {\n    m: 'medium',\n    tn: 'thin',\n    tk: 'thick'\n  },\n  examples: ['m', 'tk'],\n  getValue: getValueFromValues\n};\nvalue_sets.transition_timing_function_kind = {\n  regex: '(?:l|e|ei|eo|eio|ss|se|linear|ease|ease_in|ease_out|ease_in_out|step_start|step_end)',\n  values: {\n    l: 'linear',\n    e: 'ease',\n    ei: 'ease-in',\n    eo: 'ease-out',\n    eio: 'ease-in-out',\n    ss: 'step-start',\n    se: 'step-end'\n  },\n  examples: ['l', 'se'],\n  getValue: getValueFromValues\n};\nvalue_sets.text_trasform_kind = {\n  regex: '(?:c|u|l|capitalize|uppercase|lowercase)',\n  values: {\n    c: 'capitalize',\n    u: 'uppercase',\n    l: 'lowercase',\n    capitalize: 'capitalize',\n    uppercase: 'uppercase',\n    lowercase: 'lowercase'\n  },\n  examples: ['c', 'lowercase'],\n  getValue: getValueFromValues\n};\nvalue_sets.vertical_align_kind = {\n  regex: '(?:be|sb|sr|t|tt|m|b|tb|baseline|sub|super|top|text_top|middle|bottom|text_bottom)',\n  values: {\n    be: 'baseline',\n    sb: 'sub',\n    sr: 'super',\n    t: 'top',\n    tt: 'text-top\t',\n    m: 'middle',\n    b: 'bottom',\n    tb: 'text-bottom',\n    baseline: 'baseline',\n    sub: 'sub',\n    \"super\": 'super',\n    top: 'top',\n    text_top: 'text-top\t',\n    middle: 'middle',\n    bottom: 'bottom',\n    text_bottom: 'text-bottom'\n  },\n  examples: ['be', 'text_bottom'],\n  getValue: getValueFromValues\n};\nvalue_sets.visibility_kind = {\n  regex: '(?:v|h|c|visible|hidden|collapse)',\n  values: {\n    v: 'visible',\n    h: 'hidden',\n    c: 'collapse',\n    visible: 'visible',\n    hidden: 'hidden',\n    collapse: 'collapse'\n  },\n  examples: ['v', 'c'],\n  getValue: getValueFromValues\n};\nvalue_sets.white_space_kind = {\n  regex: '(?:n|nw|p|pl|pw|normal|nowrap|pre|pre_line|pre_wrap)',\n  values: {\n    n: 'normal',\n    nw: 'nowrap',\n    p: 'pre',\n    pl: 'pre-line',\n    pw: 'pre-wrap',\n    normal: 'normal',\n    nowrap: 'nowrap',\n    pre: 'pre',\n    pre_line: 'pre-line',\n    pre_wrap: 'pre-wrap'\n  },\n  examples: ['n', 'normal'],\n  getValue: getValueFromValues\n};\nvalue_sets.word_wrap_kind = {\n  regex: '(?:b|break_word)',\n  values: {\n    b: 'break-word',\n    break_word: 'break-word'\n  },\n  examples: ['b', 'break_word'],\n  getValue: getValueFromValues\n}; // NUMBER\n\nvalue_sets.integer = {\n  regex: '(?:_?[0-9]+)',\n  examples: ['_100', '100'],\n  getValue: function getValue(value) {\n    return value.replace(/_/g, '-');\n  }\n};\nvalue_sets.integer_0 = {\n  regex: '(?:[0-9]+)',\n  examples: ['100'],\n  getValue: function getValue(value) {\n    var result = Math.abs(value);\n    if (isNaN(result)) return null;else return result;\n  }\n};\nvalue_sets.integer_0_12 = {\n  regex: '(?:10|11|12|[0-9])',\n  examples: ['0', '12'],\n  getValue: function getValue(value) {\n    return Math.floor(value) % 13;\n  }\n};\nvalue_sets.integer_0_255 = {\n  regex: '(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:[01]?[0-9]?[0-9]))',\n  examples: ['0', '255'],\n  getValue: function getValue(value) {\n    return Math.floor(value) % 256;\n  }\n};\nvalue_sets.integer_hundred = {\n  regex: '(?:[1-9]00)',\n  examples: ['100', '900'],\n  getValue: getValueFromOriginalValue\n};\nvalue_sets.integer_3digits = {\n  regex: '(?:_?[0-9]{1,3})',\n  examples: ['_999', '999'],\n  getValue: function getValue(value) {\n    return Math.floor(value_sets.integer.getValue(value)) % 1000;\n  }\n};\nvalue_sets[\"float\"] = {\n  regex: value_sets.integer.regex + '(?:o' + value_sets.integer_0.regex + ')?',\n  examples: ['0', '7o777', '_7o777'],\n  getValue: function getValue(value) {\n    return value.replace(/o/g, '.');\n  }\n};\nvalue_sets.float_0_100 = {\n  regex: '(?:100|[0-9]?[0-9])(?:o[0-9]+)?',\n  examples: ['0', '10', '100', '7o777'],\n  getValue: function getValue(value) {\n    return value_sets[\"float\"].getValue(value.replace(/_/g, '-')) % 101;\n  }\n};\nvalue_sets.float_0 = {\n  regex: value_sets.integer.regex + '(?:o' + value_sets.integer_0.regex + ')?',\n  examples: ['0', '7o777'],\n  getValue: function getValue(value) {\n    return value_sets[\"float\"].getValue(value.replace(/_/g, '-'));\n  }\n}; // OPACITY\n\nvalue_sets.opacity = {\n  regex: value_sets.float_0_100.regex,\n  examples: ['0', '50o50', '100'],\n  getValue: function getValue(value) {\n    return value_sets.float_0_100.getValue(value) * 0.01;\n  }\n}; // LENGTH\n\nvalue_sets.length = {\n  regex: value_sets.float_0.regex + '(?:' + value_sets.length_unit_kind.regex + ')?',\n  examples: ['0px', '50p', '50', '100vw', '3n'],\n  getValue: function getValue(value) {\n    var regex = new RegExp('(' + value_sets.float_0.regex + ')(' + value_sets.length_unit_kind.regex + ')?');\n    var matches = value.match(regex);\n    var result = '';\n\n    if (value_sets.float_0.getValue(matches[1])) {\n      // 길이 값\n      result = value_sets.float_0.getValue(matches[1]);\n    }\n\n    if (matches[2]) {\n      // 길이 단위\n      result += value_sets.length_unit_kind.getValue(matches[2]);\n    } else {\n      result += '%';\n    }\n\n    return result;\n  }\n};\nvalue_sets.symbol = {\n  regex: '(?:__|_|M|D)',\n  examples: ['__', '_', 'D', 'M'],\n  getValue: function getValue(value) {\n    var result = null;\n\n    if (value == '__') {\n      result = '+';\n    } else if (value == '_') {\n      result = '-';\n    } else if (value == 'M') {\n      result = '*';\n    } else if (value == 'D') {\n      result = '/';\n    }\n\n    return result;\n  }\n};\nvalue_sets.length_calc = {\n  regex: '(?:' + value_sets.symbol.regex + '?' + value_sets.length.regex + ')+',\n  examples: ['0', '50', '50px', '100_100px', '100M2_100vwD3__100cmD4_100pxD5_100M6_100vwD7__100cmD8_100pxD9'],\n  getValue: function getValue(value) {\n    var terms = value.match(new RegExp('(' + value_sets.symbol.regex + '?' + value_sets.length.regex + ')', 'g'));\n    var result = ''; // Loop terms\n\n    for (var i = 0; i < terms.length; i++) {\n      var term = terms[i]; // Set symbol and number\n\n      var matches_each = term.match(new RegExp('(' + value_sets.symbol.regex + ')?(' + value_sets.length.regex + ')'));\n      var symbol = matches_each[1];\n      var value = matches_each[2]; // Get symbols\n\n      if (symbol) result += (i == 0 ? '' : ' ') + value_sets.symbol.getValue(symbol) + ' ';\n\n      if (symbol == 'D' || symbol == 'M') {\n        // Divide or Multiply (Don't need unit) ex 10 -> 10\n        result += value;\n      } else {\n        // + or - (Need unit) ex 10->10%\n        result += value_sets.length.getValue(value);\n      }\n    }\n\n    if (terms.length > 1) return 'calc( ' + result + ' )';\n    return result;\n  }\n};\nvalue_sets.length_calc_2D = {\n  regex: '(?:[X|Y]' + value_sets.length_calc.regex + ')+',\n  examples: ['X100pxY50px', 'X100_10pxY50pxM10', 'X100M2_100vwD3__100cmD4_100pxD5_100M6_100vwD7__100cmD8_100pxD9'],\n  getValue: function getValue(value) {\n    var result = '';\n    var regex_X = new RegExp('X(' + value_sets.length_calc.regex + ')');\n    var matches_X = value.match(regex_X);\n\n    if (matches_X) {\n      result += value_sets.length_calc.getValue(matches_X[0]);\n    } else {\n      result += 0;\n    }\n\n    result += ' ';\n    var regex_Y = new RegExp('Y(' + value_sets.length_calc.regex + ')');\n    var matches_Y = value.match(regex_Y);\n\n    if (matches_Y) {\n      result += value_sets.length_calc.getValue(matches_Y[0]);\n    } else {\n      result += 0;\n    }\n\n    return result;\n  }\n}; // FLEX\n\nvalue_sets.flexbox_flex = {\n  regex: '(?:(?:' + value_sets.integer.regex + ')' + '(?:' + value_sets.integer.regex + ')?' + '(?:' + value_sets.length.regex + ')?)',\n  examples: ['1', '1_1_100px', '1_1_100'],\n  getValue: function getValue(value) {\n    console.log('flexbox_flex getValue');\n    var result = '';\n    var regex = new RegExp('^(' + value_sets.integer.regex + ')' + '(?:_(' + value_sets.integer.regex + '))?' + '(?:_(' + value_sets.length.regex + '))?$');\n    var matches = value.match(regex);\n    console.log('matches', matches);\n    if (!matches) return null;\n    var flexes = [];\n\n    for (var i = 1; i <= 3; i++) {\n      // console.log(i);\n      // console.log(matches[i]);\n      if (!matches[i]) continue;\n\n      if (i == 3) {\n        flexes.push(value_sets.length.getValue(matches[i]));\n      } else {\n        flexes.push(value_sets.integer.getValue(matches[i]));\n      }\n    } // console.log(flexes);\n\n\n    result = flexes.join(' ');\n    return result;\n  }\n}; // DEGREE\n\nvalue_sets.degree = {\n  regex: '(?:_?[0-9]+)(?:d)',\n  examples: ['180d', '_90d'],\n  getValue: function getValue(value) {\n    return value.replace(/d/g, 'deg');\n  }\n}; // TIME\n\nvalue_sets.hour = {\n  regex: value_sets.integer_0.regex + 'h',\n  examples: ['0h', '100h'],\n  getValue: getValueFromOriginalValue\n};\nvalue_sets.hour_0_12 = {\n  regex: value_sets.integer_0_12.regex + 'h',\n  examples: ['0h', '12h'],\n  getValue: getValueFromOriginalValue\n};\nvalue_sets.second = {\n  regex: value_sets.float_0.regex + 's',\n  examples: ['0s', '100s'],\n  getValue: getValueFromOriginalValue\n};\nvalue_sets.millisecond = {\n  regex: value_sets.float_0.regex + 'ms',\n  examples: ['0ms', '100ms'],\n  getValue: getValueFromOriginalValue\n}; // TRANSFORM\n\nvalue_sets.translate_length_calc_2D = {\n  regex: '(?:[X|Y]' + value_sets.length_calc.regex + ')+',\n  examples: ['X100pxY50px', 'X100_10pxY50pxM10', 'X100M2_100vwD3__100cmD4_100pxD5_100M6_100vwD7__100cmD8_100pxD9'],\n  getValue: function getValue(value) {\n    var result = 'translate( ';\n    var regex_X = new RegExp('X(' + value_sets.length_calc.regex + ')');\n    var matches_X = value.match(regex_X);\n\n    if (matches_X) {\n      result += value_sets.length_calc.getValue(matches_X[0]); // console.log(result)\n    } else {\n      result += 0;\n    }\n\n    result += ', ';\n    var regex_Y = new RegExp('Y(' + value_sets.length_calc.regex + ')');\n    var matches_Y = value.match(regex_Y);\n\n    if (matches_Y) {\n      result += value_sets.length_calc.getValue(matches_Y[0]);\n    } else {\n      result += 0;\n    }\n\n    result += ' )'; // console.log(result)\n\n    return result;\n  }\n}; // COLOR\n\nvalue_sets.hex_color = {\n  regex: '(?:[0-9A-F]{6})',\n  examples: ['000000', 'FFFFFF'],\n  getValue: function getValue(value) {\n    var result = 'rgba(';\n    result += parseInt(value.substring(0, 2), 16) + ', ';\n    result += parseInt(value.substring(2, 4), 16) + ', ';\n    result += parseInt(value.substring(4, 6), 16);\n    result += ', 100)';\n    return result;\n  },\n  getObject: function getObject(value) {\n    var result = {\n      red: parseInt(value.substring(0, 2), 16),\n      green: parseInt(value.substring(2, 4), 16),\n      blue: parseInt(value.substring(4, 6), 16)\n    };\n    return result;\n  }\n};\nvalue_sets.google_color = {\n  regex: '(?:red|pink|purple|deeppurple|indigo|blue|lightblue|cyan|teal|green|lightgreen|lime|yellow|amber|orange|deeporange|brown|grey|bluegrey|black|white|rd|pk|pe|dp|io|be|lb|cn|tl|gn|lg|le|yw|ar|oe|de|bn|gy|by|bk|we)(?:[1-9]00|50)?',\n  values: {\n    rd: 'F44336',\n    rd50: 'FFEBEE',\n    rd100: 'FFCDD2',\n    rd200: 'EF9A9A',\n    rd300: 'E57373',\n    rd400: 'EF5350',\n    rd500: 'F44336',\n    rd600: 'E53935',\n    rd700: 'D32F2F',\n    rd800: 'C62828',\n    rd900: 'B71C1C',\n    //Red\n    red: 'F44336',\n    red50: 'FFEBEE',\n    red100: 'FFCDD2',\n    red200: 'EF9A9A',\n    red300: 'E57373',\n    red400: 'EF5350',\n    red500: 'F44336',\n    red600: 'E53935',\n    red700: 'D32F2F',\n    red800: 'C62828',\n    red900: 'B71C1C',\n    //Red\n    pk: 'E91E63',\n    pk50: 'FCE4EC',\n    pk100: 'F8BBD0',\n    pk200: 'F48FB1',\n    pk300: 'F06292',\n    pk400: 'EC407A',\n    pk500: 'E91E63',\n    pk600: 'D81B60',\n    pk700: 'C2185B',\n    pk800: 'AD1457',\n    pk900: '880E4F',\n    //Pink\n    pink: 'E91E63',\n    pink50: 'FCE4EC',\n    pink100: 'F8BBD0',\n    pink200: 'F48FB1',\n    pink300: 'F06292',\n    pink400: 'EC407A',\n    pink500: 'E91E63',\n    pink600: 'D81B60',\n    pink700: 'C2185B',\n    pink800: 'AD1457',\n    pink900: '880E4F',\n    //Pink\n    pe: '9C27B0',\n    pe50: 'F3E5F5',\n    pe100: 'E1BEE7',\n    pe200: 'CE93D8',\n    pe300: 'BA68C8',\n    pe400: 'AB47BC',\n    pe500: '9C27B0',\n    pe600: '8E24AA',\n    pe700: '7B1FA2',\n    pe800: '6A1B9A',\n    pe900: '4A148C',\n    //Purple\n    purple: '9C27B0',\n    purple50: 'F3E5F5',\n    purple100: 'E1BEE7',\n    purple200: 'CE93D8',\n    purple300: 'BA68C8',\n    purple400: 'AB47BC',\n    purple500: '9C27B0',\n    purple600: '8E24AA',\n    purple700: '7B1FA2',\n    purple800: '6A1B9A',\n    purple900: '4A148C',\n    //Purple\n    dp: '673AB7',\n    dp50: 'EDE7F6',\n    dp100: 'D1C4E9',\n    dp200: 'B39DDB',\n    dp300: '9575CD',\n    dp400: '7E57C2',\n    dp500: '673AB7',\n    dp600: '5E35B1',\n    dp700: '512DA8',\n    dp800: '4527A0',\n    dp900: '311B92',\n    //Deep Purple\n    deeppurple: '673AB7',\n    deeppurple50: 'EDE7F6',\n    deeppurple100: 'D1C4E9',\n    deeppurple200: 'B39DDB',\n    deeppurple300: '9575CD',\n    deeppurple400: '7E57C2',\n    deeppurple500: '673AB7',\n    deeppurple600: '5E35B1',\n    deeppurple700: '512DA8',\n    deeppurple800: '4527A0',\n    deeppurple900: '311B92',\n    //Deep Purple\n    io: '3F51B5',\n    io50: 'E8EAF6',\n    io100: 'C5CAE9',\n    io200: '9FA8DA',\n    io300: '7986CB',\n    io400: '5C6BC0',\n    io500: '3F51B5',\n    io600: '3949AB',\n    io700: '303F9F',\n    io800: '283593',\n    io900: '1A237E',\n    //Indigo\n    indigo: '3F51B5',\n    indigo50: 'E8EAF6',\n    indigo100: 'C5CAE9',\n    indigo200: '9FA8DA',\n    indigo300: '7986CB',\n    indigo400: '5C6BC0',\n    indigo500: '3F51B5',\n    indigo600: '3949AB',\n    indigo700: '303F9F',\n    indigo800: '283593',\n    indigo900: '1A237E',\n    //Indigo\n    be: '2196F3',\n    be50: 'E3F2FD',\n    be100: 'BBDEFB',\n    be200: '90CAF9',\n    be300: '64B5F6',\n    be400: '42A5F5',\n    be500: '2196F3',\n    be600: '1E88E5',\n    be700: '1976D2',\n    be800: '1565C0',\n    be900: '0D47A1',\n    //Blue\n    blue: '2196F3',\n    blue50: 'E3F2FD',\n    blue100: 'BBDEFB',\n    blue200: '90CAF9',\n    blue300: '64B5F6',\n    blue400: '42A5F5',\n    blue500: '2196F3',\n    blue600: '1E88E5',\n    blue700: '1976D2',\n    blue800: '1565C0',\n    blue900: '0D47A1',\n    //Blue\n    lb: '03A9F4',\n    lb50: 'E1F5FE',\n    lb100: 'B3E5FC',\n    lb200: '81D4FA',\n    lb300: '4FC3F7',\n    lb400: '29B6F6',\n    lb500: '03A9F4',\n    lb600: '039BE5',\n    lb700: '0288D1',\n    lb800: '0277BD',\n    lb900: '01579B',\n    //Light Blue\n    lightblue: '03A9F4',\n    lightblue50: 'E1F5FE',\n    lightblue100: 'B3E5FC',\n    lightblue200: '81D4FA',\n    lightblue300: '4FC3F7',\n    lightblue400: '29B6F6',\n    lightblue500: '03A9F4',\n    lightblue600: '039BE5',\n    lightblue700: '0288D1',\n    lightblue800: '0277BD',\n    lightblue900: '01579B',\n    //Light Blue\n    cn: '00BCD4',\n    cn50: 'E0F7FA',\n    cn100: 'B2EBF2',\n    cn200: '80DEEA',\n    cn300: '4DD0E1',\n    cn400: '26C6DA',\n    cn500: '00BCD4',\n    cn600: '00ACC1',\n    cn700: '0097A7',\n    cn800: '00838F',\n    cn900: '006064',\n    //Cyan\n    cyan: '00BCD4',\n    cyan50: 'E0F7FA',\n    cyan100: 'B2EBF2',\n    cyan200: '80DEEA',\n    cyan300: '4DD0E1',\n    cyan400: '26C6DA',\n    cyan500: '00BCD4',\n    cyan600: '00ACC1',\n    cyan700: '0097A7',\n    cyan800: '00838F',\n    cyan900: '006064',\n    //Cyan\n    tl: '009688',\n    tl50: 'E0F2F1',\n    tl100: 'B2DFDB',\n    tl200: '80CBC4',\n    tl300: '4DB6AC',\n    tl400: '26A69A',\n    tl500: '009688',\n    tl600: '00897B',\n    tl700: '00796B',\n    tl800: '00695C',\n    tl900: '004D40',\n    //Teal\n    teal: '009688',\n    teal50: 'E0F2F1',\n    teal100: 'B2DFDB',\n    teal200: '80CBC4',\n    teal300: '4DB6AC',\n    teal400: '26A69A',\n    teal500: '009688',\n    teal600: '00897B',\n    teal700: '00796B',\n    teal800: '00695C',\n    teal900: '004D40',\n    //Teal\n    gn: '4CAF50',\n    gn50: 'E8F5E9',\n    gn100: 'C8E6C9',\n    gn200: 'A5D6A7',\n    gn300: '81C784',\n    gn400: '66BB6A',\n    gn500: '4CAF50',\n    gn600: '43A047',\n    gn700: '388E3C',\n    gn800: '2E7D32',\n    gn900: '1B5E20',\n    //Green\n    green: '4CAF50',\n    green50: 'E8F5E9',\n    green100: 'C8E6C9',\n    green200: 'A5D6A7',\n    green300: '81C784',\n    green400: '66BB6A',\n    green500: '4CAF50',\n    green600: '43A047',\n    green700: '388E3C',\n    green800: '2E7D32',\n    green900: '1B5E20',\n    //Green\n    lg: '8BC34A',\n    lg50: 'F1F8E9',\n    lg100: 'DCEDC8',\n    lg200: 'C5E1A5',\n    lg300: 'AED581',\n    lg400: '9CCC65',\n    lg500: '8BC34A',\n    lg600: '7CB342',\n    lg700: '689F38',\n    lg800: '558B2F',\n    lg900: '33691E',\n    //Light Green\n    lightgreen: '8BC34A',\n    lightgreen50: 'F1F8E9',\n    lightgreen100: 'DCEDC8',\n    lightgreen200: 'C5E1A5',\n    lightgreen300: 'AED581',\n    lightgreen400: '9CCC65',\n    lightgreen500: '8BC34A',\n    lightgreen600: '7CB342',\n    lightgreen700: '689F38',\n    lightgreen800: '558B2F',\n    lightgreen900: '33691E',\n    //Light Green\n    le: 'CDDC39',\n    le50: 'F9FBE7',\n    le100: 'F0F4C3',\n    le200: 'E6EE9C',\n    le300: 'DCE775',\n    le400: 'D4E157',\n    le500: 'CDDC39',\n    le600: 'C0CA33',\n    le700: 'AFB42B',\n    le800: '9E9D24',\n    le900: '827717',\n    //Lime\n    lime: 'CDDC39',\n    lime50: 'F9FBE7',\n    lime100: 'F0F4C3',\n    lime200: 'E6EE9C',\n    lime300: 'DCE775',\n    lime400: 'D4E157',\n    lime500: 'CDDC39',\n    lime600: 'C0CA33',\n    lime700: 'AFB42B',\n    lime800: '9E9D24',\n    lime900: '827717',\n    //Lime\n    yw: 'FFEB3B',\n    yw50: 'FFFDE7',\n    yw100: 'FFF9C4',\n    yw200: 'FFF59D',\n    yw300: 'FFF176',\n    yw400: 'FFEE58',\n    yw500: 'FFEB3B',\n    yw600: 'FDD835',\n    yw700: 'FBC02D',\n    yw800: 'F9A825',\n    yw900: 'F57F17',\n    //Yellow\n    yellow: 'FFEB3B',\n    yellow50: 'FFFDE7',\n    yellow100: 'FFF9C4',\n    yellow200: 'FFF59D',\n    yellow300: 'FFF176',\n    yellow400: 'FFEE58',\n    yellow500: 'FFEB3B',\n    yellow600: 'FDD835',\n    yellow700: 'FBC02D',\n    yellow800: 'F9A825',\n    yellow900: 'F57F17',\n    //Yellow\n    ar: 'FFC107',\n    ar50: 'FFF8E1',\n    ar100: 'FFECB3',\n    ar200: 'FFE082',\n    ar300: 'FFD54F',\n    ar400: 'FFCA28',\n    ar500: 'FFC107',\n    ar600: 'FFB300',\n    ar700: 'FFA000',\n    ar800: 'FF8F00',\n    ar900: 'FF6F00',\n    //Amber\n    amber: 'FFC107',\n    amber50: 'FFF8E1',\n    amber100: 'FFECB3',\n    amber200: 'FFE082',\n    amber300: 'FFD54F',\n    amber400: 'FFCA28',\n    amber500: 'FFC107',\n    amber600: 'FFB300',\n    amber700: 'FFA000',\n    amber800: 'FF8F00',\n    amber900: 'FF6F00',\n    //Amber\n    oe: 'FF9800',\n    oe50: 'FFF3E0',\n    oe100: 'FFE0B2',\n    oe200: 'FFCC80',\n    oe300: 'FFB74D',\n    oe400: 'FFA726',\n    oe500: 'FF9800',\n    oe600: 'FB8C00',\n    oe700: 'F57C00',\n    oe800: 'EF6C00',\n    oe900: 'E65100',\n    //Orange\n    orange: 'FF9800',\n    orange50: 'FFF3E0',\n    orange100: 'FFE0B2',\n    orange200: 'FFCC80',\n    orange300: 'FFB74D',\n    orange400: 'FFA726',\n    orange500: 'FF9800',\n    orange600: 'FB8C00',\n    orange700: 'F57C00',\n    orange800: 'EF6C00',\n    orange900: 'E65100',\n    //Orange\n    de: 'FF5722',\n    de50: 'FBE9E7',\n    de100: 'FFCCBC',\n    de200: 'FFAB91',\n    de300: 'FF8A65',\n    de400: 'FF7043',\n    de500: 'FF5722',\n    de600: 'F4511E',\n    de700: 'E64A19',\n    de800: 'D84315',\n    de900: 'BF360C',\n    //Deep Orange\n    deeporange: 'FF5722',\n    deeporange50: 'FBE9E7',\n    deeporange100: 'FFCCBC',\n    deeporange200: 'FFAB91',\n    deeporange300: 'FF8A65',\n    deeporange400: 'FF7043',\n    deeporange500: 'FF5722',\n    deeporange600: 'F4511E',\n    deeporange700: 'E64A19',\n    deeporange800: 'D84315',\n    deeporange900: 'BF360C',\n    //Deep Orange\n    bn: '795548',\n    bn50: 'EFEBE9',\n    bn100: 'D7CCC8',\n    bn200: 'BCAAA4',\n    bn300: 'A1887F',\n    bn400: '8D6E63',\n    bn500: '795548',\n    bn600: '6D4C41',\n    bn700: '5D4037',\n    bn800: '4E342E',\n    bn900: '3E2723',\n    //Brown\n    brown: '795548',\n    brown50: 'EFEBE9',\n    brown100: 'D7CCC8',\n    brown200: 'BCAAA4',\n    brown300: 'A1887F',\n    brown400: '8D6E63',\n    brown500: '795548',\n    brown600: '6D4C41',\n    brown700: '5D4037',\n    brown800: '4E342E',\n    brown900: '3E2723',\n    //Brown\n    gy: '9E9E9E',\n    gy50: 'FAFAFA',\n    gy100: 'F5F5F5',\n    gy200: 'EEEEEE',\n    gy300: 'E0E0E0',\n    gy400: 'BDBDBD',\n    gy500: '9E9E9E',\n    gy600: '757575',\n    gy700: '616161',\n    gy800: '424242',\n    gy900: '212121',\n    //Grey\n    grey: '9E9E9E',\n    grey50: 'FAFAFA',\n    grey100: 'F5F5F5',\n    grey200: 'EEEEEE',\n    grey300: 'E0E0E0',\n    grey400: 'BDBDBD',\n    grey500: '9E9E9E',\n    grey600: '757575',\n    grey700: '616161',\n    grey800: '424242',\n    grey900: '212121',\n    //Grey\n    by: '607D8B',\n    by50: 'ECEFF1',\n    by100: 'CFD8DC',\n    by200: 'B0BEC5',\n    by300: '90A4AE',\n    by400: '78909C',\n    by500: '607D8B',\n    by600: '546E7A',\n    by700: '455A64',\n    by800: '37474F',\n    by900: '263238',\n    //Blue Grey\n    bluegrey: '607D8B',\n    bluegrey50: 'ECEFF1',\n    bluegrey100: 'CFD8DC',\n    bluegrey200: 'B0BEC5',\n    bluegrey300: '90A4AE',\n    bluegrey400: '78909C',\n    bluegrey500: '607D8B',\n    bluegrey600: '546E7A',\n    bluegrey700: '455A64',\n    bluegrey800: '37474F',\n    bluegrey900: '263238',\n    //Blue Grey\n    bk: '000000',\n    //Black\n    black: '000000',\n    //Black\n    we: 'FFFFFF',\n    //White\n    white: 'FFFFFF' //White\n\n  },\n  examples: ['yw', 'rd500'],\n  getValue: function getValue(value) {\n    return value_sets.hex_color.getValue(this.values[value]);\n  },\n  getObject: function getObject(value) {\n    return value_sets.hex_color.getObject(this.values[value]);\n  }\n};\nvalue_sets.rgb_color = {\n  regex: value_sets.integer_0_255.regex + '(?:_' + value_sets.integer_0_255.regex + '){2}',\n  examples: ['0_0_0', '10_10_10', '100_100_100', '255_255_255'],\n  getValue: function getValue(value) {\n    var splits = value.split('_');\n    if (!(splits && splits.length == 3)) return null;\n    var result = 'rgba(';\n    result += splits[0] + ', ';\n    result += splits[1] + ', ';\n    result += splits[2];\n    result += ', 100)';\n    return result;\n  },\n  getObject: function getObject(value) {\n    var splits = value.split('_');\n    if (!(splits && splits.length == 3)) return null;\n    var result = {\n      red: splits[0],\n      green: splits[1],\n      blue: splits[2]\n    };\n    return result;\n  }\n};\nvalue_sets.rgba_color = {\n  regex: '(?:' + value_sets.google_color.regex + '|' + value_sets.hex_color.regex + '|' + value_sets.rgb_color.regex + ')' + '(?:_' + value_sets.opacity.regex + ')?',\n  examples: ['rd_0', 'yw500_25', '123456_50', '255_255_255_100', '255_255_255'],\n  getValue: function getValue(value) {\n    var regex = new RegExp('(?:(' + value_sets.google_color.regex + ')|(' + value_sets.hex_color.regex + ')|(' + value_sets.rgb_color.regex + '))' + '(?:_(' + value_sets.opacity.regex + '))?');\n    var matches = value.match(regex);\n    var object_rgb, opacity, matches_each;\n\n    if (matches[1]) {\n      var regex_each = new RegExp('(' + value_sets.google_color.regex + ')(?:_(' + value_sets.opacity.regex + '))?');\n      matches_each = value.match(regex_each);\n      object_rgb = value_sets.google_color.getObject(matches_each[1]);\n      if (matches_each[2]) opacity = value_sets.opacity.getValue(matches_each[2]);\n    } else if (matches[2]) {\n      var regex_each = new RegExp('(' + value_sets.hex_color.regex + ')(?:_(' + value_sets.opacity.regex + '))?');\n      matches_each = value.match(regex_each);\n      object_rgb = value_sets.hex_color.getObject(matches_each[1]);\n      if (matches_each[2]) opacity = value_sets.opacity.getValue(matches_each[2]);\n    } else if (matches[3]) {\n      var regex_each = new RegExp('(' + value_sets.rgb_color.regex + ')(?:_(' + value_sets.opacity.regex + '))?');\n      matches_each = value.match(regex_each);\n      object_rgb = value_sets.rgb_color.getObject(matches_each[1]);\n      if (matches_each[2]) opacity = value_sets.opacity.getValue(matches_each[2]);\n    }\n\n    if (!object_rgb) return null;\n\n    if (matches_each[2]) {\n      return 'rgba(' + object_rgb.red + ',' + object_rgb.green + ',' + object_rgb.blue + ',' + opacity + ')';\n    } else {\n      return 'rgb(' + object_rgb.red + ',' + object_rgb.green + ',' + object_rgb.blue + ')';\n    }\n  }\n}; // GRADIENT\n\nvalue_sets.gradient = {\n  regex: '(?:' + value_sets.gradient_kind.regex + '_)?' + '(?:' + value_sets.degree.regex + ')((?:_' + value_sets.rgba_color.regex + '){2,})',\n  examples: ['l_30d_rd_oe_yw_gn_be_io_pe'],\n  getValue: function getValue(value) {\n    var result = '';\n    var regex = new RegExp('(?:(' + value_sets.gradient_kind.regex + ')_)?(' + value_sets.degree.regex + ')((?:_' + value_sets.rgba_color.regex + '){2,})');\n    var matches = value.match(regex);\n    var gradient_kind = null,\n        degree = null,\n        hour = null,\n        rgba_colors = [];\n    if (matches[1]) gradient_kind = value_sets.gradient_kind.getValue(matches[1]);\n    if (matches[2]) degree = value_sets.degree.getValue(matches[2]);\n\n    if (matches[3]) {\n      var regex_rgba_color = new RegExp('(?:_(' + value_sets.rgba_color.regex + '))(?:_(' + value_sets.rgba_color.regex + '))');\n      var matches_rgba_color = matches[3].match(regex_rgba_color);\n\n      for (var i = 1; i < matches_rgba_color.length; i++) {\n        var rgba_color = value_sets.rgba_color.getValue(matches_rgba_color[i]);\n        if (rgba_color) rgba_colors.push(rgba_color);\n      }\n    }\n\n    if (gradient_kind && degree && rgba_colors.length >= 1) {\n      return gradient_kind + '(' + degree + ',' + rgba_colors.join(', ') + ')';\n    }\n  }\n}; // SHADOW\n\nvalue_sets.shadow = {\n  regex: value_sets.integer_3digits.regex + '(?:_' + value_sets.integer_3digits.regex + '){0,3}(?:_' + value_sets.rgba_color.regex + ')',\n  examples: ['2_2_bk_30', '2_2_2_000000_50'],\n  getValue: function getValue(value) {\n    var result = '';\n    var regex = new RegExp('(' + value_sets.integer_3digits.regex + ')(?:_(' + value_sets.integer_3digits.regex + '))?(?:_(' + value_sets.integer_3digits.regex + '))?(?:_(' + value_sets.integer_3digits.regex + '))?(?:_(' + value_sets.rgba_color.regex + '))');\n    var matches = value.match(regex);\n    if (!matches) return null;\n    var shadows = [];\n\n    for (var i = 1; i <= 4; i++) {\n      shadows.push(matches[i]);\n    }\n\n    result = shadows.join('px ') + value_sets.rgba_color.getValue(matches[5]);\n    return result;\n  }\n}; // URL\n\nvalue_sets.file_name = {\n  regex: '[a-zA-Z0-9_-]+',\n  examples: ['aA0_zZ9'],\n  getValue: function getValue(value) {\n    return value;\n  }\n};\nvalue_sets.image_extension = {\n  regex: '(?:png|jpg|gif|PNG|JPG|GIF)',\n  examples: ['png', 'GIF'],\n  getValue: function getValue(value) {\n    return value;\n  }\n};\nvalue_sets.image_url = {\n  regex: value_sets.file_name.regex + '([__]' + value_sets.file_name.regex + ')*' + '_' + value_sets.image_extension.regex,\n  examples: ['images__image_png'],\n  getValue: function getValue(value) {\n    return value;\n  }\n}; // VARIABLE\n\nvalue_sets.variable = {\n  regex: '(?:[a-z]+)(?:[A-Z][a-z]+)*',\n  examples: ['linear', 'ease', 'easeIn', 'easeOut', 'easeInOut'],\n  getValue: function getValue(value) {\n    var result = value.replace(/[A-Z]/g, function (letter, index) {\n      return index == 0 ? letter.toLowerCase() : '-' + letter.toLowerCase();\n    }).replace(/\\s+/g, '');\n    return result;\n  }\n};\nvalue_sets.variables = {\n  regex: value_sets.variable.regex + '(?:_' + value_sets.variable.regex + ')*',\n  examples: ['width_backgroundColor'],\n  getValue: function getValue(value) {\n    var splits = value.split('_');\n    var result = '';\n\n    for (var i = 0; i < splits.length; i++) {\n      if (result.length >= 1) {\n        result += ' ';\n      }\n\n      result += value_sets.variable.getValue(splits[i]);\n    }\n\n    return result;\n  }\n};\n\nvar test = function test() {\n  // Loop value_sets\n  for (var key in value_sets) {\n    console.log('\\n\\n' + key); // Set value_set\n\n    var value_set = value_sets[key];\n    if (!value_set) continue; // Set examples\n\n    var examples = value_set.examples;\n    if (!examples) continue; // Loop examples\n\n    for (var i = 0; i < examples.length; i++) {\n      var example = examples[i];\n      var result = value_set.getValue(example);\n      if (!(result == undefined || result == null)) console.log('example', example, 'result', result);else console.error('example', example, 'result', result);\n    }\n  }\n};\n\nif (debug) test();\n\n//# sourceURL=webpack:///./src/value_sets.js?");
+
+/***/ }),
+
+/***/ "./src/watch.js":
+/*!**********************!*\
+  !*** ./src/watch.js ***!
+  \**********************/
+/*! exports provided: watch */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"watch\", function() { return watch; });\n/* harmony import */ var _start_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./start.js */ \"./src/start.js\");\n// require(\"./paint.js\");\n\n\nif (typeof MutationObserver !== 'undefined') {\n  var watcher = new MutationObserver(function (mutations, watcher) {\n    mutations.forEach(function (mutation) {\n      var element = mutation.target;\n      if (element) Object(_start_js__WEBPACK_IMPORTED_MODULE_0__[\"startRootElement\"])(element);\n    });\n  });\n}\n\nvar watch = function watch() {\n  var elements,\n      count = 0;\n  var interval = setInterval(function () {\n    count++;\n\n    if (count >= 300) {\n      clearInterval(interval);\n    } // count all classes\n\n\n    if (document.querySelectorAll('[cssist]').length >= 1) elements = document.querySelectorAll('[cssist]');else elements = document.querySelectorAll('body');\n\n    if (elements.length >= 1) {\n      clearInterval(interval);\n\n      for (var i = 0; i < elements.length; i++) {\n        var element = elements[i];\n        Object(_start_js__WEBPACK_IMPORTED_MODULE_0__[\"startRootElement\"])(element);\n        if (watcher) watcher.observe(element, {\n          attributes: true,\n          childList: true\n        });\n      }\n    }\n  }, 10);\n};\n\n//# sourceURL=webpack:///./src/watch.js?");
+
+/***/ })
+
+/******/ });

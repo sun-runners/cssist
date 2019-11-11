@@ -1,0 +1,23 @@
+export var event_set = { // CSS Pseudo-classes
+  'a':'active',
+  'c':'checked',
+  'd':'disabled',
+  'ey':'empty',
+  'e':'enabled',
+  'f':'focus',
+  'h':'hover',
+  'ir':'in-range',
+  'i':'invalid',
+  'l':'link',
+  'oot':'only-of-type',
+  'oc':'only-child',
+  'o':'optional',
+  'oor':'out-of-range',
+  'ro':'read-only',
+  'rw':'read-write',
+  'r':'required',
+  'r':'root',
+  't':'target',
+  'v':'valid',
+  'vd':'visited'
+};
