@@ -6,5 +6,10 @@ initialize();
 import { watch } from './watch.js'
 watch();
 
-import * as get from './get.js'
-cssist.get = get;
+import { download } from './download.js'
+window.cssist.download = download;
+
+import { testSelector, testElement, testRootElement } from './test.js'
+window.cssist.testSelector = testSelector;
+window.cssist.testElement = testElement;
+window.cssist.testRootElement = testRootElement;

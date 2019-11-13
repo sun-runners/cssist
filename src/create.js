@@ -3,7 +3,7 @@ import { checkClassSet } from './check.js'
 
 
 
-var createCSS = function(css){
+var createCss = function(css){
   // Set property and value
   var result = getPropertyValue(css.property, css.value); if(!result){ css.valid = false; return css; }
   css.property = result.property;
@@ -27,11 +27,11 @@ export var createCssFromSelector = function(selector){
     css.csses = [];
     for(var i=0; i<selectors.length; i++){
       var css_i = getCssOfClass(selectors[i]);
-      css_i = createCSS(css_i);
+      css_i = createCss(css_i);
       css.csses.push(css_i);
     }
   }
-  else css = createCSS(css);
+  else css = createCss(css);
 
   // Set media_queries
   var media_queries = getMediaQueries(css.media_query);

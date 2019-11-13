@@ -7,11 +7,15 @@ import { class_sets } from './class_sets.js'
 
 
 // Variable Section
-var debug = true;
+var debug = false;
 
-var greeting = `// CSSIST
-// The following codes are automatically generated on `+new Date();
-greeting += '\n\n\n';
+var greeting = '/*' + '\n';
+greeting += 'CSSIST' + '\n';
+greeting += 'version : ' + package_json.version + '\n';
+greeting += 'date : ' + new Date() + '\n';
+greeting += 'The following codes are automatically generated.' + '\n';
+greeting += '*/\n\n\n';
+console.log(greeting);
 
 var cssist_default = {
   version: package_json.version,
@@ -41,7 +45,7 @@ export var initialize = function(){
   }
 
   // Method 1
-  // getStyleElement(window.cssist.stylesheet);
+  getStyleElement(window.cssist.stylesheet);
 
   // Method 2
   var sheet = getStyleSheet();
@@ -54,13 +58,6 @@ export var initialize = function(){
       sheet.addRule(css.selector, css.rules);
     }
   }
-
-  // Method 3
-  // if(sheet.insertRule) {
-  //   sheet.insertRule(window.cssist.stylesheet);
-  // } else {
-  //   sheet.addRule(css.selector, css.rules);
-  // }
 
   if(debug){
     window.value_sets = value_sets;

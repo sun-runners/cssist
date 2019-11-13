@@ -5,7 +5,7 @@ import { getStyleSheet } from './get.js'
 
 
 // Variable Section
-var debug = true;
+var debug = false;
 
 
 
@@ -22,7 +22,7 @@ if (typeof(MutationObserver) !== 'undefined') {
 
 
 
-export var startSelector = function(selector){
+export var startSelector = function(selector, is_test){
   if(debug) console.log('[start] startSelector', selector);
 
   // Create css
@@ -31,50 +31,58 @@ export var startSelector = function(selector){
   // Fail
   if(!(css&&css.valid)){
     cssist.selectors.fail.push(selector);
-    if(css) cssist.csses.fail.push(css); return;
+    if(css) cssist.csses.fail.push(css);
+    return;
   }
 
   // Success
-  // Create code
-  css.code = createCodeFromCss(css);
+  css.code = createCodeFromCss(css); // Create code
 
-  cssist.selectors.success.push(selector);
-  cssist.csses.success.push(css);
-  cssist.stylesheet += css.code;
+  if(checkSelector(selector)){
+    cssist.selectors.success.push(selector);
+    cssist.csses.success.push(css);
+    cssist.stylesheet += css.code;
 
-  // Apply css
-  var sheet = getStyleSheet();
-  if(sheet.insertRule) {
-    sheet.insertRule(css.code);
-	} else {
-		sheet.addRule(css.selector, css.rules);
-	}
-  localStorage.setItem('cssist', JSON.stringify(cssist));
+    // Apply css
+    var sheet = getStyleSheet();
+    if(sheet.insertRule) {
+      sheet.insertRule(css.code);
+    } else {
+      sheet.addRule(css.selector, css.rules);
+    }
+    localStorage.setItem('cssist', JSON.stringify(cssist));
+  }
+
+  return css;
 }
 
 
 
-export var startElement = function(element){
+export var startElement = function(element, is_test){
   // Check element
   if(!(element && element.classList && element.classList.length>=1)) return;
 
   // Set classes
   var selectors = element.classList;
+  var csses = [];
 
   for(var i=0; i<selectors.length; i++){
     var selector = selectors[i];
     // Check selector
-    if(!checkSelector(selector)) continue;
-    startSelector(selector);
+    if(!checkSelector(selector)){ if(!is_test) continue; }
+    var css = startSelector(selector, is_test);
+    csses.push(css);
   }
 
   // Set mutation
   if(watcher) watcher.observe(element, { attributes: true,  attributeFilter: ['class'] });
+
+  return csses;
 }
 
 
 
-export var startRootElement = function(element){
+export var startRootElement = function(element, is_test){
   // Check element
   if( !(element && typeof element === 'object' && element.nodeType && element.nodeType !== 8 && element.tagName) ) return;
 

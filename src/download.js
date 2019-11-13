@@ -1,13 +1,20 @@
-require("./get.js");
-(function(){
-  cssist.download = function(){
-    var style_element = cssist.get.styleElement();
-    var element = document.createElement('a');
-    element.setAttribute('href', 'data:text/css;charset=utf-8,' + encodeURIComponent(style_element.innerHTML));
-    element.setAttribute('download', 'cssist.css');
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-  };
-})();
+export var download = function(){
+
+  // Set content
+  var stylesheet = window.cssist.stylesheet
+
+  // Create a tag
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/css;charset=utf-8,' + encodeURIComponent(stylesheet));
+  element.setAttribute('download', 'cssist.css');
+  element.style.display = 'none';
+
+  // Add a tag
+  document.body.appendChild(element);
+
+  // Download with a tag
+  element.click();
+
+  // Remove a tag
+  document.body.removeChild(element);
+}; 
