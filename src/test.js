@@ -3,7 +3,7 @@ import { getPropertyValue, getEvent, getMediaQueries } from './get.js'
 
 
 
-export var testSelector = function(element){ return startSelector(element, true); };
+export var testSelector = function(selector){ return startSelector(selector, true); };
 
 export var testElement = function(element){ return startElement(element, true); };
 

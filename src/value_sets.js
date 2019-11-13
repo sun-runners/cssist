@@ -498,8 +498,6 @@ value_sets.flexbox_flex = {
     if (!(matches)) return null;
     var flexes = [];
     for (var i = 1; i <= 3; i++) {
-      // console.log(i);
-      // console.log(matches[i]);
       if (!matches[i]) continue;
       if (i == 3){
         flexes.push(value_sets.length.getValue(matches[i]));
@@ -508,7 +506,6 @@ value_sets.flexbox_flex = {
         flexes.push(value_sets.integer.getValue(matches[i]));
       }
     }
-    // console.log(flexes);
     result = flexes.join(' ');
     return result;
   }
@@ -565,7 +562,6 @@ value_sets.translate_length_calc_2D = {
     var matches_X = value.match(regex_X);
     if (matches_X) {
       result += value_sets.length_calc.getValue(matches_X[0]);
-      // console.log(result)
     } else {
       result += 0;
     }
@@ -578,7 +574,6 @@ value_sets.translate_length_calc_2D = {
       result += 0;
     }
     result += ' )';
-    // console.log(result)
     return result;
   }
 };
