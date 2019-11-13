@@ -22,7 +22,7 @@
         ng-repeat="x in [50, 75, 100, 125, 150]"
         ng-action
         ng-class="[{'jello animated':$hover||$click }]">
-          <span class="cen">
+          <span class="cen-xy">
             .w-{{x}}px
           </span>
         </div>
@@ -34,7 +34,7 @@
             <div class="d-b f-l w-{{x}} h-75px b-we m-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
             ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-              <span class="cen">
+              <span class="cen-xy">
                 .w-{{x}}
               </span>
             </div>
@@ -48,7 +48,7 @@
             <div class="d-b f-l w-100D{{x}} h-75px b-we mt-3px mb-3px bor-3px bs-2_4_12_bk_50 tn-500ms"
             ng-action ng-repeat="y in _.range(x)"
             ng-class="[{'jello animated':$hover||$click }]">
-              <span class="cen">
+              <span class="cen-xy">
                 .w-100D{{x}}
               </span>
             </div>
@@ -62,7 +62,7 @@
         ng-repeat="x in [50, 75, 100, 125, 150]"
         ng-action
         ng-class="[{'jello animated':$hover||$click }]">
-          <span class="cen">
+          <span class="cen-xy">
             .h-{{x}}px
           </span>
         </div>
@@ -73,7 +73,7 @@
         ng-repeat="x in [1, 2, 3, 4, 5]"
         ng-action
         ng-class="[{'jello animated':$hover||$click }]">
-          <span class="cen">
+          <span class="cen-xy">
             .h-50pxM{{x}}
           </span>
         </div>
@@ -89,7 +89,7 @@
           {w:'100', h:'50px'}]"
           ng-action
           ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               .w-{{x.w}} .h-{{x.h}}
             </span>
           </div>
@@ -102,7 +102,7 @@
         ng-repeat="x in [10, 20, 40, 60, 80, 100]"
         ng-action
         ng-class="[{'jello animated':$hover||$click }]">
-          <span class="cen">
+          <span class="cen-xy">
             .o-{{x}}
           </span>
         </div>
@@ -115,7 +115,7 @@
         ng-mouseenter="hover_background_color[x] = true;" ng-mouseleave="hover_background_color[x] = false;"
         ng-action
         ng-class="[{'jello animated':$hover||$click }]">
-          <span class="cen c-333333">
+          <span class="cen-xy c-333333">
             .b-{{x}}
           </span>
         </div>
@@ -126,7 +126,7 @@
         ng-repeat="x in ['CDDC39', 'FFEB3B', 'FFC107', 'FF9800', 'FF5722']"
         ng-action
         ng-class="[{'jello animated':$hover||$click }]">
-          <span class="cen">
+          <span class="cen-xy">
             .b-{{x}}
           </span>
         </div>
@@ -137,7 +137,7 @@
         ng-repeat="x in [20, 40, 60, 80, 100]"
         ng-action
         ng-class="[{'jello animated':$hover||$click }]">
-          <span class="cen">
+          <span class="cen-xy">
             .b-we_{{x}}
           </span>
         </div>
@@ -148,7 +148,7 @@
         ng-repeat="x in ['205_220_57', '255_235_59', '255_193_7', '255_152_0', '255_87_34']"
         ng-action
         ng-class="[{'jello animated':$hover||$click }]">
-          <span class="cen">
+          <span class="cen-xy">
             .b-{{x}}
           </span>
         </div>
@@ -159,7 +159,7 @@
         ng-repeat="x in [20, 40, 60, 80, 100]"
         ng-action
         ng-class="[{'jello animated':$hover||$click }]">
-          <span class="cen">
+          <span class="cen-xy">
             .b-255_255_255_{{x}}
           </span>
         </div>
@@ -171,7 +171,7 @@
         ng-repeat="x in [1,2,3,4,5]"
         ng-action
         ng-class="[{'jello animated':$hover||$click }]">
-          <span class="cen">
+          <span class="cen-xy">
             .bo-{{x}}px
           </span>
         </div>
@@ -183,7 +183,7 @@
         ng-repeat="x in [2,4,6,8,10]"
         ng-action
         ng-class="[{'jello animated':$hover||$click }]">
-          <span class="cen">
+          <span class="cen-xy">
             .bor-{{x}}px
           </span>
         </div>
@@ -194,7 +194,7 @@
         ng-repeat="x in [20, 40, 60, 80, 100]"
         ng-action
         ng-class="[{'jello animated':$hover||$click }]">
-          <span class="cen">
+          <span class="cen-xy">
             .bor-{{x}}
           </span>
         </div>
@@ -205,7 +205,7 @@
         ng-repeat="x in ['CDDC39', 'FFEB3B', 'FFC107', 'FF9800', 'FF5722']"
         ng-action
         ng-class="[{'jello animated':$hover||$click }]">
-          <span class="cen">
+          <span class="cen-xy">
             .bo-{{x}}
           </span>
         </div>
@@ -215,10 +215,10 @@
       <content-dir title="'Top Bottom Left Right Cen'" description="'Description will be here soon.'">
         <div class="w-100vwD3 h-100vhD2 b-bk_10">
           <div class="p-a d-ib {{x}} w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms"
-          ng-repeat="x in ['t-0 l-0', 't-0 r-0', 'b-0 l-0', 'b-0 r-0', 't-0 cen-x', 'l-0 cen-y', 'b-0 cen-x', 'r-0 cen-y', 'cen']"
+          ng-repeat="x in ['t-0 l-0', 't-0 r-0', 'b-0 l-0', 'b-0 r-0', 't-0 cen-x', 'l-0 cen-y', 'b-0 cen-x', 'r-0 cen-y', 'cen-xy']"
           ng-action
           ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               {{x}}
             </span>
           </div>
@@ -231,7 +231,7 @@
         ng-repeat="x in [12, 15, 18, 21, 24]"
         ng-action
         ng-class="[{'jello animated':$hover||$click }]">
-          <span class="cen">
+          <span class="cen-xy">
             .f-{{x}}px
           </span>
         </div>
@@ -242,7 +242,7 @@
         ng-repeat="x in ['CDDC39', 'FFEB3B', 'FFC107', 'FF9800', 'FF5722']"
         ng-action
         ng-class="[{'jello animated':$hover||$click }]">
-          <span class="cen">
+          <span class="cen-xy">
             .c-{{x}}
           </span>
         </div>
@@ -253,7 +253,7 @@
         ng-repeat="x in ['100', '200', '300', '400', '500', '600', '700', '800', '900']"
         ng-action
         ng-class="[{'jello animated':$hover||$click }]">
-          <span class="cen">
+          <span class="cen-xy">
             .fw-{{x}}
           </span>
         </div>
@@ -266,7 +266,7 @@
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms"
             ng-repeat="x in [1,2,3,4]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item {{x}}
             </span>
           </div>
@@ -278,7 +278,7 @@
         <div class="d-fx fxd-rr w-100vh b-we pt-5px pb-5px">
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1,2,3,4]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item {{x}}
             </span>
           </div>
@@ -290,7 +290,7 @@
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms"
             ng-repeat="x in [1,2,3,4]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item {{x}}
             </span>
           </div>
@@ -302,7 +302,7 @@
         <div class="d-fx fxd-cr b-we pr-5px pl-5px">
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1,2,3,4]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item {{x}}
             </span>
           </div>
@@ -314,7 +314,7 @@
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms"
             ng-repeat="x in [1,2,3,4,5,6,7,8]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item {{x}}
             </span>
           </div>
@@ -326,7 +326,7 @@
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms"
             ng-repeat="x in [1,2,3,4,5,6,7,8]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item {{x}}
             </span>
           </div>
@@ -337,7 +337,7 @@
         <div class="d-fx fxw-wr w-100vh b-we pt-5px pb-5px">
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1,2,3,4,5,6,7,8]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item {{x}}
             </span>
           </div>
@@ -348,7 +348,7 @@
         <div class="d-fx jc-fxs w-100vh b-we pt-5px pb-5px">
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item {{x}}
             </span>
           </div>
@@ -359,7 +359,7 @@
         <div class="d-fx jc-fxe w-100vh b-we pt-5px pb-5px">
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item
             </span>
           </div>
@@ -370,7 +370,7 @@
         <div class="d-fx jc-c w-100vh b-we pt-5px pb-5px">
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item
             </span>
           </div>
@@ -381,7 +381,7 @@
         <div class="d-fx jc-sb w-100vh b-we pt-5px pb-5px">
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1,2]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item
             </span>
           </div>
@@ -392,7 +392,7 @@
         <div class="d-fx jc-sa w-100vh b-we pt-5px pb-5px">
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1,2]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item
             </span>
           </div>
@@ -403,7 +403,7 @@
         <div class="d-fx jc-se w-100vh b-we pt-5px pb-5px">
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1,2]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item
             </span>
           </div>
@@ -414,7 +414,7 @@
         <div class="d-fx ai-fxs h-50vh b-we pt-5px pb-5px">
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1,2]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item
             </span>
           </div>
@@ -425,7 +425,7 @@
         <div class="d-fx ai-fxe h-50vh b-we pt-5px pb-5px">
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1,2]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item
             </span>
           </div>
@@ -436,7 +436,7 @@
         <div class="d-fx ai-c h-50vh b-we pt-5px pb-5px">
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1,2]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item
             </span>
           </div>
@@ -447,7 +447,7 @@
         <div class="d-fx fxw-w ac-fxs h-50vh w-100px b-we pt-5px pb-5px">
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1,2]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item
             </span>
           </div>
@@ -458,7 +458,7 @@
         <div class="d-fx fxw-w ac-fxe h-50vh w-100px b-we pt-5px pb-5px">
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1,2]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item
             </span>
           </div>
@@ -469,7 +469,7 @@
         <div class="d-fx fxw-w ac-c h-50vh w-100px b-we pt-5px pb-5px">
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1,2]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item
             </span>
           </div>
@@ -480,7 +480,7 @@
         <div class="d-fx fxw-w ac-sb h-50vh w-110px b-we pt-5px pb-5px">
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1,2]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item
             </span>
           </div>
@@ -491,7 +491,7 @@
         <div class="d-fx fxw-w ac-sa h-50vh w-110px b-we pt-5px pb-5px">
           <div class="w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1,2]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item
             </span>
           </div>
@@ -502,7 +502,7 @@
         <div class="d-fx fxw-w ac-s h-50vh w-110px b-we pt-5px pb-5px">
           <div class="w-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [1,2]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               flex item
             </span>
           </div>
@@ -515,7 +515,7 @@
           {or: 4},{or: 1},{or: 2},{or: 5},{or: 3}
           ]" ng-action
             ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               .or-{{x.or}}
             </span>
           </div>
@@ -527,7 +527,7 @@
           <div class="w-100px h-100px fxg-{{x.fxg}} m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [
                 {fxg: 10},{fxg: 5},{fxg: 2}
                 ]" ng-action ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               .fxg-{{x.fxg}}
             </span>
           </div>
@@ -539,7 +539,7 @@
           <div class="w-{{x.w}} h-100px fxs-{{x.fxs}} m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [
                 {fxs: 2, w: '500px'},{fxs: 3, w: '500px'},{fxs: 4, w: '500px'}
                 ]" ng-action ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               .fxs-{{x.fxs}} .w-{{x.w}}
             </span>
           </div>
@@ -551,7 +551,7 @@
           <div class="w-100px h-100px fxb-{{x.fxb}} m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [
               {fxb: 40},{fxb: 'auto'},{fxb: '50px'}
               ]" ng-action ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               .fxb-{{x.fxb}}
             </span>
           </div>
@@ -563,7 +563,7 @@
           <div class="w-100px h-100px fx-{{x.fxg}}_{{x.fxs}}_{{x.fxb}} m-3px b-we bs-2_4_12_bk_50 tn-500ms" ng-repeat="x in [
               {fxg: 1, fxs: 1, fxb:'100px'}, {fxg: 2, fxs: 1, fxb:'60px'}, {fxg: 5, fxs: 2, fxb:'70px'},
               ]" ng-action ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               .fx-{{x.fxg}}_{{x.fxs}}_{{x.fxb}}
             </span>
           </div>
@@ -577,7 +577,7 @@
               ng-repeat="x in [
               {as: 'fxs'}, {as: 'fxe'}, {as: 'c'}, {as: 'bl'}, {as: 'stretch'}
               ]" ng-action ng-class="[{'jello animated':$hover||$click }]">
-            <span class="cen">
+            <span class="cen-xy">
               .as-{{x.as}}
             </span>
           </div>
@@ -588,7 +588,7 @@
         <div class="d-fx c-{{x}} fw-{{x}} w-100px h-100px m-3px b-we bs-2_4_12_bk_50 tn-500ms"
           ng-repeat="x in ['100', '200', '300']" ng-action
           ng-class="[{'jello animated':$hover||$click }]">
-          <span class="cen">
+          <span class="cen-xy">
             .fw-{{x}}
           </span>
         </div>
@@ -597,13 +597,13 @@
       <!-- Button -->
       <button class="p-a w-20 h-60px cen-y c-we l-0 z-2" ng-click="movePrev();">
         <div class="p-r w-100 h-100">
-          <i class="ion-arrow-left-b f-30px cen"></i>
+          <i class="ion-arrow-left-b f-30px cen-xy"></i>
           LEFT
         </div>
       </button>
       <button class="p-a w-20 h-60px cen-y c-we r-0 z-2" ng-click="moveNext();">
         <div class="p-r w-100 h-100">
-          <i class="ion-arrow-right-b f-30px cen"></i>
+          <i class="ion-arrow-right-b f-30px cen-xy"></i>
           RIGHT
         </div>
       </button>

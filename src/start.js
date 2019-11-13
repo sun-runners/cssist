@@ -1,6 +1,11 @@
 import { checkSelector } from './check.js'
 import { createCssFromSelector, createCodeFromCss } from './create.js'
-import { getStyleElement, getStyleSheet } from './get.js'
+import { getStyleSheet } from './get.js'
+
+
+
+// Variable Section
+var debug = true;
 
 
 
@@ -8,8 +13,8 @@ if (typeof(MutationObserver) !== 'undefined') {
   var watcher = new MutationObserver(function(mutations, watcher) {
     mutations.forEach(function(mutation) {
       var element = mutation.target;
-      if(element && element.lastClassName !== element.className && typeof element.className=='string')
-        startElement(element);
+      // For: Do not start when lastClassName == className
+      if(element && element.lastClassName !== element.className && typeof element.className=='string') startElement(element);
       element.lastClassName = element.className;
     });
   });
@@ -18,8 +23,7 @@ if (typeof(MutationObserver) !== 'undefined') {
 
 
 export var startSelector = function(selector){
-  // Check selector
-  if(!checkSelector(selector)) return;
+  if(debug) console.log('[start] startSelector', selector);
 
   // Create css
   var css = createCssFromSelector(selector);
@@ -38,10 +42,14 @@ export var startSelector = function(selector){
   cssist.csses.success.push(css);
   cssist.stylesheet += css.code;
 
-  // getStyleElement().innerHTML += css.code;
-
+  // Apply css
   var sheet = getStyleSheet();
-  sheet.insertRule(css.code);
+  if(sheet.insertRule) {
+    sheet.insertRule(css.code);
+	} else {
+		sheet.addRule(css.selector, css.rules);
+	}
+  localStorage.setItem('cssist', JSON.stringify(cssist));
 }
 
 
@@ -53,13 +61,15 @@ export var startElement = function(element){
   // Set classes
   var selectors = element.classList;
 
-  // Set mutation
-  if(watcher) watcher.observe(element, { attributes: true,  attributeFilter: ['class'] });
-
   for(var i=0; i<selectors.length; i++){
     var selector = selectors[i];
+    // Check selector
+    if(!checkSelector(selector)) continue;
     startSelector(selector);
   }
+
+  // Set mutation
+  if(watcher) watcher.observe(element, { attributes: true,  attributeFilter: ['class'] });
 }
 
 

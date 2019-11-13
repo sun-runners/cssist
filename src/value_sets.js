@@ -447,7 +447,7 @@ value_sets.length_calc = {
       var value = matches_each[2];
 
       // Get symbols
-      if (symbol) result += (i==0?'':' ')+value_sets.symbol.getValue(symbol)+' ';
+      if (symbol) result += (i==0?'':' ')+value_sets.symbol.getValue(symbol)+(i==0?'':' ');
       if (symbol=='D' || symbol=='M') { // Divide or Multiply (Don't need unit) ex 10 -> 10
         result += value;
       } else { // + or - (Need unit) ex 10->10%
@@ -492,11 +492,9 @@ value_sets.flexbox_flex = {
   regex: '(?:(?:' + value_sets.integer.regex + ')' + '(?:' + value_sets.integer.regex + ')?' + '(?:' + value_sets.length.regex + ')?)',
   examples: ['1', '1_1_100px', '1_1_100'],
   getValue: function (value) {
-    console.log('flexbox_flex getValue');
     var result = '';
     var regex = new RegExp('^(' + value_sets.integer.regex + ')' + '(?:_(' + value_sets.integer.regex + '))?' + '(?:_(' + value_sets.length.regex + '))?$');
     var matches = value.match(regex);
-    console.log('matches', matches);
     if (!(matches)) return null;
     var flexes = [];
     for (var i = 1; i <= 3; i++) {

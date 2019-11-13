@@ -150,6 +150,7 @@ export var property_sets = [
     properties: { ww: 'word-wrap', word_wrap: 'word-wrap' },
     value_sets: [value_sets.word_wrap_kind, value_sets.initial, value_sets.inherit]
   }, {
+    test: true,
     properties: {
       w: 'width', xw: 'max-width', nw: 'min-width', h: 'height', xh: 'max-height', nh: 'min-height',
       width: 'width', max_width: 'max-width', min_width: 'min-width', height: 'height', max_height: 'max-height', min_height: 'min-height',

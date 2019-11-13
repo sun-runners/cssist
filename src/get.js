@@ -1,5 +1,6 @@
 import { property_sets } from './property_sets.js'
 import { event_set } from './event_set.js'
+import { class_sets } from './class_sets.js'
 
 
 
@@ -10,10 +11,10 @@ export var getCssOfClass = function(selector){
   if(!selector){ return; }
 
   var regx_prop = '([a-zA-Z\\_]+)';
-  var regx_value = '([a-zA-Z0-9\\_]+)';
+  var regx_value = '(?:-([a-zA-Z0-9\\_]+))?';
   var regx_event = '(?:-([a-zA-Z]{1,3}))?';
   var regx_media_query = '(?:-((?:(?:XH|NH|XW|NW|X|N)[0-9]+)+))?';
-  var regx = new RegExp('^'+regx_prop+'-'+regx_value+regx_event+regx_media_query+'$');
+  var regx = new RegExp('^'+regx_prop+regx_value+regx_event+regx_media_query+'$');
   // Current: /^([a-zA-Z_]+)([a-zA-Z0-9_]+)(?:-([a-zA-Z]{1,3}))?(?:-((?:(?:XH|NH|XW|NW|X|N)[0-9]+)+))?$/
   // Past: /^([a-zA-Z\_]+)-((?:[a-zA-Z0-9]|(?:\_)|(?:\-\-))+)(?:-([a-zA-Z]{1,2}))?(?:-((?:(?:XH|NH|XW|NW|X|N)[0-9]+)+))?$/
 
@@ -21,12 +22,15 @@ export var getCssOfClass = function(selector){
   var matches = selector.match(regx);
 
   // Check
-  if(!(matches&&matches[1]&&matches[2])){ return; }
+  if(!(matches && matches[1])) return; // No property
+  if(!matches[2]){ // No value
+    if(matches[1]!=='cen') return;
+  }
 
   return {
     selector: selector,
     property: matches[1],
-    value: matches[2],
+    value: matches[2]?matches[2]:null,
     event: matches[3]?matches[3]:null,
     media_query: matches[4]?matches[4]:null
   };
@@ -90,14 +94,29 @@ export var getMediaQueries = function(mqs){
 
 
 // For Codes
+var getCode = function(css){
+  if(!css.csses) return css.property + ' : ' + css.value+'; ';
+  var code = [];
+  for(var i=0; i<css.csses.length; i++){
+    var css_i = css.csses[i];
+    code.push(css_i.property + ' : ' + css_i.value+'; ');
+  }
+  return code;
+}
 
 export var getCodesCors = function(css){
-  var broswers = ['webkit', 'moz', 'o', 'ms'];
-  var codes = '\n', code = css.property + ' : ' + css.value+'; ';
-  codes += code;
+  var broswers = ['', '-webkit-', '-moz-', '-o-', '-ms-'];
+  var codes = '\n', code = getCode(css);
+  // codes += '\t'+code+'\n';
   for(var i=0; i < broswers.length; i++){
-    codes += '\t-'+broswers[i]+'-'+code+' \n';
+    if(!Array.isArray(code)) codes += '\t'+broswers[i]+code+'\n';
+    else{
+      for(var j=0; j < code.length; j++){
+        codes += '\t'+broswers[i]+code[j]+'\n';
+      }
+    }
   }
+  css.rules = codes;
   return "."+css.selector+" { "+codes+" }";
 };
 
