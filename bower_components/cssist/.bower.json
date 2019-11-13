@@ -1,33 +1,57 @@
 {
   "name": "cssist",
-  "authors": [
-    "김선욱 <sunus7@naver.com>"
-  ],
-  "description": "It automatically create css based on classes",
-  "main": "cssist.js",
-  "moduleType": [],
-  "license": "MIT",
+  "version": "2.0.5",
   "homepage": "https://github.com/KimSunWook/cssist",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "docs",
-    "webpack",
-    "CNAME",
-    "webpack.config.js"
+  "main": "cssist.js",
+  "authors": [
+    "Kim Sun Wook <sunus7@naver.com>"
   ],
-  "dependencies": {
-    "animate.css": "^3.5.2"
+  "description": "Cssist is a JavaScript library that automatically generates classes so that you can develop the web without css",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:KimSunWook/cssist.git"
   },
-  "version": "1.0.4",
-  "_release": "1.0.4",
+  "keywords": [
+    "cssist"
+  ],
+  "ignore": [
+    "**",
+    "*.json",
+    "webpack.config.js",
+    "*.md",
+    "CNAME"
+  ],
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "angular": "~1.5.8",
+    "angular-animate": "~1.5.8",
+    "angular-aria": "~1.5.8",
+    "angular-cookies": "~1.5.8",
+    "angular-messages": "~1.5.8",
+    "angular-resource": "~1.5.8",
+    "angular-route": "~1.5.8",
+    "angular-sanitize": "~1.5.8",
+    "angular-touch": "~1.5.8",
+    "angular-ui-router": "~0.3.1",
+    "angular-fullpage.js": "~0.2.1",
+    "angular-material": "^1.1.4",
+    "animate.css": "^3.5.2",
+    "ng-lodash": "^0.5.0",
+    "cssist": "*",
+    "animejs": "^2.2.0",
+    "reset.css": "^1.0.2",
+    "ng-gradient": "^1.0.1",
+    "ng-action": "ngAction#^1.1.3"
+  },
+  "_release": "2.0.5",
   "_resolution": {
     "type": "version",
-    "tag": "v1.0.4",
-    "commit": "c7472dd086b04131e46e46eeb178079253eea46a"
+    "tag": "v2.0.5",
+    "commit": "0795eacc65e2f1a94a149244cb3586b924c2221c"
   },
   "_source": "https://github.com/KimSunWook/cssist.git",
-  "_target": "*",
-  "_originalSource": "cssist"
+  "_target": "^2.0.5",
+  "_originalSource": "cssist",
+  "_direct": true
 }
