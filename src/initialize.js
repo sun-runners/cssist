@@ -15,7 +15,6 @@ greeting += 'version : ' + package_json.version + '\n';
 greeting += 'date : ' + new Date() + '\n';
 greeting += 'The following codes are automatically generated.' + '\n';
 greeting += '*/\n\n\n';
-console.log(greeting);
 
 var cssist_default = {
   version: package_json.version,

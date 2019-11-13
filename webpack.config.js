@@ -1,8 +1,8 @@
 const webpack = require("webpack");
 
 module.exports = {
-  mode: "development",
-  // mode: "production",
+  // mode: "development",
+  mode: "production",
   entry: {
     cssist: './src/entry.js',
   },
