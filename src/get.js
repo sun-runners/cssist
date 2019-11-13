@@ -73,7 +73,7 @@ var getMediaQuery = function(mq){
   else if(mq.match(/^XH[0-9]+/)) media_query.key = 'max_height';
   else if(mq.match(/^NH[0-9]+/)) media_query.key = 'min_height';
   else return null;
-  media_query.value = mq.match(/[0-9]+$/)[0]+'px';
+  media_query.value = mq.match(/[0-9]+/)[0]+'px';
   return media_query;
 };
 
@@ -81,9 +81,9 @@ export var getMediaQueries = function(mqs){
   var media_queries = {};
   if(!mqs) return media_queries;
   var regex_each = '((?:XH|NH|XW|NW|X|N)[0-9]+)';
-  var regex = new RegExp('^'+regex_each+'?'+regex_each+'$');
+  var regex = new RegExp('^'+regex_each+regex_each+'?'+'$');
 
-  var matches = mqs.match(regex_each);
+  var matches = mqs.match(regex);
   for(var i=1; i<=matches.length-1; i++){
     var media_query = getMediaQuery(matches[i]);
     if(media_query) media_queries[media_query.key] = media_query.value;
@@ -121,14 +121,21 @@ export var getCodesCors = function(css){
 };
 
 export var getCodesMediaQuery = function(codes, css){
+  var getMax = function(px){
+    if(!px) return;
+    var gap = 0.00000001;
+    var number = px.match(/[0-9]+/)[0] - gap;
+    return number + 'px';
+  }
+
   // Set css_codes
   if(!(css.max_width||css.min_width||css.max_height||css.min_height)) return codes+'\n\n';
 
   // Set media_query
   var media_queries = [];
-  if(css.max_width) media_queries.push('max-width:'+css.max_width);
+  if(css.max_width) media_queries.push('max-width:'+getMax(css.max_width));
   if(css.min_width) media_queries.push('min-width:'+css.min_width);
-  if(css.max_height) media_queries.push('max-height:'+css.max_height);
+  if(css.max_height) media_queries.push('max-height:'+getMax(css.max_height));
   if(css.min_height) media_queries.push('min-height:'+css.min_height);
   return '@media all and ('+media_queries.join(') and (')+') { '+codes+' }'+'\n\n';
 };
