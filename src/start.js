@@ -1,3 +1,4 @@
+import { initialize } from './initialize.js'
 import { checkSelector } from './check.js'
 import { createCssFromSelector, createCodeFromCss } from './create.js'
 import { getStyleSheet } from './get.js'
@@ -5,7 +6,6 @@ import { getStyleSheet } from './get.js'
 
 
 // Variable Section
-var debug = false;
 
 
 
@@ -23,15 +23,16 @@ if (typeof(MutationObserver) !== 'undefined') {
 
 
 export var startSelector = function(selector, is_test){
-  if(debug) console.log('[start] startSelector', selector);
+  // if(debug) console.log('[start] startSelector', selector);
+  if(!window.cssist) initialize();
 
   // Create css
   var css = createCssFromSelector(selector);
 
   // Fail
   if(!(css&&css.valid)){
-    cssist.selectors.fail.push(selector);
-    if(css) cssist.csses.fail.push(css);
+    window.cssist.selectors.fail.push(selector);
+    if(css) window.cssist.csses.fail.push(css);
     return;
   }
 
@@ -39,9 +40,9 @@ export var startSelector = function(selector, is_test){
   css.code = createCodeFromCss(css); // Create code
 
   if(checkSelector(selector)){
-    cssist.selectors.success.push(selector);
-    cssist.csses.success.push(css);
-    cssist.stylesheet += css.code;
+    window.cssist.selectors.success.push(selector);
+    window.cssist.csses.success.push(css);
+    window.cssist.stylesheet += css.code;
 
     // Apply css
     var sheet = getStyleSheet();
@@ -50,7 +51,7 @@ export var startSelector = function(selector, is_test){
     } else {
       sheet.addRule(css.selector, css.rules);
     }
-    localStorage.setItem('cssist', JSON.stringify(cssist));
+    localStorage.setItem('cssist', JSON.stringify(window.cssist));
   }
 
   return css;
@@ -61,6 +62,7 @@ export var startSelector = function(selector, is_test){
 export var startElement = function(element, is_test){
   // Check element
   if(!(element && element.classList && element.classList.length>=1)) return;
+  // if(debug) console.log('[start] startElement', element);
 
   // Set classes
   var selectors = element.classList;
@@ -77,12 +79,15 @@ export var startElement = function(element, is_test){
   // Set mutation
   if(watcher) watcher.observe(element, { attributes: true,  attributeFilter: ['class'] });
 
+  element._cssist = true;
   return csses;
 }
 
 
 
 export var startRootElement = function(element, is_test){
+  // if(debug) console.log('[start] startRootElement', element);
+
   // Check element
   if( !(element && typeof element === 'object' && element.nodeType && element.nodeType !== 8 && element.tagName) ) return;
 
@@ -96,5 +101,7 @@ export var startRootElement = function(element, is_test){
   if(!(element_childen && element_childen.length>=1)) return;
 
   // Start element_childen
-  for(var i = 0; i < element_childen.length; i++) startElement(element_childen[i]);
+  for(var i = 0; i < element_childen.length; i++){
+    if(!element_childen[i]._cssist) startElement(element_childen[i]);
+  }
 };

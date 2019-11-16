@@ -1,3 +1,4 @@
+import { initialize } from './initialize.js'
 import { property_sets } from './property_sets.js'
 import { event_set } from './event_set.js'
 import { class_sets } from './class_sets.js'
@@ -95,16 +96,20 @@ export var getMediaQueries = function(mqs){
 
 // For Codes
 var getCode = function(css){
-  if(!css.csses) return css.property + ' : ' + css.value+'; ';
+  if(!window.cssist) initialize();
+
+  if(!css.csses) return css.property + ' : ' + css.value + (window.cssist.is_important?" !important":"") + '; ';
   var code = [];
   for(var i=0; i<css.csses.length; i++){
     var css_i = css.csses[i];
-    code.push(css_i.property + ' : ' + css_i.value+'; ');
+    code.push(css_i.property + ' : ' + css_i.value + (window.cssist.is_important?" !important":"") + '; ');
   }
   return code;
 }
 
 export var getCodesCors = function(css){
+  if(!window.cssist) initialize();
+
   var broswers = ['', '-webkit-', '-moz-', '-o-', '-ms-'];
   var codes = '\n', code = getCode(css);
   // codes += '\t'+code+'\n';
@@ -117,7 +122,8 @@ export var getCodesCors = function(css){
     }
   }
   css.rules = codes;
-  return "."+css.selector+" { "+codes+" }";
+
+  return (window.cssist.is_partial?"[cssist] ":"") + "." + css.selector + (css.event?":"+css.event:"") + " { "+codes+" }";
 };
 
 export var getCodesMediaQuery = function(codes, css){
@@ -145,8 +151,8 @@ export var getCodesMediaQuery = function(codes, css){
 // For StyleSheet
 export var getStyleElement = function(innerHTML){
   var style_element;
-  if(document.querySelectorAll('style#cssist') && document.querySelectorAll('style#cssist')[0]){
-    return document.querySelectorAll('style#cssist')[0];
+  if(document.querySelectorAll('style#CSSIST') && document.querySelectorAll('style#CSSIST')[0]){
+    return document.querySelectorAll('style#CSSIST')[0];
   }
   var element_style = document.createElement("STYLE");
 
@@ -154,7 +160,7 @@ export var getStyleElement = function(innerHTML){
   element_style.appendChild(document.createTextNode(''));
 
   element_style.setAttribute("type", 'text/css');
-  element_style.setAttribute("id", "cssist");
+  element_style.setAttribute("id", "CSSIST");
   if(innerHTML) element_style.innerHTML = innerHTML;
 
   var element_head;

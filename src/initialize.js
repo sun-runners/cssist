@@ -34,13 +34,13 @@ var cssist_default = {
 // Initialize Section
 export var initialize = function(){
   if(localStorage['cssist']) var cssist = JSON.parse(localStorage['cssist']);
-  if(cssist && package_json && cssist.version == package_json.version){
-    if(debug) console.log('[initialize] localStorage cssist');
+  if(!debug && cssist && package_json && cssist.version == package_json.version){
     window.cssist = cssist;
+    if(debug) console.log('[initialize] localStorage cssist', window.cssist);
   }
   else{
-    if(debug) console.log('[initialize] new cssist');
     window.cssist = cssist_default;
+    if(debug) console.log('[initialize] new cssist', window.cssist);
   }
 
   // Method 1

@@ -1,4 +1,9 @@
+import { initialize } from './initialize.js'
+
+
+
 export var download = function(){
+  if(!window.cssist) initialize();
 
   // Set content
   var stylesheet = window.cssist.stylesheet
@@ -17,4 +22,4 @@ export var download = function(){
 
   // Remove a tag
   document.body.removeChild(element);
-}; 
+};
