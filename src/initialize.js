@@ -3,6 +3,8 @@ import { getStyleElement, getStyleSheet } from './get.js'
 import { value_sets } from './value_sets.js'
 import { property_sets } from './property_sets.js'
 import { class_sets } from './class_sets.js'
+import { testSelector, testElement, testRootElement, testPropertyValue, testEvent, testMediaQueries } from './test.js'
+import { download } from './download.js'
 
 
 
@@ -16,6 +18,7 @@ greeting += 'date : ' + new Date() + '\n';
 greeting += 'The following codes are automatically generated.' + '\n';
 greeting += '*/\n\n\n';
 
+
 var cssist_default = {
   version: package_json.version,
   csses:{
@@ -26,7 +29,16 @@ var cssist_default = {
     success:[],
     fail:[]
   },
-  stylesheet:greeting
+  stylesheet:greeting,
+
+  // Function Section
+  download: download,
+  testSelector: testSelector,
+  testElement: testElement,
+  testRootElement: testRootElement,
+  testPropertyValue: testPropertyValue,
+  testEvent: testEvent,
+  testMediaQueries: testMediaQueries
 };
 
 

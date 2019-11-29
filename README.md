@@ -1063,6 +1063,14 @@
 
 ## Q & A
 
+  - ### I don't have `cssist` in `window` object.
+  :  You can get cssist object from localStorage at DevTools' console window.
+    ```
+    window.cssist = JSON.parse(localStorage['cssist']);
+    window.cssist
+    ```
+    Now, you can use cssist.
+
   - ### How to download css file?
   :  You can download css file at DevTools' console window.
     ```
