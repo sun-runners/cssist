@@ -6,7 +6,7 @@ export var download = function(){
   if(!window.cssist) initialize();
 
   // Set content
-  var stylesheet = window.cssist.stylesheet
+  var stylesheet = window.cssist.stylesheet;
 
   // Create a tag
   var element = document.createElement('a');
