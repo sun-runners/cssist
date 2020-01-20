@@ -1,8 +1,58 @@
 # CSSIST
 
-  > Cssist is a JavaScript library that automatically generates classes.  
-  > With `CSSIST`, you don't need to make a css file anymore.  
-  > Just concentrate on html and script.
+  CSS is a language that determines how documents written in markup languages ​​such as HTML actually appear on your website.
+  CSSIST automatically generates and manages CSS based on the class name of CSSIST in HTML.
+  So you can develop by writing only the CSSIST class in markup such as HTML without writing CSS.
+  As a CSS framework that doesn't write CSS for the first time, many advantages arise from not developing CSS.
+
+  CSS는 HTML 등의 마크업 언어로 작성된 문서가 실제로 웹사이트에 표현되는 방법을 정해주는 언어입니다.
+  CSSIST는 HTML의 CSSIST의 클래스명을 기반으로 자동으로 CSS를 생성 및 관리합니다.
+  즉, CSS 를 작성하지 않고 HTML와 같은 마크업에 CSSIST 클래스만 작성하여 개발할 수 있습니다.
+  최초로 CSS를 작성하지 않는 CSS 프레임워크로써, CSS를 개발하지 않기 떄문에, 많은 장점이 발생합니다.
+
+
+
+# 장점
+
+  - 높은 자유도
+
+  CSSIST는 percentage(%), px, em, vw, vh, HEX, RGB, RGBA, 계산식(calc) 등 다양한 단위의 값을 지원합니다.
+  이 중 계산식은 CSSIST의 가장 큰 장점으로, 다양한 값뿐만 아니라 수식으로 값을 표현할 수 있습니다.
+
+
+  - 반응형
+
+  CSSIST는 MAX, MIN 값을 클래스명과 함께 지정할 수 있기 때문에, 한번에 모든 반응형을 개발할 수 있습니다.
+  따라서 기존에 미디어쿼리로 기기 사이즈마다 따로 개발할 필요가 없어, 코드가 훨씬 많이 줄어듭니다.
+
+
+  - 크로스 브라우징
+
+  크롬, 파이어폭스, 오페라, 익스플로어 등 현재 여러 브라우저가 널리 사용되고 있습니다.
+  크로스 브라우징은 모든 브라우저가 동일한 정보를 보여주는 통일성입니다.
+  CSSIST는 한 개의 클래스를 생성할 때 크로스 브라우징 처리를 전부 처리합니다.
+  따라서 기존에 CSS에서처럼 모든 클래스의 속성들의 크로스 브라우징 처리를 할 필요가 전혀 없으며, 중복된 코드가 없어 코드가 훨씬 짧습니다.
+
+
+  - 이벤트
+
+  CSS엔 Hover, Mouseenter, Mouseleave, Focus, Blur 등 수 많은 이벤트가 존재합니다.
+  사용자의 다양한 이벤트에 반응하는 CSS에 지원하는 모든 이벤트를 CSSIST에서도 사용할 수 있습니다.
+  따라서 기존에 CSS에서처럼 따로 따로 이벤트 클래스를 지정할 필요가 없습니다.
+
+
+  - 유지보수
+
+  클래스명에 대한 고민없이 마크업의 CSSIST 클래스들만 변경하여 쉽고 빠르게 유지보수할 수 있습니다.
+  따라서 기존에 CSS처럼 불필요한 수 천개의 클래스명을 정할 필요가 없습니다.
+
+
+
+# 추가 에정
+
+  - 도큐먼트 사이트
+  
+  - 각 테스트 시스템
 
 
 
