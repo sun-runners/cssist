@@ -778,12 +778,14 @@ value_sets.shadow = {
     var matches = value.match(regex);
     if (!(matches)) return null;
     var shadows = [];
-    for (var i = 1; i <= 4; i++) { shadows.push(matches[i]); }
+    for (var i = 1; i <= 4; i++) { 
+      if (/_/g.test(matches[i])) shadows.push(matches[i].replace(/_/g, '-')); 
+      else shadows.push(matches[i]); 
+    }
     result = shadows.join('px ') + value_sets.rgba_color.getValue(matches[5]);
-    return result;
+    return result;    
   }
 };
-
 
 
 // URL
