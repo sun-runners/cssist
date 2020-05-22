@@ -3,7 +3,10 @@
   "version": "2.1.3",
   "description": "cssist =======",
   "main": "cssist.js",
-  "dependencies": {},
+  "dependencies": {
+    "prismjs": "^1.20.0",
+    "vue-prism-editor": "^0.6.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
@@ -12,12 +15,15 @@
     "expose-loader": "^0.7.5",
     "file-loader": "4.2.0",
     "style-loader": "1.0.0",
+    "vuepress": "^1.5.0",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.9"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "webpack --watch"
+    "serve": "webpack --watch",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "repository": {
     "type": "git",
