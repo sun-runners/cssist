@@ -1,7 +1,7 @@
 import { initialize } from './initialize.js'
 
 
-
+// let debug = true
 export var download = function(){
   if(!window.cssist) initialize();
 

@@ -14,4 +14,4 @@ The `padding-left` CSS property sets the width of the padding area to the left o
 <!-- <percent> value -->
 <div class="p-100"></div> <!-- Equivalent to padding-left: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)

@@ -14,4 +14,4 @@ The `padding-bottom` CSS property sets the height of the padding area on the bot
 <!-- <percent> value -->
 <div class="pb-100"></div> <!-- Equivalent to padding-bottom: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)

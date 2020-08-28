@@ -14,4 +14,4 @@ In use, flex-shrink is used alongside the other flex properties flex-grow and fl
     <div class="w-500px h-100px fxs-3 b-be300 bo-yw50">Shrink 3</div>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)

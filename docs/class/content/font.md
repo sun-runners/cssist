@@ -29,5 +29,5 @@ The font CSS property is a shorthand for font-style, font-variant, font-weight, 
     <span class="f-52px d-fx jc-c p-20px">Pick a boo.</span>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 

@@ -33,4 +33,4 @@ A string identifying the property to which a transition effect should be applied
     <span>Hello World</span>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)

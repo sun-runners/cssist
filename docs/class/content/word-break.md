@@ -16,4 +16,4 @@ Has the same effect as word-break: normal and overflow-wrap: anywhere, regardles
     <span>Hello World</span>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)

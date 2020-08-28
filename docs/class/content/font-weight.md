@@ -16,4 +16,4 @@ The font-weight CSS property sets the weight (or boldness) of the font. The weig
     <span class=" d-fx jc-c p-20px fw-lr">Pick a boo.</span>
     </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)

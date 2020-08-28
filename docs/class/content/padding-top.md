@@ -13,4 +13,4 @@ The `padding-top` CSS property sets the width of the padding area to the top of 
 <!-- <percent> value -->
 <div class="pt-100"></div> <!-- Equivalent to padding: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)

@@ -13,4 +13,4 @@ The margin-bottom CSS property sets the margin area on the bottom of an element.
 <!-- <percent> value -->
 <div class="mb-100"></div> <!-- Equivalent to margin-bottom: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)

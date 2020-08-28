@@ -27,7 +27,7 @@ The visibility attribute lets you control the visibility of graphical elements. 
     Ipsum.
 </div>
 ```
-![image](/assets/images/visibility/visible.png)
+
 
 ```html
 <div class="w-800px h-500px bo-rd bo-1px p-10px lh-80px">
@@ -41,7 +41,7 @@ The visibility attribute lets you control the visibility of graphical elements. 
     Ipsum.
 </div>
 ```
-![image](/assets/images/visibility/hidden.png)
+
 
 ```html
 <div class="w-800px h-500px bo-rd bo-1px p-10px lh-80px">
@@ -55,5 +55,5 @@ The visibility attribute lets you control the visibility of graphical elements. 
     Ipsum.
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 

@@ -13,4 +13,4 @@ The padding CSS property sets the padding area on all four sides of an element. 
 <!-- <percent> value -->
 <div class="p-100"></div> <!-- Equivalent to padding: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)

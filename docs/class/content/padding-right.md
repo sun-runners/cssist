@@ -13,4 +13,4 @@ The `padding-right` CSS property sets the width of the padding area to the right
 <!-- <percent> value -->
 <div class="pr-100"></div> <!-- Equivalent to padding: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)

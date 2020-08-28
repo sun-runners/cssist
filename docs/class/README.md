@@ -2,7 +2,7 @@
 
 ## align-content
 - Class prefix: `ac`
--Values: `fxs|fxe|c|sb|sa|s|`
+- Values: `fxs|fxe|c|sb|sa|s|`
 
 The CSS align-content property sets the distribution of space between and around content items along a flexbox's cross-axis or a grid's block axis.
 
@@ -10,14 +10,17 @@ The CSS align-content property sets the distribution of space between and around
 ### Syntax
 ```html
 
-<div class="d-fx ac-c">
-    align-content center
-    align-content space between
-    align-content space around
-    align-content start
+<div class="w-200px h-300px d-fx fxw-w ac-sb b-yw bor-1px">
+    <div class="w-55px h-55px b-le500"> item 1</div>
+    <div class="w-55px h-55px b-gn500"> item 2</div>
+    <div class="w-55px h-55px b-rd500"> item 3</div>
+    <div class="w-55px h-55px b-rd500"> item 4</div>
+    <div class="w-55px h-55px b-rd500"> item 5</div>
+    <div class="w-55px h-55px b-rd500"> item 6</div>
+    <div class="w-55px h-55px b-rd500"> item 7</div>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## align-items
 - Class prefix: `ai`
@@ -84,7 +87,7 @@ All flex items are aligned such that their flex container baselines align. The i
     </div>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## background-color
 - Class prefix: `b`
@@ -97,7 +100,10 @@ The background-color CSS property sets the background color of an element.
 <!-- A square gray square with a text inside "sets background" -->
 <div class="b-EAEAEA h-100px w-200px"> sets background</div>
  ```
-[Try Playground](../../../demo) 
+ ### Sample Output
+![image](/assets/images/background.png)
+
+[Try Playground](../../../cssist/demo)
 
 ## border-radius
 - Class prefix: `bor`
@@ -105,38 +111,86 @@ The background-color CSS property sets the background color of an element.
 
 The border-radius CSS property rounds the corners of an element's outer border edge. You can set a single radius to make circular corners, or two radii to make elliptical corners.
 ```html
-<!-- A square gray square with a text inside "CSSIST BOX" -->
+<!-- A gray square with curved border a text inside "CSSIST BOX" -->
 <button class="h-100px w-200px 
     f-22px bo-1px bo-222222 
     b-EAEAEA bor-100px"> 
     CSSIST Box 
 </button>
- ```
-```html
-<!-- A circle gray square with a text inside "CSSIST BOX" -->
+
+<!-- A gray circle with a text inside "CSSIST BOX" -->
 <button class="h-200px w-200px 
     f-22px bo-1px bo-222222 
     b-EAEAEA bor-100"> 
     CSSIST Box 
 </button>
  ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 ## border
-- Class prefix: `bo`
+- Class prefix: `bo` `bo-l` `bo-r` `bo-b` `bo-t`
 - Values: `<length>`
 
-The box-shadow CSS property adds shadow effects around an element's frame. You can set multiple effects separated by commas. A box shadow is described by X and Y offsets relative to the element, blur and spread radius, and color.
-### Syntax
+`bo` The border CSS property adds border effects around an element's frame. A border is set to be how bold or thick a line is by declaring a specific length or number. And can be assign on which side you want to add a border.
+
 ```html
-<!-- A square gray square with a text inside "sets background" -->
 <button class="h-100px w-200px 
-    f-22px bo-1px bo-222222 
-    b-EAEAEA "> 
+    f-22px b-EAEAEA bo-5px"> 
     CSSIST Box 
 </button>
- ```
-[Try Playground](../../../demo)
+```
+ ### Sample Output
+![image](/assets/images/border/bo.png)
 
+[Try Playground](../../../cssist/demo)
+
+`bo-l` Border Left
+```html
+<button class="h-100px w-200px 
+    f-22px bo_l-10px b-EAEAEA bo-rd"> 
+    CSSIST Box 
+</button>
+```
+ ### Sample Output
+![image](/assets/images/border/bo-l.png)
+
+[Try Playground](../../../cssist/demo)
+
+`bo-r` Border Right
+```html
+<button class="h-100px w-200px 
+    f-22px bo_r-10px b-EAEAEA bo-rd"> 
+    CSSIST Box 
+</button>
+```
+ ### Sample Output
+![image](/assets/images/border/bo-r.png)
+
+[Try Playground](../../../cssist/demo)
+
+
+`bo-t` Border Top
+```html
+<button class="h-100px w-200px 
+    f-22px bo_t-10px b-EAEAEA bo-rd"> 
+    CSSIST Box 
+</button>
+```
+ ### Sample Output
+![image](/assets/images/border/bo-t.png)
+
+[Try Playground](../../../cssist/demo)
+
+`bo-b` Border Bottom
+```html
+<button class="h-100px w-200px 
+    f-22px bo_b-10px b-EAEAEA bo-rd"> 
+    CSSIST Box 
+</button>
+```
+ ### Sample Output
+![image](/assets/images/border/bo-b.png)
+
+[Try Playground](../../../cssist/demo)
 
 ## box-shadow
 - Class prefix: `b`
@@ -147,20 +201,12 @@ The box-shadow CSS property adds shadow effects around an element's frame. You c
 ```html
 <!-- A square gray square with a text inside "CSSIST BOX" -->
 <button class="h-100px w-200px 
-    f-22px bo-0.5px bo-222222 
-    bs-3_5_8_222222_60 b-EAEAEA  
-    d-fx"> 
-    CSSIST Box 
-</button>
-<!-- A square gray with a text inside "CSSIST BOX" -->
-<button class="h-100px w-200px 
-    f-22px bo-0.5px bo-222222 
-    bs-3_5_8_222222_60 b-EAEAEA  
+    f-22px bs-3_5_8_222222_60 b-EAEAEA  
     d-fx"> 
     CSSIST Box 
 </button>
  ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 
 ## color
@@ -168,7 +214,7 @@ The box-shadow CSS property adds shadow effects around an element's frame. You c
 - Values: `<hex>`
 
 The `<color>` CSS data type represents a color in the sRGB color space. A `<color>` may also include an alpha-channel transparency value, indicating how the color should composite with its background. 
-[see more colors.](/class/values.md) 
+[Try Playground](../../../cssist/demo)
 
 ## display-flex
 - Class prefix: `d-fx`
@@ -184,6 +230,8 @@ In addition `flex` can refer to a flexible length in CSS Grid Layout.
 
 <div class="d-fx"></div> <!-- Equivalent to margin-right: 200px; -->
 ```
+[Try Playground](../../../cssist/demo)
+
 
 ## display
 - Class prefix: `d`
@@ -220,7 +268,10 @@ Formally, the display property sets an element's inner and outer display types. 
         </div>
     </div>
 ```
+### Sample Output
 ![image](/assets/images/display/d-i.png)
+
+[Try Playground](../../../cssist/demo)
 
 ```html
     <div class="w-80 h-600px b-1px b-we d-fx">
@@ -247,7 +298,10 @@ Formally, the display property sets an element's inner and outer display types. 
         </div>
     </div>
 ```
-[Try Playground](../../../demo)
+### Sample Output
+![image](/assets/images/display/d-fx.png)
+
+[Try Playground](../../../cssist/demo)
 
 ## flex-direction
 - Class prefix: `d-fx fxd`
@@ -310,7 +364,7 @@ Behaves the same as column but the main-start and main-end are permuted.
 ```
 ### Output
 
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## flex-grow
 - Class prefix: `d-fx fxg`
@@ -332,7 +386,7 @@ flex-grow is used alongside the other flex properties flex-shrink and flex-basis
     <div class="w-100px h-100px b-pe500">4</div>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## flex-shrink
 - Class prefix: `fxs`
@@ -350,7 +404,7 @@ In use, flex-shrink is used alongside the other flex properties flex-grow and fl
     <div class="w-500px h-100px fxs-3 b-be300 bo-yw50">Shrink 3</div>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## flex-wrap
 - Class prefix: `fxw`
@@ -386,7 +440,9 @@ The flex-wrap CSS property sets whether flex items are forced onto one line or c
             </div>
         </div>
 ```
+### Sample Output
 ![image](/assets/images/flex_wrap/fx-w.png)
+[Try Playground](../../../cssist/demo)
 
 ```html
 <div class="w-100 pt-20px">  
@@ -414,7 +470,11 @@ The flex-wrap CSS property sets whether flex items are forced onto one line or c
             </div>
         </div>
 ```
-![image](/assets/images/flex_wrap/fx-nw.png)
+### Sample Output
+![image](/assets/images/flex_wrap/fxw-nw.png)
+
+[Try Playground](../../../cssist/demo)
+
 ```html
 <div class="w-100 pt-20px">  
         <div class="w-80 h-600px b-1px b-we d-fx fxw-wrap_reverse">
@@ -441,7 +501,10 @@ The flex-wrap CSS property sets whether flex items are forced onto one line or c
             </div>
         </div>
 ```
-[Try Playground](../../../demo)
+### Sample Output
+![image](/assets/images/flex_wrap/wrap_reverse.png)
+
+[Try Playground](../../../cssist/demo)
 
 ## font-weight
 - Class prefix: `fw`
@@ -459,9 +522,12 @@ The font-weight CSS property sets the weight (or boldness) of the font. The weig
     <span class=" d-fx jc-c p-20px fw-b">Pick a boo.</span>
     <span class=" d-fx jc-c p-20px fw-br">Pick a boo.</span>
     <span class=" d-fx jc-c p-20px fw-lr">Pick a boo.</span>
-    </div>
+</div>
 ```
-[Try Playground](../../../demo)
+### Sample Output
+![image](/assets/images/font/fw.png)
+
+[Try Playground](../../../cssist/demo)
 
 ## font
 - Class prefix: `f`
@@ -487,14 +553,7 @@ The font CSS property is a shorthand for font-style, font-variant, font-weight, 
 ```
 ![image](/assets/images/font/font_size_auto.png)
 
-```html
-<div class="w-100 h-100px b-1px fw">
-    <span class="f-32px d-fx jc-c p-20px">Pick a boo.</span>
-    <span class="f-42px d-fx jc-c p-20px">Pick a boo.</span>
-    <span class="f-52px d-fx jc-c p-20px">Pick a boo.</span>
-</div>
-```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 
 ## gradient
@@ -514,8 +573,11 @@ The `<gradient>` CSS data type is a special type of `<image>` that consists of a
     </span>
 </button>
  ```
- ### Output
-[Try Playground](../../../demo)
+### Sample Output
+ ![An image](../.vuepress/public/assets/images/gr_box.png)
+    
+
+[Try Playground](../../../cssist/demo)
 
  
 ## height
@@ -533,7 +595,7 @@ The height CSS property specifies the height of an element. By default, the prop
 <!-- <percent> value -->
 <div class="h-100"></div> <!-- Equivalent to height: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## justify-content
 - Class prefix: `jc`
@@ -550,6 +612,9 @@ The CSS justify-content property defines how the browser distributes space betwe
     <span class="f-22px d-fx"> Pick a boo. </span>
 </div>
 ```
+### Sample Output
+![image](/assets/images/justify_content/jc-after.png)
+
 [Try Playground](../../../demo)
 
 ```html
@@ -559,6 +624,9 @@ The CSS justify-content property defines how the browser distributes space betwe
     <span class="f-22px"> Pick a bee. </span>
 </div>
 ```
+### Sample Output
+![image](/assets/images/justify_content/space_between.png)
+
 [Try Playground](../../../demo)
 
 ```html
@@ -568,6 +636,9 @@ The CSS justify-content property defines how the browser distributes space betwe
     <span class="f-22px "> Pick a boo. </span>
 </div>
 ```
+### Sample Output
+![image](/assets/images/justify_content/space_around.png)
+
 [Try Playground](../../../demo)
 
 ```html
@@ -577,6 +648,9 @@ The CSS justify-content property defines how the browser distributes space betwe
     <span class="f-22px "> Pick a bee. </span>
 </div>
 ```
+### Sample Output
+![image](/assets/images/justify_content/space_evenly.png)
+
 [Try Playground](../../../demo)
 
 ```html
@@ -587,6 +661,9 @@ The CSS justify-content property defines how the browser distributes space betwe
     <span class="f-22px "> Pick a bee. </span>
 </div>
 ```
+### Sample Output
+![image](/assets/images/justify_content/flex_start.png)
+
 [Try Playground](../../../demo)
 
 ```html
@@ -596,7 +673,10 @@ The CSS justify-content property defines how the browser distributes space betwe
     <span class="f-22px "> Pick a bee. </span>
 </div>
 ```
-[Try Playground](../../../demo)
+### Sample Output
+![image](/assets/images/justify_content/flex_end.png)
+
+[Try Playground](../../../cssist/demo)
 
 ## letter-spacing
 - Class prefix: `ls`
@@ -619,7 +699,12 @@ The letter-spacing CSS property sets the spacing behavior between text character
     </div>
 </div>
 ```
-[Try Playground](../../../demo)
+### Without Letter Spacing
+![image](/assets/images/letter_spacing/ls-before.png)
+### Sample Output With Letter Spacing
+![image](/assets/images/letter_spacing/ls-after.png)
+
+[Try Playground](../../../cssist/demo)
 
 
 ## line-height
@@ -643,7 +728,7 @@ The line-height CSS property sets the height of a line box. It's commonly used t
     </div>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## margin-bottom
 - Class prefix: `mb`
@@ -660,7 +745,7 @@ The margin-bottom CSS property sets the margin area on the bottom of an element.
 <!-- <percent> value -->
 <div class="mb-100"></div> <!-- Equivalent to margin-bottom: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## margin-left
 - Class prefix: `ml`
@@ -677,7 +762,7 @@ The margin-left CSS property sets the margin area on the left side of an element
 <!-- <percent> value -->
 <div class="ml-100"></div> <!-- Equivalent to margin-left: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## margin-right
 - Class prefix: `mr`
@@ -694,7 +779,7 @@ The margin-left CSS property sets the margin area on the left side of an element
 <!-- <percent> value -->
 <div class="mr-100"></div> <!-- Equivalent to margin-right: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## margin-top
 - Class prefix: `mt`
@@ -711,7 +796,7 @@ The margin-top CSS property sets the margin area on the top of an element. A pos
 <!-- <percent> value -->
 <div class="mt-100"></div> <!-- Equivalent to margin-top: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## margin
 - Class prefix: `m`
@@ -728,7 +813,7 @@ The margin CSS property sets the margin area on all four sides of an element. It
 <!-- <percent> value -->
 <div class="m-100"></div> <!-- Equivalent to margin: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## opacity
 - Class prefix: `o`
@@ -747,7 +832,10 @@ The opacity attribute specifies the transparency of an object or of a group of o
     </span>
 </button>
  ```
- [Try Playground](../../../demo)
+ ### Sample Output
+ ![An image](../.vuepress/public/assets/images/opacity.png)
+ 
+ [Try Playground](../../../cssist/demo)
 
 
 ## order
@@ -764,7 +852,7 @@ The order CSS property sets the order to lay out an item in a flex or grid conta
 </div>
 ```
 ### Output
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 
 ## padding-bottom
@@ -783,7 +871,7 @@ The `padding-bottom` CSS property sets the height of the padding area on the bot
 <!-- <percent> value -->
 <div class="pb-100"></div> <!-- Equivalent to padding-bottom: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## padding-left
 - Class prefix: `pl`
@@ -801,7 +889,7 @@ The `padding-left` CSS property sets the width of the padding area to the left o
 <!-- <percent> value -->
 <div class="p-100"></div> <!-- Equivalent to padding-left: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## padding-right
 - Class prefix: `pr`
@@ -818,7 +906,7 @@ The `padding-right` CSS property sets the width of the padding area to the right
 <!-- <percent> value -->
 <div class="pr-100"></div> <!-- Equivalent to padding: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## padding-top
 - Class prefix: `pt`
@@ -835,7 +923,7 @@ The `padding-top` CSS property sets the width of the padding area to the top of 
 <!-- <percent> value -->
 <div class="pt-100"></div> <!-- Equivalent to padding: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## padding
 - Class prefix: `p`
@@ -852,7 +940,7 @@ The padding CSS property sets the padding area on all four sides of an element. 
 <!-- <percent> value -->
 <div class="p-100"></div> <!-- Equivalent to padding: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## position
 - Class prefix: `p`
@@ -872,8 +960,6 @@ The position CSS property sets how an element is positioned in a document. The t
     <div class="w-100px h-100px d-ib f-we b-be100"> three </div>
     <div class="w-100px h-100px d-ib f-we b-io100"> Four </div>
 ```
-### Output
-![image](/assets/images/position/pos_static.png)
 
 `r` | `relative`
 The element is positioned according to the normal flow of the document, and then offset relative to itself based on the values of top, right, bottom, and left. The offset does not affect the position of any other elements; thus, the space given for the element in the page layout is the same as if position were static.
@@ -886,8 +972,6 @@ This value creates a new stacking context when the value of z-index is not auto.
     <div class="w-100px h-100px d-ib f-we b-be100"> three </div>
     <div class="w-100px h-100px d-ib f-we b-io100"> Four </div>
 ```
-### Output
-![image](/assets/images/position/pos_relative.png)
 
 `a` | `absolute`
 The element is removed from the normal document flow, and no space is created for the element in the page layout. It is positioned relative to its closest positioned ancestor, if any; otherwise, it is placed relative to the initial containing block. Its final position is determined by the values of top, right, bottom, and left.
@@ -900,8 +984,6 @@ This value creates a new stacking context when the value of z-index is not auto.
     <div class="w-100px h-100px d-ib f-we b-be100"> three </div>
     <div class="w-100px h-100px d-ib f-we b-io100"> Four </div>
 ```
-### Output
-![image](/assets/images/position/pos_absolute.png)
 
 `f` | `fixed`
 The element is removed from the normal document flow, and no space is created for the element in the page layout. It is positioned relative to the initial containing block established by the viewport, except when one of its ancestors has a transform, perspective, or filter property set to something other than none (see the CSS Transforms Spec), in which case that ancestor behaves as the containing block. (Note that there are browser inconsistencies with perspective and filter contributing to containing block formation.) Its final position is determined by the values of top, right, bottom, and left.
@@ -914,7 +996,7 @@ This value always creates a new stacking context. In printed documents, the elem
     <div class="w-100px h-100px d-ib f-we b-be100"> three </div>
     <div class="w-100px h-100px d-ib f-we b-io100"> Four </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## text-align
 - Class prefix: `t`
@@ -932,6 +1014,7 @@ The text-align CSS property sets the horizontal alignment of a block element or 
         text-center 1 </span>
     </div>
 ```
+### Sample Output
 ![image](/assets/images/text-align/center.png)
 
 ```html
@@ -942,6 +1025,7 @@ The text-align CSS property sets the horizontal alignment of a block element or 
         text-left </span>
     </div>
 ```
+### Sample Output
 ![image](/assets/images/text-align/Screenshot_left.png)
 
 ```html
@@ -951,6 +1035,7 @@ The text-align CSS property sets the horizontal alignment of a block element or 
         text-right </span>
     </div>
 ```
+### Sample Output
 ![image](/assets/images/text-align/right.png)
 
 ```html
@@ -966,7 +1051,6 @@ The text-align CSS property sets the horizontal alignment of a block element or 
         </span>
     </div>
 ```
-![image](/assets/images/text-align/justify.png)
 
 ```html
     <div class="h-100px w-200px bo-5px bo-EAEAEA t-s">
@@ -981,7 +1065,7 @@ The text-align CSS property sets the horizontal alignment of a block element or 
     </div>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 
 ## text-transform
@@ -1003,6 +1087,7 @@ The text-transform CSS property specifies how to capitalize an element's text. I
     Ipsum.
 </div>
 ```
+### Sample Output
 ![image](/assets/images/tt/tt-l.png)
 ### Syntax
 
@@ -1017,7 +1102,7 @@ The text-transform CSS property specifies how to capitalize an element's text. I
     Ipsum.
 </div>
 ```
-![image](/assets/images/tt/tt-u.png)
+
 ### Syntax
 
 ```html
@@ -1031,7 +1116,7 @@ The text-transform CSS property specifies how to capitalize an element's text. I
     Ipsum.
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 
 ## transform
@@ -1059,7 +1144,7 @@ Is a `<time>` denoting the amount of time the transition from the old value of a
     <span>Hello World</span>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## transition-property
 - Class prefix: `tn`
@@ -1096,7 +1181,7 @@ A string identifying the property to which a transition effect should be applied
     <span>Hello World</span>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## vertical-alignment
 - Class prefix: `v`
@@ -1184,7 +1269,7 @@ For elements that do not have a baseline, the bottom margin edge is used instead
 ```html
 <div>This <img class="v-be" src="https://mdn.mozillademos.org/files/12245/frame_image.svg" alt="link" width="32" height="32" /> is my alignment</div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 
 ## visibility
@@ -1216,7 +1301,7 @@ The visibility attribute lets you control the visibility of graphical elements. 
     Ipsum.
 </div>
 ```
-![image](/assets/images/visibility/visible.png)
+
 
 ```html
 <div class="w-800px h-500px bo-rd bo-1px p-10px lh-80px">
@@ -1230,7 +1315,7 @@ The visibility attribute lets you control the visibility of graphical elements. 
     Ipsum.
 </div>
 ```
-![image](/assets/images/visibility/hidden.png)
+
 
 ```html
 <div class="w-800px h-500px bo-rd bo-1px p-10px lh-80px">
@@ -1244,7 +1329,7 @@ The visibility attribute lets you control the visibility of graphical elements. 
     Ipsum.
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 
 ## white-space
@@ -1326,7 +1411,7 @@ Sequences of white space are collapsed. Lines are broken at newline characters, 
     <span class=" d-fx jc-c p-20px ">Pick a boo.</span>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## width
 - Class prefix: `w`
@@ -1342,7 +1427,7 @@ The width CSS property sets an element's width. By default, it sets the width of
 <!-- <percent> value -->
 <div class="w-100"></div> <!-- Equivalent to width: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## word-break
 - Class prefix: `wb`
@@ -1362,7 +1447,7 @@ Has the same effect as word-break: normal and overflow-wrap: anywhere, regardles
     <span>Hello World</span>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
 ## word-wrap
 - Class prefix: `ww`
@@ -1382,5 +1467,5 @@ Allows unbreakable words to be broken
     <span>Hello World</span>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 

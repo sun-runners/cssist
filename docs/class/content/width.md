@@ -12,4 +12,4 @@ The width CSS property sets an element's width. By default, it sets the width of
 <!-- <percent> value -->
 <div class="w-100"></div> <!-- Equivalent to width: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)

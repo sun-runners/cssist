@@ -20,5 +20,5 @@ The box-shadow CSS property adds shadow effects around an element's frame. You c
     CSSIST Box 
 </button>
  ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 

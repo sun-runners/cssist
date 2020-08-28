@@ -77,4 +77,4 @@ Sequences of white space are collapsed. Lines are broken at newline characters, 
     <span class=" d-fx jc-c p-20px ">Pick a boo.</span>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)

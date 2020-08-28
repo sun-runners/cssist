@@ -84,5 +84,5 @@ For elements that do not have a baseline, the bottom margin edge is used instead
 ```html
 <div>This <img class="v-be" src="https://mdn.mozillademos.org/files/12245/frame_image.svg" alt="link" width="32" height="32" /> is my alignment</div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 

@@ -18,4 +18,4 @@ flex-grow is used alongside the other flex properties flex-shrink and flex-basis
     <div class="w-100px h-100px b-pe500">4</div>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)

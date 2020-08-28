@@ -5,7 +5,8 @@
   "main": "cssist.js",
   "dependencies": {
     "prismjs": "^1.20.0",
-    "vue-prism-editor": "^0.6.1"
+    "vue-prism-editor": "^0.6.1",
+    "vuepress-plugin-code-copy": "^1.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",

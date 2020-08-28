@@ -13,4 +13,4 @@ The margin-left CSS property sets the margin area on the left side of an element
 <!-- <percent> value -->
 <div class="mr-100"></div> <!-- Equivalent to margin-right: 100%; -->
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)

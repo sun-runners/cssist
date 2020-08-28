@@ -48,7 +48,6 @@ The text-align CSS property sets the horizontal alignment of a block element or 
         </span>
     </div>
 ```
-![image](/assets/images/text-align/justify.png)
 
 ```html
     <div class="h-100px w-200px bo-5px bo-EAEAEA t-s">
@@ -63,5 +62,5 @@ The text-align CSS property sets the horizontal alignment of a block element or 
     </div>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 

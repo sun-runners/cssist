@@ -15,5 +15,7 @@ The opacity attribute specifies the transparency of an object or of a group of o
     </span>
 </button>
  ```
- [Try Playground](../../../demo)
+ ![An image](../../images/opacity.png)
+
+ [Try Playground](../../../cssist/demo)
 

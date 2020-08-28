@@ -23,4 +23,4 @@ Is a `<time>` denoting the amount of time the transition from the old value of a
     <span>Hello World</span>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)

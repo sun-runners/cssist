@@ -63,4 +63,4 @@ All flex items are aligned such that their flex container baselines align. The i
     </div>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)

@@ -64,5 +64,6 @@ export var createCodeFromCss = function(css){
   // Get MediaQuery Codes
   codes = getCodesMediaQuery(codes, css);
 
+  console.log(codes)
   return codes;
 }

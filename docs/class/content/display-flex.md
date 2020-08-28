@@ -12,3 +12,5 @@ In addition `flex` can refer to a flexible length in CSS Grid Layout.
 
 <div class="d-fx"></div> <!-- Equivalent to margin-right: 200px; -->
 ```
+[Try Playground](../../../cssist/demo)
+

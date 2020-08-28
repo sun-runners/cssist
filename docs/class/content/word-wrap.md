@@ -16,4 +16,4 @@ Allows unbreakable words to be broken
     <span>Hello World</span>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)

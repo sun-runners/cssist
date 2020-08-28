@@ -20,11 +20,11 @@ if (typeof(MutationObserver) !== 'undefined') {
   });
 }
 
-
+let debug = false
 
 export var startSelector = function(selector, is_test){
-  // if(debug) console.log('[start] startSelector', selector);
   if(!window.cssist) initialize();
+  // if(debug) console.log('[start] startSelector', selector);
 
   // Create css
   var css = createCssFromSelector(selector);
@@ -62,7 +62,8 @@ export var startSelector = function(selector, is_test){
 export var startElement = function(element, is_test){
   // Check element
   if(!(element && element.classList && element.classList.length>=1)) return;
-  // if(debug) console.log('[start] startElement', element);
+  if(debug) console.log('[start] startElement', element);
+  
 
   // Set classes
   var selectors = element.classList;
@@ -82,8 +83,6 @@ export var startElement = function(element, is_test){
   element._cssist = true;
   return csses;
 }
-
-
 
 export var startRootElement = function(element, is_test){
   // if(debug) console.log('[start] startRootElement', element);

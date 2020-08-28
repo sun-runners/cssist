@@ -23,17 +23,17 @@
 
             <div class="d-fx jc-c mt-20px">
                 <p class="actioin">
-                    <a href="/https://github.com/KimSunWook/cssist/" class="mr-10px nav-link action-button w-80px p-10px b-gn400 bo-5px f-20px c-we">
+                    <a href="https://github.com/KimSunWook/cssist" class="mr-10px nav-link action-button w-80px p-10px b-gn400 bo-5px f-20px c-we">
                     Visit github
                     </a>
                 </p>
-                <p class="actioin">
-                    <a href="/demo/" class="mr-10px nav-link action-button w-80px p-10px b-be400 bo-5px f-20px c-we">
+                <p class="action">
+                    <a href="/cssist/demo/" class="mr-10px nav-link action-button w-80px p-10px b-be400 bo-5px f-20px c-we">
                     Try your Codes here!
                     </a>
                 </p>
-                <p class="actioin">
-                    <a href="/guide/" class="mr-10px nav-link action-button w-80px p-10px b-yw400 bo-5px f-20px c-we">
+                <p class="action">
+                    <a href="/cssist/guide/" class="mr-10px nav-link action-button w-80px p-10px b-yw400 bo-5px f-20px c-we">
                     Get Started →
                     </a>
                 </p>

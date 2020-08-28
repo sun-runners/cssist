@@ -16,6 +16,6 @@ The `<gradient>` CSS data type is a special type of `<image>` that consists of a
 </button>
  ```
  ### Output
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 
  

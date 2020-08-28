@@ -60,4 +60,4 @@ Formally, the display property sets an element's inner and outer display types. 
         </div>
     </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)

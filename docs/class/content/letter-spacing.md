@@ -19,5 +19,5 @@ The letter-spacing CSS property sets the spacing behavior between text character
     </div>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 

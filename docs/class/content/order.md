@@ -12,5 +12,5 @@ The order CSS property sets the order to lay out an item in a flex or grid conta
 </div>
 ```
 ### Output
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 

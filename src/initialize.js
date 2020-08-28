@@ -9,7 +9,7 @@ import { download } from './download.js'
 
 
 // Variable Section
-var debug = false;
+var debug = true;
 
 var greeting = '/*' + '\n';
 greeting += 'CSSIST' + '\n';
@@ -52,7 +52,7 @@ export var initialize = function(){
   }
   else{
     window.cssist = cssist_default;
-    if(debug) console.log('[initialize] new cssist', window.cssist);
+    // if(debug) console.log('[initialize] new cssist', window.cssist);
   }
 
   // Method 1

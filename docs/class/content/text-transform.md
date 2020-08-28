@@ -31,7 +31,7 @@ The text-transform CSS property specifies how to capitalize an element's text. I
     Ipsum.
 </div>
 ```
-![image](/assets/images/tt/tt-u.png)
+
 ### Syntax
 
 ```html
@@ -45,5 +45,5 @@ The text-transform CSS property specifies how to capitalize an element's text. I
     Ipsum.
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)
 

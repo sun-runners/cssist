@@ -59,4 +59,4 @@ The CSS justify-content property defines how the browser distributes space betwe
     <span class="f-22px "> Pick a bee. </span>
 </div>
 ```
-[Try Playground](../../../demo)
+[Try Playground](../../../cssist/demo)

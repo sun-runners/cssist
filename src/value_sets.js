@@ -642,7 +642,7 @@ value_sets.google_color = {
     le: 'CDDC39', le50: 'F9FBE7', le100: 'F0F4C3', le200: 'E6EE9C', le300: 'DCE775', le400: 'D4E157', le500: 'CDDC39', le600: 'C0CA33', le700: 'AFB42B', le800: '9E9D24', le900: '827717', //Lime
     lime: 'CDDC39', lime50: 'F9FBE7', lime100: 'F0F4C3', lime200: 'E6EE9C', lime300: 'DCE775', lime400: 'D4E157', lime500: 'CDDC39', lime600: 'C0CA33', lime700: 'AFB42B', lime800: '9E9D24', lime900: '827717', //Lime
 
-    yw: 'FFEB3B', yw50: 'FFFDE7', yw100: 'FFF9C4', yw200: 'FFF59D', yw300: 'FFF176', yw400: 'FFEE58', yw500: 'FFEB3B', yw600: 'FDD835', yw700: 'FBC02D', yw800: 'F9A825', yw900: 'F57F17', //Yellow
+    yw: 'FFEB3B', yw50: 'bk', yw100: 'FFF9C4', yw200: 'FFF59D', yw300: 'FFF176', yw400: 'FFEE58', yw500: 'FFEB3B', yw600: 'FDD835', yw700: 'FBC02D', yw800: 'F9A825', yw900: 'F57F17', //Yellow
     yellow: 'FFEB3B', yellow50: 'FFFDE7', yellow100: 'FFF9C4', yellow200: 'FFF59D', yellow300: 'FFF176', yellow400: 'FFEE58', yellow500: 'FFEB3B', yellow600: 'FDD835', yellow700: 'FBC02D', yellow800: 'F9A825', yellow900: 'F57F17', //Yellow
 
     ar: 'FFC107', ar50: 'FFF8E1', ar100: 'FFECB3', ar200: 'FFE082', ar300: 'FFD54F', ar400: 'FFCA28', ar500: 'FFC107', ar600: 'FFB300', ar700: 'FFA000', ar800: 'FF8F00', ar900: 'FF6F00', //Amber
